@@ -19,7 +19,8 @@
   "scripts": {
     "start": "serve -s build",
     "start:dev": "react-scripts start",
-     "test": "react-scripts test",
+    "test": "cross-env CI=true react-scripts test --env=jsdom",
+    "test:dev": "react-scripts test",
     "build": "react-scripts build"
   },
   "browserslist": [
@@ -27,5 +28,8 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "devDependencies": {
+    "cross-env": "^5.2.0"
+  }
 }
