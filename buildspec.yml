@@ -6,6 +6,9 @@ phases:
       # Install runtime dependencies
       - npm install --production
 
+      # Prevent files from having a timestamp before 1980
+      - find ./node_modules -mtime +10950 -exec touch {} \;
+
       # Upgrade AWS CLI to the latest version
       - pip install --upgrade awscli
   post_build:
