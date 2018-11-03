@@ -11,6 +11,9 @@ phases:
 
       # Upgrade AWS CLI to the latest version
       - pip install --upgrade awscli
+
+      # Install serve globally
+      - npm install -g serve
   post_build:
     commands:
       - rm -Rf ./node_modules
