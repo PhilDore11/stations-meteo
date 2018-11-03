@@ -1,5 +1,5 @@
 {
-  "name": "Stations-Meteo",
+  "name": "stations-meteo",
   "description": "Station Meteo React App",
   "version": "0.0.1",
   "private": true,
@@ -14,10 +14,11 @@
     "react-dom": "^16.6.0",
     "react-router-dom": "^4.4.0-beta.6",
     "react-scripts": "2.1.0",
-    "redux": "^4.0.1"
+    "redux": "^4.0.1",
+    "serve": "^10.0.2"
   },
   "scripts": {
-    "start": "serve -s build",
+    "start": "./node_modules/.bin/serve -s build",
     "start:dev": "react-scripts start",
     "test": "cross-env CI=true react-scripts test --env=jsdom",
     "test:dev": "react-scripts test",
