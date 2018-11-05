@@ -15,6 +15,6 @@ phases:
     commands:
       - aws cloudformation package --template template.yml --s3-bucket $S3_BUCKET --output-template-file template-export.yml
 artifacts:
-  type: zip
+  type: zip64
   files:
     - template-export.yml
