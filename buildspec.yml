@@ -1,20 +1,13 @@
-version: 0.2
+version: 0.1
 
 phases:
-  install:
+  build:
     commands:
-      # Install runtime dependencies
-      - npm install --production
+      - aws s3 cp --recursive public/ s3://$WEBSITE_S3_BUCKET/public/ --grants read=uri=http://acs.amazonaws.com/groups/global/AllUsers
+      - sed -i -e "s|assets/|$WEBSITE_S3_PREFIX/public/assets/|g" public/index.html
+      - aws cloudformation package --template template.yml --s3-bucket $S3_BUCKET --output-template template-export.json
 
-      # Prevent files from having a timestamp before 1980
-      - find ./node_modules -mtime +10950 -exec touch {} \;
-
-      # Upgrade AWS CLI to the latest version
-      - pip install --upgrade awscli
-  post_build:
-    commands:
-      - aws cloudformation package --template template.yml --s3-bucket $S3_BUCKET --output-template-file template-export.yml
 artifacts:
-  type: zip64
+  type: zip
   files:
-    - template-export.yml
+    - template-export.json
