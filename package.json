@@ -18,7 +18,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "start:prod": "./node_modules/.bin/serve -s build",
+    "start:prod": "react-scripts start",
     "test": "cross-env CI=true react-scripts test --env=jsdom",
     "test:dev": "react-scripts test",
     "build": "react-scripts build"
