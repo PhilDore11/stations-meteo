@@ -17,8 +17,8 @@
     "redux": "^4.0.1"
   },
   "scripts": {
-    "start": "./node_modules/.bin/serve -s build",
-    "start:dev": "react-scripts start",
+    "start": "react-scripts start",
+    "start:prod": "./node_modules/.bin/serve -s build",
     "test": "cross-env CI=true react-scripts test --env=jsdom",
     "test:dev": "react-scripts test",
     "build": "react-scripts build"
