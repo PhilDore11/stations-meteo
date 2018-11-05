@@ -2,9 +2,6 @@ AWSTemplateFormatVersion: 2010-09-09
 Transform:
 - AWS::CodeStar
 
-Conditions:
-  UseSubnet: !Not [!Equals [!Ref 'SubnetId', subnet-none]]
-
 Parameters:
   ProjectId:
     Type: String
