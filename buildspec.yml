@@ -17,7 +17,6 @@ phases:
   post_build:
     commands:
       - rm -Rf ./node_modules
-      - rm -Rf ./src
 
       - aws cloudformation package --template template.yml --s3-bucket $S3_BUCKET --output-template-file template-export.yml
 artifacts:
