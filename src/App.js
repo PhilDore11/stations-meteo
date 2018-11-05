@@ -9,6 +9,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import List from '@material-ui/core/List';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
+import Paper from '@material-ui/core/Paper';
 
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
@@ -30,6 +31,8 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import HomeContainer from './containers/HomeContainer';
 import DashboardContainer from './containers/DashboardContainer';
 import MapContainer from './containers/MapContainer';
+
+import FooterContainer from './containers/FooterContainer';
 
 import logo from './jfsa.png';
 
@@ -133,6 +136,8 @@ const App = ({ classes }) => (
           <Route path="/map" component={MapContainer} />
         </Switch>
       </div>
+      <Divider />
+      <FooterContainer />
     </div>
   </Router>
 );

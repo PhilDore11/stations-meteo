@@ -23,6 +23,9 @@
     "test:dev": "react-scripts test",
     "build": "react-scripts build"
   },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
   "browserslist": [
     ">0.2%",
     "not dead",
