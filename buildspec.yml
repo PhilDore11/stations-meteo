@@ -5,16 +5,3 @@ phases:
     commands:
       # Install runtime dependencies
       - npm install --production
-
-      # Prevent files from having a timestamp before 1980
-      - find ./node_modules -mtime +10950 -exec touch {} \;
-
-      # Upgrade AWS CLI to the latest version
-      - pip install --upgrade awscli
-  post_build:
-    commands:
-      - aws cloudformation package --template template.yml --s3-bucket $S3_BUCKET --output-template-file template-export.json
-artifacts:
-  type: zip64
-  files:
-    - template-export.json
