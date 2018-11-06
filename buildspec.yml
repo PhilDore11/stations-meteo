@@ -28,6 +28,7 @@ phases:
 artifacts:
   files:
     - build/**/*
+    - public/**/*
     - package.json
     - .ebextensions/**/*
     # - location
