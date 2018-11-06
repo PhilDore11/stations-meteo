@@ -17,8 +17,8 @@
     "redux": "^4.0.1"
   },
   "scripts": {
-    "start:prod": "serve -s build",
-    "start": "react-scripts start",
+    "start": "serve -s build",
+    "start:dev": "react-scripts start",
     "test": "react-scripts test",
     "build": "react-scripts build"
   },
@@ -30,5 +30,8 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "devDependencies": {
+    "cross-env": "^5.2.0"
+  }
 }
