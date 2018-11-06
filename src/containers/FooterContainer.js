@@ -22,7 +22,7 @@ const Footer = ({ classes }) => (
       <Grid container justify="flex-end">
         <Grid item>
           <Typography variant="caption" color="inherit" noWrap>
-            v0.0.3
+            v0.0.4
           </Typography>
         </Grid>
       </Grid>
