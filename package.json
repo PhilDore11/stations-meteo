@@ -17,10 +17,9 @@
     "redux": "^4.0.1"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "start:prod": "react-scripts start",
-    "test": "cross-env CI=true react-scripts test --env=jsdom",
-    "test:dev": "react-scripts test",
+    "start": "serve -s build",
+    "start:dev": "react-scripts start",
+    "test": "react-scripts test",
     "build": "react-scripts build"
   },
   "eslintConfig": {
