@@ -89,6 +89,7 @@ const App = ({ classes }) => (
           <Route path="/dashboard" component={DashboardContainer} />
           <Route path="/map" component={MapContainer} />
         </Switch>
+        <div className={classes.toolbar} />
       </div>
       <Divider />
       <FooterContainer />
