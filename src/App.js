@@ -21,7 +21,7 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import HeaderContainer from './containers/HeaderContainer';
 
 import HomeContainer from './containers/HomeContainer';
-import DashboardContainer from './containers/DashboardContainer';
+import DashboardContainer from './containers/Dashboard';
 import MapContainer from './containers/MapContainer';
 
 import FooterContainer from './containers/FooterContainer';
