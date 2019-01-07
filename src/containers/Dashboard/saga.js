@@ -28,8 +28,8 @@ function* fetchPrecipitationData(action) {
   }
 }
 
-function* dashboardSaga() {
+function* defaultSaga() {
   yield takeLatest(FETCH_PRECIPITATION_DATA, fetchPrecipitationData);
 }
 
-export default dashboardSaga;
+export default defaultSaga;

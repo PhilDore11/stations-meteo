@@ -8,7 +8,7 @@ import {
 } from './constants';
 
 const initialState = {
-  currentDay: moment().month(3).date(19).startOf('day'),
+  currentDay: moment().year(2018).month(3).date(19).startOf('day'),
   precipitationData: [],
   precipitationError: null,
 }

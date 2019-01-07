@@ -1,0 +1,3 @@
+export const FETCH_CLIENTS = 'Clients/FETCH_CLIENTS'
+export const FETCH_CLIENTS_SUCCESS = 'Clients/FETCH_CLIENTS_SUCCESS'
+export const FETCH_CLIENTS_ERROR = 'Clients/FETCH_CLIENTS_ERROR'

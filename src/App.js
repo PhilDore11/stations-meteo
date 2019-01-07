@@ -3,28 +3,33 @@ import PropTypes from 'prop-types';
 
 import { withStyles } from '@material-ui/core/styles';
 
-import Drawer from '@material-ui/core/Drawer';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import List from '@material-ui/core/List';
-import Divider from '@material-ui/core/Divider';
+import {
+  Drawer,
+  CssBaseline,
+  List,
+  Divider,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+} from '@material-ui/core';
 
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-
-import HomeIcon from '@material-ui/icons/Home';
-import DashboardIcon from '@material-ui/icons/Dashboard';
-import MapIcon from '@material-ui/icons/Map';
+import { 
+  Home as HomeIcon, 
+  Dashboard as DashboardIcon, 
+  Map as MapIcon, 
+  People as PeopleIcon
+} from '@material-ui/icons';
 
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
-import HeaderContainer from './containers/HeaderContainer';
+import HeaderContainer from 'containers/HeaderContainer';
 
-import HomeContainer from './containers/HomeContainer';
-import DashboardContainer from './containers/Dashboard';
-import MapContainer from './containers/MapContainer';
+import HomeContainer from 'containers/HomeContainer';
+import DashboardContainer from 'containers/Dashboard';
+import MapContainer from 'containers/MapContainer';
+import ClientsContainer from 'containers/Clients';
 
-import FooterContainer from './containers/FooterContainer';
+import FooterContainer from 'containers/FooterContainer';
 
 const drawerWidth = 240;
 
@@ -69,7 +74,8 @@ const App = ({ classes }) => (
           {[
             { icon: <HomeIcon />, label: 'Acceuil', location: '/' },
             { icon: <DashboardIcon />, label: 'Analyse', location: 'dashboard' },
-            { icon: <MapIcon />, label: 'Map', location: 'map' }
+            { icon: <MapIcon />, label: 'Map', location: 'map' },
+            { icon: <PeopleIcon />, label: 'Clients', location: 'clients' }
           ].map((item, index) => (
             <Link key={index} to={item.location} className={classes.menuLink}>
               <ListItem button>
@@ -88,6 +94,7 @@ const App = ({ classes }) => (
           <Route exact path="/" component={HomeContainer} />
           <Route path="/dashboard" component={DashboardContainer} />
           <Route path="/map" component={MapContainer} />
+          <Route path="/clients" component={ClientsContainer} />
         </Switch>
         <div className={classes.toolbar} />
       </div>
