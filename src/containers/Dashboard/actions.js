@@ -1,31 +1,30 @@
-import { 
+import {
   FETCH_PRECIPITATION_DATA,
   FETCH_PRECIPITATION_DATA_SUCCESS,
   FETCH_PRECIPITATION_DATA_ERROR,
   INCREMENT_DAY,
-  DECREMENT_DAY,
-} from './constants';
+  DECREMENT_DAY
+} from "./constants";
 
-export const fetchPrecipitationData = (currentDay) => ({
+export const fetchPrecipitationData = currentDay => ({
   type: FETCH_PRECIPITATION_DATA,
-  currentDay,
+  currentDay
 });
 
-export const fetchPrecipitationDataSuccess = (res) => ({
+export const fetchPrecipitationDataSuccess = res => ({
   type: FETCH_PRECIPITATION_DATA_SUCCESS,
-  res,
+  res
 });
 
-export const fetchPrecipitationDataError = (error) => ({
+export const fetchPrecipitationDataError = error => ({
   type: FETCH_PRECIPITATION_DATA_ERROR,
-  error,
+  error
 });
 
 export const incrementDay = () => ({
-  type: INCREMENT_DAY,
+  type: INCREMENT_DAY
 });
 
 export const decrementDay = () => ({
-  type: DECREMENT_DAY,
+  type: DECREMENT_DAY
 });
-

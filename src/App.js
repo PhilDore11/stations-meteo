@@ -1,7 +1,9 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 
-import { withStyles } from '@material-ui/core/styles';
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+
+import { withStyles } from "@material-ui/core/styles";
 
 import {
   Drawer,
@@ -10,48 +12,46 @@ import {
   Divider,
   ListItem,
   ListItemIcon,
-  ListItemText,
-} from '@material-ui/core';
+  ListItemText
+} from "@material-ui/core";
 
-import { 
-  Home as HomeIcon, 
-  Dashboard as DashboardIcon, 
-  Map as MapIcon, 
+import {
+  Home as HomeIcon,
+  Dashboard as DashboardIcon,
+  Map as MapIcon,
   People as PeopleIcon
-} from '@material-ui/icons';
+} from "@material-ui/icons";
 
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-
-import HeaderContainer from 'containers/HeaderContainer';
-
-import HomeContainer from 'containers/HomeContainer';
-import DashboardContainer from 'containers/Dashboard';
-import MapContainer from 'containers/MapContainer';
-import ClientsContainer from 'containers/Clients';
-
-import FooterContainer from 'containers/FooterContainer';
+import {
+  HeaderContainer,
+  HomeContainer,
+  DashboardContainer,
+  MapContainer,
+  ClientsContainer,
+  FooterContainer
+} from "./containers";
 
 const drawerWidth = 240;
 
 const styles = theme => ({
   root: {
-    display: 'flex',
+    display: "flex"
   },
   drawer: {
     width: drawerWidth,
-    flexShrink: 0,
+    flexShrink: 0
   },
   drawerPaper: {
-    width: drawerWidth,
+    width: drawerWidth
   },
   toolbar: theme.mixins.toolbar,
   content: {
     flexGrow: 1,
     backgroundColor: theme.palette.background.default,
-    padding: theme.spacing.unit * 3,
+    padding: theme.spacing.unit * 3
   },
   menuLink: {
-    textDecoration: 'none',
+    textDecoration: "none"
   }
 });
 
@@ -64,7 +64,7 @@ const App = ({ classes }) => (
         className={classes.drawer}
         variant="permanent"
         classes={{
-          paper: classes.drawerPaper,
+          paper: classes.drawerPaper
         }}
         anchor="left"
       >
@@ -72,16 +72,18 @@ const App = ({ classes }) => (
         <Divider />
         <List>
           {[
-            { icon: <HomeIcon />, label: 'Acceuil', location: '/' },
-            { icon: <DashboardIcon />, label: 'Analyse', location: 'dashboard' },
-            { icon: <MapIcon />, label: 'Map', location: 'map' },
-            { icon: <PeopleIcon />, label: 'Clients', location: 'clients' }
+            { icon: <HomeIcon />, label: "Acceuil", location: "/" },
+            {
+              icon: <DashboardIcon />,
+              label: "Analyse",
+              location: "dashboard"
+            },
+            { icon: <MapIcon />, label: "Map", location: "map" },
+            { icon: <PeopleIcon />, label: "Clients", location: "clients" }
           ].map((item, index) => (
             <Link key={index} to={item.location} className={classes.menuLink}>
               <ListItem button>
-                <ListItemIcon>
-                  {item.icon}
-                </ListItemIcon>
+                <ListItemIcon>{item.icon}</ListItemIcon>
                 <ListItemText primary={item.label} />
               </ListItem>
             </Link>
@@ -105,7 +107,7 @@ const App = ({ classes }) => (
 );
 
 App.propTypes = {
-  classes: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired
 };
 
 export default withStyles(styles)(App);

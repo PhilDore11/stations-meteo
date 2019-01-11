@@ -1,29 +1,24 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles } from "@material-ui/core/styles";
 
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import Grid from '@material-ui/core/Grid';
+import { AppBar, Toolbar, Typography, Grid, Button } from "@material-ui/core";
 
-import Button from '@material-ui/core/Button';
+// import { ClientMenu } from "../components";
 
-import ClientMenu from 'components/ClientMenu';
-
-import logo from '../jfsa.png';
+import logo from "../jfsa.png";
 
 const drawerWidth = 240;
 
 const styles = theme => ({
   header: {
-    zIndex: theme.zIndex.drawer + 1,
+    zIndex: theme.zIndex.drawer + 1
   },
   logo: {
     width: drawerWidth - 48,
     marginRight: 24
-  },
+  }
 });
 
 const HeaderContainer = ({ classes }) => (
@@ -41,9 +36,6 @@ const HeaderContainer = ({ classes }) => (
               Stations Météo
             </Typography>
           </Grid>
-          <Grid item>
-            <ClientMenu />
-          </Grid>
         </Grid>
       </Grid>
     </Toolbar>
@@ -51,7 +43,7 @@ const HeaderContainer = ({ classes }) => (
 );
 
 HeaderContainer.propTypes = {
-  classes: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired
 };
 
 export default withStyles(styles)(HeaderContainer);

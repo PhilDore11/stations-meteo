@@ -1,24 +1,19 @@
-import React from 'react';
+import React from "react";
 
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
+import { Menu, MenuItem, IconButton, Divider } from "@material-ui/core/Menu";
 
-import IconButton from '@material-ui/core/IconButton';
-import Divider from '@material-ui/core/Divider';
-
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import { AccountCircle as AccountCircleIcon } from "@material-ui/icons";
 
 class ClientMenu extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      anchorEl: null,
+      anchorEl: null
     };
   }
-  
 
-  handleClick = (event) => {
+  handleClick = event => {
     this.setState({ anchorEl: event.currentTarget });
   };
 
@@ -32,7 +27,7 @@ class ClientMenu extends React.Component {
     return (
       <span>
         <IconButton
-          aria-owns={anchorEl ? 'simple-menu' : undefined}
+          aria-owns={anchorEl ? "simple-menu" : undefined}
           aria-haspopup="true"
           onClick={this.handleClick}
         >

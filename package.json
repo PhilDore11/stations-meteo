@@ -3,9 +3,10 @@
   "description": "Station Meteo React App",
   "version": "0.0.4",
   "private": true,
+  "main": "src/index.js",
   "dependencies": {
     "@material-ui/core": "^3.3.2",
-    "@material-ui/icons": "^3.0.1",
+    "@material-ui/icons": "3.0.2",
     "chart.js": "^2.7.3",
     "google-map-react": "^1.0.9",
     "json-fetch": "^7.5.1",
@@ -17,7 +18,7 @@
     "react-router-dom": "^4.4.0-beta.6",
     "react-scripts": "^2.1.1",
     "redux": "^4.0.1",
-    "redux-saga": "^0.16.2"
+    "redux-saga": "0.16.2"
   },
   "scripts": {
     "start": "serve -s build",
@@ -28,10 +29,5 @@
   "eslintConfig": {
     "extends": "react-app"
   },
-  "browserslist": [
-    ">0.2%",
-    "not dead",
-    "not ie <= 11",
-    "not op_mini all"
-  ]
+  "browserslist": [">0.2%", "not dead", "not ie <= 11", "not op_mini all"]
 }

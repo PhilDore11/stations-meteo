@@ -1,31 +1,30 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 
-import { connect } from 'react-redux';
+import { connect } from "react-redux";
 
 import {
   Divider,
   Grid,
   Card,
   CardHeader,
-  CardContent,
-} from '@material-ui/core';
+  CardContent
+} from "@material-ui/core";
 
-import ClientsTable from 'components/ClientsTable';
+import { ClientsTable } from "../../components";
 
-import { 
-  fetchClients,
-} from './actions';
+import { fetchClients } from "./actions";
 
 class ClientsContainer extends React.Component {
   componentDidMount() {
+    console.log("FETCH Clients");
     this.props.fetchClients(this.props.currentDay);
   }
 
   render() {
     const { clients } = this.props;
-    
-    console.log('clients', clients);
+
+    console.log("clients", clients);
 
     return (
       <Grid container spacing={24}>
@@ -45,15 +44,18 @@ class ClientsContainer extends React.Component {
 
 ClientsContainer.propTypes = {
   fetchClients: PropTypes.func.isRequired,
-  clients: PropTypes.array,
+  clients: PropTypes.array
 };
 
 const mapStateToProps = state => ({
-  ...state.clients,
-})
+  ...state.clients
+});
 
 const mapDispatchToProps = {
-  fetchClients,
+  fetchClients
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ClientsContainer);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ClientsContainer);

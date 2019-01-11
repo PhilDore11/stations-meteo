@@ -1,20 +1,20 @@
-import { 
+import {
   FETCH_CLIENTS,
   FETCH_CLIENTS_SUCCESS,
-  FETCH_CLIENTS_ERROR,
-} from './constants';
+  FETCH_CLIENTS_ERROR
+} from "./constants";
 
-export const fetchClients = (currentDay) => ({
+export const fetchClients = currentDay => ({
   type: FETCH_CLIENTS,
-  currentDay,
+  currentDay
 });
 
-export const fetchClientsSuccess = (res) => ({
+export const fetchClientsSuccess = res => ({
   type: FETCH_CLIENTS_SUCCESS,
-  res,
+  res
 });
 
-export const fetchClientsError = (error) => ({
+export const fetchClientsError = error => ({
   type: FETCH_CLIENTS_ERROR,
-  error,
+  error
 });
