@@ -27,8 +27,7 @@ import {
   HomeContainer,
   DashboardContainer,
   MapContainer,
-  ClientsContainer,
-  FooterContainer
+  ClientsContainer
 } from "./containers";
 
 const drawerWidth = 240;
@@ -101,7 +100,6 @@ const App = ({ classes }) => (
         <div className={classes.toolbar} />
       </div>
       <Divider />
-      <FooterContainer />
     </div>
   </Router>
 );

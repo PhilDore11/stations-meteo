@@ -9,7 +9,7 @@ import {
   TableCell
 } from "@material-ui/core";
 
-const ClientsTable = ({ clients }) => (
+const ClientTable = ({ clients }) => (
   <Table>
     <TableHead>
       <TableRow>
@@ -28,8 +28,8 @@ const ClientsTable = ({ clients }) => (
   </Table>
 );
 
-ClientsTable.propTypes = {
+ClientTable.propTypes = {
   clients: PropTypes.array.isRequired
 };
 
-export default ClientsTable;
+export default ClientTable;

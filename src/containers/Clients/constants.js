@@ -1,3 +1,9 @@
 export const FETCH_CLIENTS = "Clients/FETCH_CLIENTS";
 export const FETCH_CLIENTS_SUCCESS = "Clients/FETCH_CLIENTS_SUCCESS";
 export const FETCH_CLIENTS_ERROR = "Clients/FETCH_CLIENTS_ERROR";
+
+export const ADD_CLIENT = "Clients/ADD_CLIENT";
+export const ADD_CLIENT_SUCCESS = "Clients/ADD_CLIENT_SUCCESS";
+export const ADD_CLIENT_ERROR = "Clients/ADD_CLIENT_ERROR";
+
+export const TOGGLE_CLIENT_ADD_MODAL = "Clients/TOGGLE_CLIENT_ADD_MODAL";

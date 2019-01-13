@@ -4,27 +4,42 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
 import {
+  withStyles,
   Divider,
   Grid,
   Card,
   CardHeader,
-  CardContent
+  CardContent,
+  Fab
 } from "@material-ui/core";
 
-import { ClientsTable } from "../../components";
+import { Add as AddIcon } from "@material-ui/icons";
 
-import { fetchClients } from "./actions";
+import { ClientTable, ClientAddModal } from "../../components";
+
+import { fetchClients, addClient, toggleClientAddModal } from "./actions";
+
+const styles = theme => ({
+  add: {
+    position: "fixed",
+    bottom: "20px",
+    right: "20px"
+  }
+});
 
 class ClientsContainer extends React.Component {
   componentDidMount() {
-    console.log("FETCH Clients");
     this.props.fetchClients(this.props.currentDay);
   }
 
   render() {
-    const { clients } = this.props;
-
-    console.log("clients", clients);
+    const {
+      classes,
+      clients,
+      addModalOpen,
+      toggleClientAddModal,
+      addClient
+    } = this.props;
 
     return (
       <Grid container spacing={24}>
@@ -33,9 +48,22 @@ class ClientsContainer extends React.Component {
             <CardHeader title="Clients" />
             <Divider />
             <CardContent>
-              <ClientsTable clients={clients} />
+              <ClientTable clients={clients} />
             </CardContent>
           </Card>
+          <Fab
+            color="primary"
+            aria-label="Add"
+            className={classes.add}
+            onClick={toggleClientAddModal}
+          >
+            <AddIcon />
+          </Fab>
+          <ClientAddModal
+            isOpen={addModalOpen}
+            onToggle={toggleClientAddModal}
+            onCreate={addClient}
+          />
         </Grid>
       </Grid>
     );
@@ -43,6 +71,7 @@ class ClientsContainer extends React.Component {
 }
 
 ClientsContainer.propTypes = {
+  classes: PropTypes.object.isRequired,
   fetchClients: PropTypes.func.isRequired,
   clients: PropTypes.array
 };
@@ -52,10 +81,12 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  fetchClients
+  fetchClients,
+  addClient,
+  toggleClientAddModal
 };
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(ClientsContainer);
+)(withStyles(styles)(ClientsContainer));
