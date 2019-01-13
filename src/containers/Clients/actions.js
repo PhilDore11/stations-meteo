@@ -2,10 +2,17 @@ import {
   FETCH_CLIENTS,
   FETCH_CLIENTS_SUCCESS,
   FETCH_CLIENTS_ERROR,
-  TOGGLE_CLIENT_ADD_MODAL,
   ADD_CLIENT,
   ADD_CLIENT_SUCCESS,
-  ADD_CLIENT_ERROR
+  ADD_CLIENT_ERROR,
+  EDIT_CLIENT,
+  EDIT_CLIENT_SUCCESS,
+  EDIT_CLIENT_ERROR,
+  DELETE_CLIENT,
+  DELETE_CLIENT_SUCCESS,
+  DELETE_CLIENT_ERROR,
+  TOGGLE_CLIENT_MODAL,
+  SET_CLIENT_DATA
 } from "./constants";
 
 export const fetchClients = currentDay => ({
@@ -22,10 +29,6 @@ export const fetchClientsError = error => ({
   error
 });
 
-export const toggleClientAddModal = () => ({
-  type: TOGGLE_CLIENT_ADD_MODAL
-});
-
 export const addClient = clientData => ({
   type: ADD_CLIENT,
   clientData
@@ -39,4 +42,42 @@ export const addClientSuccess = res => ({
 export const addClientError = error => ({
   type: ADD_CLIENT_ERROR,
   error
+});
+
+export const editClient = clientData => ({
+  type: EDIT_CLIENT,
+  clientData
+});
+
+export const editClientSuccess = res => ({
+  type: EDIT_CLIENT_SUCCESS,
+  res
+});
+
+export const editClientError = error => ({
+  type: EDIT_CLIENT_ERROR,
+  error
+});
+
+export const deleteClient = () => ({
+  type: DELETE_CLIENT
+});
+
+export const deleteClientSuccess = res => ({
+  type: DELETE_CLIENT_SUCCESS,
+  res
+});
+
+export const deleteClientError = error => ({
+  type: DELETE_CLIENT_ERROR,
+  error
+});
+
+export const toggleClientModal = () => ({
+  type: TOGGLE_CLIENT_MODAL
+});
+
+export const setClientData = clientData => ({
+  type: SET_CLIENT_DATA,
+  clientData
 });

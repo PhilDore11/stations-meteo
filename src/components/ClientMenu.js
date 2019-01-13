@@ -1,52 +1,73 @@
 import React from "react";
+import PropTypes from "prop-types";
 
-import { Menu, MenuItem, IconButton, Divider } from "@material-ui/core/Menu";
+import { 
+  Menu, 
+  MenuItem, 
+  ListItemIcon, 
+  ListItemText, 
+  IconButton 
+} from "@material-ui/core";
 
-import { AccountCircle as AccountCircleIcon } from "@material-ui/icons";
+import { 
+  MoreVert as MoreVertIcon, 
+  Edit as EditIcon,
+  Delete as DeleteIcon
+} from "@material-ui/icons";
 
 class ClientMenu extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
+      isOpen: false,
       anchorEl: null
     };
   }
 
   handleClick = event => {
-    this.setState({ anchorEl: event.currentTarget });
+    this.setState({ isOpen: true, anchorEl: event.target });
   };
 
   handleClose = () => {
-    this.setState({ anchorEl: null });
+    this.setState({ isOpen: false, anchorEl: null });
   };
 
   render() {
-    const { anchorEl } = this.state;
+    const { onEdit, onDelete } = this.props;
+    const { isOpen, anchorEl } = this.state;
 
     return (
       <span>
-        <IconButton
-          aria-owns={anchorEl ? "simple-menu" : undefined}
-          aria-haspopup="true"
-          onClick={this.handleClick}
-        >
-          <AccountCircleIcon />
+        <IconButton onClick={this.handleClick}>
+          <MoreVertIcon />
         </IconButton>
         <Menu
-          id="simple-menu"
           anchorEl={anchorEl}
-          open={Boolean(anchorEl)}
+          open={isOpen}
           onClose={this.handleClose}
         >
-          <MenuItem onClick={this.handleClose}>Gestion des clients</MenuItem>
-          <MenuItem onClick={this.handleClose}>Gestion des stations</MenuItem>
-          <Divider />
-          <MenuItem onClick={this.handleClose}>Logout</MenuItem>
+          <MenuItem onClick={onEdit}>
+            <ListItemIcon>
+              <EditIcon />
+            </ListItemIcon>
+            <ListItemText inset primary="Modifier" />
+          </MenuItem>
+          <MenuItem onClick={onDelete}>
+            <ListItemIcon>
+              <DeleteIcon />
+            </ListItemIcon>
+            <ListItemText inset primary="Supprimer" />
+          </MenuItem>
         </Menu>
       </span>
     );
   }
 }
+
+ClientMenu.propTypes = {
+  onEdit: PropTypes.func.isRequired,
+  onDelete: PropTypes.func.isRequired
+};
 
 export default ClientMenu;

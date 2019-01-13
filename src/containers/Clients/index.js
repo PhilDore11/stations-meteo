@@ -15,9 +15,16 @@ import {
 
 import { Add as AddIcon } from "@material-ui/icons";
 
-import { ClientTable, ClientAddModal } from "../../components";
+import { ClientTable, ClientModal, ClientForm } from "../../components";
 
-import { fetchClients, addClient, toggleClientAddModal } from "./actions";
+import { 
+  fetchClients, 
+  addClient, 
+  editClient, 
+  deleteClient, 
+  toggleClientModal,
+  setClientData, 
+} from "./actions";
 
 const styles = theme => ({
   add: {
@@ -32,13 +39,20 @@ class ClientsContainer extends React.Component {
     this.props.fetchClients(this.props.currentDay);
   }
 
+  onClientChange(value) {
+    console.log('onClientChange', value);
+    this.props.setClientData();
+  }
+
   render() {
     const {
       classes,
       clients,
-      addModalOpen,
-      toggleClientAddModal,
-      addClient
+      clientModalOpen,
+      clientData,
+      toggleClientModal,
+      addClient,
+      deleteClient
     } = this.props;
 
     return (
@@ -48,21 +62,26 @@ class ClientsContainer extends React.Component {
             <CardHeader title="Clients" />
             <Divider />
             <CardContent>
-              <ClientTable clients={clients} />
+              <ClientTable
+                clients={clients}
+                onClientEdit={toggleClientModal}
+                onClientDelete={deleteClient}
+              />
             </CardContent>
           </Card>
           <Fab
             color="primary"
             aria-label="Add"
             className={classes.add}
-            onClick={toggleClientAddModal}
+            onClick={toggleClientModal}
           >
             <AddIcon />
           </Fab>
-          <ClientAddModal
-            isOpen={addModalOpen}
-            onToggle={toggleClientAddModal}
+          <ClientModal
+            isOpen={clientModalOpen}
+            onToggle={toggleClientModal}
             onCreate={addClient}
+            body={<ClientForm client={clientData} onChange={this.onClientChange} />}
           />
         </Grid>
       </Grid>
@@ -83,7 +102,10 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
   fetchClients,
   addClient,
-  toggleClientAddModal
+  editClient,
+  deleteClient,
+  toggleClientModal,
+  setClientData
 };
 
 export default connect(

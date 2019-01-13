@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 
 import {
+  withStyles,
   Table,
   TableHead,
   TableBody,
@@ -9,12 +10,21 @@ import {
   TableCell
 } from "@material-ui/core";
 
-const ClientTable = ({ clients }) => (
+import { ClientMenu } from '.';
+
+const styles = theme => ({
+  actionCell: {
+    width: 48
+  }
+});
+
+const ClientTable = ({ classes, clients, onClientEdit, onClientDelete }) => (
   <Table>
     <TableHead>
       <TableRow>
         <TableCell>Name</TableCell>
         <TableCell>Addresse courriel</TableCell>
+        <TableCell className={classes.actionCell}></TableCell>
       </TableRow>
     </TableHead>
     <TableBody>
@@ -22,6 +32,9 @@ const ClientTable = ({ clients }) => (
         <TableRow key={client.id}>
           <TableCell>{client.name}</TableCell>
           <TableCell>{client.email}</TableCell>
+          <TableCell className={classes.actionCell}>
+            <ClientMenu onEdit={onClientEdit} onDelete={onClientDelete} />
+          </TableCell>
         </TableRow>
       ))}
     </TableBody>
@@ -29,7 +42,10 @@ const ClientTable = ({ clients }) => (
 );
 
 ClientTable.propTypes = {
-  clients: PropTypes.array
+  classes: PropTypes.object.isRequired,
+  clients: PropTypes.array,
+  onClientEdit: PropTypes.func.isRequired,
+  onClientDelete: PropTypes.func.isRequired,
 };
 
-export default ClientTable;
+export default withStyles(styles)(ClientTable);
