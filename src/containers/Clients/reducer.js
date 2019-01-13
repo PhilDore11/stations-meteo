@@ -27,11 +27,12 @@ export default (state = initialState, action) => {
     case ADD_CLIENT_SUCCESS:
       return {
         ...state,
-        clients: action.res
+        addModalOpen: false
       };
     case ADD_CLIENT_ERROR:
       return {
         ...state,
+        addModalOpen: false,
         clientsError: action.error
       };
     case TOGGLE_CLIENT_ADD_MODAL:

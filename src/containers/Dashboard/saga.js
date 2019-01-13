@@ -18,8 +18,6 @@ function* fetchPrecipitationData(action) {
     const chartStart = moment(currentDay).startOf("day");
     const chartEnd = moment(currentDay).endOf("day");
 
-    console.log("ENV", process.env);
-
     const response = yield call(
       jsonFetch,
       `${

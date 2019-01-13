@@ -5,13 +5,14 @@ import jsonFetch from "json-fetch";
 import { FETCH_CLIENTS, ADD_CLIENT } from "./constants";
 
 import {
+  fetchClients,
   fetchClientsSuccess,
   fetchClientsError,
   addClientSuccess,
   addClientError
 } from "./actions";
 
-function* fetchClients() {
+function* fetchClientsGenerator() {
   try {
     const response = yield call(
       jsonFetch,
@@ -24,24 +25,24 @@ function* fetchClients() {
   }
 }
 
-function* addClient(action) {
-  console.log("action", action);
+function* addClientGenerator(action) {
   try {
-    const response = yield call(
+    yield call(
       jsonFetch,
       `${process.env.REACT_APP_API_URL}/clients`,
       { body: action.clientData, method: "POST" }
     );
 
-    yield put(addClientSuccess(response.body));
+    yield put(addClientSuccess());
+    yield put(fetchClients());
   } catch (e) {
     yield put(addClientError(e));
   }
 }
 
 function* defaultSaga() {
-  yield takeLatest(FETCH_CLIENTS, fetchClients);
-  yield takeLatest(ADD_CLIENT, addClient);
+  yield takeLatest(FETCH_CLIENTS, fetchClientsGenerator);
+  yield takeLatest(ADD_CLIENT, addClientGenerator);
 }
 
 export default defaultSaga;

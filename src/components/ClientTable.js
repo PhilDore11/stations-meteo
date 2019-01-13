@@ -13,15 +13,15 @@ const ClientTable = ({ clients }) => (
   <Table>
     <TableHead>
       <TableRow>
-        <TableCell>ID</TableCell>
         <TableCell>Name</TableCell>
+        <TableCell>Addresse courriel</TableCell>
       </TableRow>
     </TableHead>
     <TableBody>
-      {clients.map(client => (
+      {clients && clients.map(client => (
         <TableRow key={client.id}>
-          <TableCell>{client.id}</TableCell>
           <TableCell>{client.name}</TableCell>
+          <TableCell>{client.email}</TableCell>
         </TableRow>
       ))}
     </TableBody>
@@ -29,7 +29,7 @@ const ClientTable = ({ clients }) => (
 );
 
 ClientTable.propTypes = {
-  clients: PropTypes.array.isRequired
+  clients: PropTypes.array
 };
 
 export default ClientTable;
