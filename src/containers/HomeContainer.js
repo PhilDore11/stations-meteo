@@ -119,4 +119,4 @@ HomeContainer.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(HomeContainer);
+export default React.memo(withStyles(styles)(HomeContainer));

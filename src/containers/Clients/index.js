@@ -34,14 +34,30 @@ const styles = theme => ({
   }
 });
 
-class ClientsContainer extends React.Component {
+class ClientsContainer extends React.PureComponent {
   componentDidMount() {
     this.props.fetchClients(this.props.currentDay);
   }
 
-  onClientChange(value) {
-    console.log('onClientChange', value);
-    this.props.setClientData();
+  onClientChange = (event, clientData) => {
+    const {id, value} = event.target;
+    const newClientData = {...clientData, [id]: value};
+    this.props.setClientData(newClientData);
+  }
+
+  onClientAdd = () => {
+    this.props.setClientData({name: "", email: ""});
+    this.props.toggleClientModal(true);
+  }
+  onClientEdit = clientData => {
+    this.props.setClientData(clientData);
+    this.props.toggleClientModal(false);
+  }
+
+  onClientSave = () => {
+    this.props.isAdd
+      ? this.props.addClient(this.props.clientData)
+      : this.props.editClient(this.props.clientData);
   }
 
   render() {
@@ -51,7 +67,7 @@ class ClientsContainer extends React.Component {
       clientModalOpen,
       clientData,
       toggleClientModal,
-      addClient,
+      isAdd,
       deleteClient
     } = this.props;
 
@@ -64,7 +80,7 @@ class ClientsContainer extends React.Component {
             <CardContent>
               <ClientTable
                 clients={clients}
-                onClientEdit={toggleClientModal}
+                onClientEdit={this.onClientEdit}
                 onClientDelete={deleteClient}
               />
             </CardContent>
@@ -73,14 +89,15 @@ class ClientsContainer extends React.Component {
             color="primary"
             aria-label="Add"
             className={classes.add}
-            onClick={toggleClientModal}
+            onClick={this.onClientAdd}
           >
             <AddIcon />
           </Fab>
           <ClientModal
             isOpen={clientModalOpen}
+            isAdd={isAdd}
             onToggle={toggleClientModal}
-            onCreate={addClient}
+            onSave={this.onClientSave}
             body={<ClientForm client={clientData} onChange={this.onClientChange} />}
           />
         </Grid>

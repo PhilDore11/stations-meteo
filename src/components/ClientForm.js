@@ -23,7 +23,7 @@ const ClientForm = ({ classes, client, onChange }) => (
       margin="normal"
       variant="outlined"
       value={client.name}
-      onChange={onChange}
+      onChange={(event) => onChange(event, client)}
       />
     <TextField
       className={classes.textField}
@@ -33,7 +33,7 @@ const ClientForm = ({ classes, client, onChange }) => (
       margin="normal"
       variant="outlined"
       value={client.email}
-      onChange={onChange}
+      onChange={(event) => onChange(event, client)}
     />
   </form>
 );
@@ -44,4 +44,4 @@ ClientForm.propTypes = {
   client: PropTypes.object,
 };
 
-export default withStyles(styles)(ClientForm);
+export default React.memo(withStyles(styles)(ClientForm));

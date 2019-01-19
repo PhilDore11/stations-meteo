@@ -12,7 +12,7 @@ import {
   DELETE_CLIENT_SUCCESS,
   DELETE_CLIENT_ERROR,
   TOGGLE_CLIENT_MODAL,
-  SET_CLIENT_DATA
+  SET_CLIENT_DATA,
 } from "./constants";
 
 export const fetchClients = currentDay => ({
@@ -59,8 +59,9 @@ export const editClientError = error => ({
   error
 });
 
-export const deleteClient = () => ({
-  type: DELETE_CLIENT
+export const deleteClient = clientData => ({
+  type: DELETE_CLIENT,
+  clientData
 });
 
 export const deleteClientSuccess = res => ({
@@ -73,8 +74,9 @@ export const deleteClientError = error => ({
   error
 });
 
-export const toggleClientModal = () => ({
-  type: TOGGLE_CLIENT_MODAL
+export const toggleClientModal = isAdd => ({
+  type: TOGGLE_CLIENT_MODAL,
+  isAdd
 });
 
 export const setClientData = clientData => ({

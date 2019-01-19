@@ -2,14 +2,23 @@ import { call, put, takeLatest } from "redux-saga/effects";
 
 import jsonFetch from "json-fetch";
 
-import { FETCH_CLIENTS, ADD_CLIENT } from "./constants";
+import {
+  FETCH_CLIENTS,
+  ADD_CLIENT,
+  EDIT_CLIENT,
+  DELETE_CLIENT,
+} from "./constants";
 
 import {
   fetchClients,
   fetchClientsSuccess,
   fetchClientsError,
   addClientSuccess,
-  addClientError
+  addClientError,
+  editClientSuccess,
+  editClientError,
+  deleteClientSuccess,
+  deleteClientError,
 } from "./actions";
 
 function* fetchClientsGenerator() {
@@ -40,9 +49,41 @@ function* addClientGenerator(action) {
   }
 }
 
+function* editClientGenerator(action) {
+  try {
+    yield call(
+      jsonFetch,
+      `${process.env.REACT_APP_API_URL}/clients`,
+      { body: action.clientData, method: "PUT" }
+    );
+
+    yield put(editClientSuccess());
+    yield put(fetchClients());
+  } catch (e) {
+    yield put(editClientError(e));
+  }
+}
+
+function* deleteClientGenerator(action) {
+  try {
+    yield call(
+      jsonFetch,
+      `${process.env.REACT_APP_API_URL}/clients`,
+      { body: action.clientData, method: "DELETE" }
+    );
+
+    yield put(deleteClientSuccess());
+    yield put(fetchClients());
+  } catch (e) {
+    yield put(deleteClientError(e));
+  }
+}
+
 function* defaultSaga() {
   yield takeLatest(FETCH_CLIENTS, fetchClientsGenerator);
   yield takeLatest(ADD_CLIENT, addClientGenerator);
+  yield takeLatest(EDIT_CLIENT, editClientGenerator);
+  yield takeLatest(DELETE_CLIENT, deleteClientGenerator);
 }
 
 export default defaultSaga;

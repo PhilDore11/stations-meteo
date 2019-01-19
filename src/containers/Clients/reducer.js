@@ -15,7 +15,8 @@ const initialState = {
   clients: [],
   clientsError: null,
   clientData: {},
-  clientModalOpen: false
+  clientModalOpen: false,
+  isAdd: true
 };
 
 export default (state = initialState, action) => {
@@ -67,7 +68,8 @@ export default (state = initialState, action) => {
     case TOGGLE_CLIENT_MODAL:
       return {
         ...state,
-        clientModalOpen: !state.clientModalOpen
+        clientModalOpen: !state.clientModalOpen,
+        isAdd: action.isAdd
       };
     case SET_CLIENT_DATA:
       return {

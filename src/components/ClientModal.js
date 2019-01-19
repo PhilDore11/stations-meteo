@@ -8,9 +8,9 @@ import {
   Button
 } from "@material-ui/core";
 
-const ClientModal = ({ body, isOpen, onToggle, onCreate }) => (
+const ClientModal = ({ body, isAdd, isOpen, onToggle, onSave }) => (
   <Dialog open={isOpen} onClose={onToggle}>
-    <DialogTitle>Nouveau Client</DialogTitle>
+    <DialogTitle>{isAdd ? "Nouveau Client" : "Modifier Client"}</DialogTitle>
     <DialogContent>
       {body}
     </DialogContent>
@@ -18,8 +18,8 @@ const ClientModal = ({ body, isOpen, onToggle, onCreate }) => (
       <Button onClick={onToggle} color="default">
         Annuler
       </Button>
-      <Button onClick={() => onCreate(this.state)} color="primary">
-        Créer
+      <Button onClick={onSave} color="primary">
+        {isAdd ? "Créer" : "Modifier"}
       </Button>
     </DialogActions>
   </Dialog>
@@ -27,9 +27,10 @@ const ClientModal = ({ body, isOpen, onToggle, onCreate }) => (
 
 ClientModal.propTypes = {
   body: PropTypes.node,
+  isAdd: PropTypes.bool,
   isOpen: PropTypes.bool.isRequired,
   onToggle: PropTypes.func.isRequired,
-  onCreate: PropTypes.func.isRequired
+  onSave: PropTypes.func.isRequired
 };
 
-export default ClientModal;
+export default React.memo(ClientModal);

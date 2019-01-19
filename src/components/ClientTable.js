@@ -33,7 +33,10 @@ const ClientTable = ({ classes, clients, onClientEdit, onClientDelete }) => (
           <TableCell>{client.name}</TableCell>
           <TableCell>{client.email}</TableCell>
           <TableCell className={classes.actionCell}>
-            <ClientMenu onEdit={onClientEdit} onDelete={onClientDelete} />
+            <ClientMenu
+              onEdit={() => onClientEdit(client)}
+              onDelete={() => onClientDelete(client)}
+            />
           </TableCell>
         </TableRow>
       ))}
@@ -48,4 +51,4 @@ ClientTable.propTypes = {
   onClientDelete: PropTypes.func.isRequired,
 };
 
-export default withStyles(styles)(ClientTable);
+export default React.memo(withStyles(styles)(ClientTable));

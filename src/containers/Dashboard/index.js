@@ -37,7 +37,7 @@ const chartColors = {
   }
 };
 
-class DashboardContainer extends React.Component {
+class DashboardContainer extends React.PureComponent {
   constructor(props) {
     super(props);
 

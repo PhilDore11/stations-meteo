@@ -15,45 +15,52 @@ import {
   Delete as DeleteIcon
 } from "@material-ui/icons";
 
-class ClientMenu extends React.Component {
+class ClientMenu extends React.PureComponent {
   constructor(props) {
     super(props);
 
     this.state = {
       isOpen: false,
-      anchorEl: null
     };
   }
 
   handleClick = event => {
-    this.setState({ isOpen: true, anchorEl: event.target });
+    this.setState({ isOpen: true });
   };
 
   handleClose = () => {
-    this.setState({ isOpen: false, anchorEl: null });
+    this.setState({ isOpen: false });
   };
+
+  onItemClick = action => {
+    this.setState({ isOpen: false });
+    action()
+  }
 
   render() {
     const { onEdit, onDelete } = this.props;
-    const { isOpen, anchorEl } = this.state;
+    const { isOpen } = this.state;
 
     return (
       <span>
-        <IconButton onClick={this.handleClick}>
+        <IconButton
+          onClick={this.handleClick}
+          buttonRef={node => this.anchorEl = node}
+        >
           <MoreVertIcon />
         </IconButton>
         <Menu
-          anchorEl={anchorEl}
+          anchorEl={this.anchorEl}
           open={isOpen}
           onClose={this.handleClose}
         >
-          <MenuItem onClick={onEdit}>
+          <MenuItem onClick={() => this.onItemClick(onEdit)}>
             <ListItemIcon>
               <EditIcon />
             </ListItemIcon>
             <ListItemText inset primary="Modifier" />
           </MenuItem>
-          <MenuItem onClick={onDelete}>
+          <MenuItem onClick={() => this.onItemClick(onDelete)}>
             <ListItemIcon>
               <DeleteIcon />
             </ListItemIcon>

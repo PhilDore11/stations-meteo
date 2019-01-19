@@ -15,7 +15,7 @@ import { Room as PinIcon } from "@material-ui/icons";
 
 import GoogleMapReact from "google-map-react";
 
-class MapContainer extends React.Component {
+class MapContainer extends React.PureComponent {
   constructor(props) {
     super(props);
 
