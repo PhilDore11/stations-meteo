@@ -5,11 +5,7 @@ import { connect } from "react-redux";
 
 import {
   withStyles,
-  Divider,
   Grid,
-  Card,
-  CardHeader,
-  CardContent,
   Fab
 } from "@material-ui/core";
 
@@ -74,17 +70,11 @@ class ClientsContainer extends React.PureComponent {
     return (
       <Grid container spacing={24}>
         <Grid item xs={12}>
-          <Card>
-            <CardHeader title="Clients" />
-            <Divider />
-            <CardContent>
-              <ClientTable
-                clients={clients}
-                onClientEdit={this.onClientEdit}
-                onClientDelete={deleteClient}
-              />
-            </CardContent>
-          </Card>
+          <ClientTable
+            clients={clients}
+            onClientEdit={this.onClientEdit}
+            onClientDelete={deleteClient}
+          />
           <Fab
             color="primary"
             aria-label="Add"

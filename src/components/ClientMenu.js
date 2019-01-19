@@ -25,16 +25,19 @@ class ClientMenu extends React.PureComponent {
   }
 
   handleClick = event => {
+    event.stopPropagation();
     this.setState({ isOpen: true });
   };
 
-  handleClose = () => {
+  handleClose = event => {
+    event.stopPropagation();
     this.setState({ isOpen: false });
   };
 
-  onItemClick = action => {
+  onItemClick = (event, action) => {
+    event.stopPropagation();
     this.setState({ isOpen: false });
-    action()
+    action();
   }
 
   render() {
@@ -54,13 +57,13 @@ class ClientMenu extends React.PureComponent {
           open={isOpen}
           onClose={this.handleClose}
         >
-          <MenuItem onClick={() => this.onItemClick(onEdit)}>
+          <MenuItem onClick={(event) => this.onItemClick(event, onEdit)}>
             <ListItemIcon>
               <EditIcon />
             </ListItemIcon>
             <ListItemText inset primary="Modifier" />
           </MenuItem>
-          <MenuItem onClick={() => this.onItemClick(onDelete)}>
+          <MenuItem onClick={(event) => this.onItemClick(event, onDelete)}>
             <ListItemIcon>
               <DeleteIcon />
             </ListItemIcon>

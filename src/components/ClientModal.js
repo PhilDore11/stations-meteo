@@ -15,10 +15,10 @@ const ClientModal = ({ body, isAdd, isOpen, onToggle, onSave }) => (
       {body}
     </DialogContent>
     <DialogActions>
-      <Button onClick={onToggle} color="default">
+      <Button variant="outlined" onClick={onToggle} color="default">
         Annuler
       </Button>
-      <Button onClick={onSave} color="primary">
+      <Button variant="contained" onClick={onSave} color="primary">
         {isAdd ? "Créer" : "Modifier"}
       </Button>
     </DialogActions>

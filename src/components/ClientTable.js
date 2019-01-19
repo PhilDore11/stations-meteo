@@ -2,53 +2,56 @@ import React from "react";
 import PropTypes from "prop-types";
 
 import {
-  withStyles,
-  Table,
-  TableHead,
-  TableBody,
-  TableRow,
-  TableCell
+  ExpansionPanel,
+  ExpansionPanelSummary,
+  ExpansionPanelDetails,
+  Grid,
+  Typography,
+  Badge,
 } from "@material-ui/core";
 
-import { ClientMenu } from '.';
+import {
+  ExpandMore as ExpandMoreIcon,
+  Router as DeviceIcon,
+} from "@material-ui/icons";
 
-const styles = theme => ({
-  actionCell: {
-    width: 48
-  }
-});
+import { ClientMenu, StationsList } from '.';
 
-const ClientTable = ({ classes, clients, onClientEdit, onClientDelete }) => (
-  <Table>
-    <TableHead>
-      <TableRow>
-        <TableCell>Name</TableCell>
-        <TableCell>Addresse courriel</TableCell>
-        <TableCell className={classes.actionCell}></TableCell>
-      </TableRow>
-    </TableHead>
-    <TableBody>
-      {clients && clients.map(client => (
-        <TableRow key={client.id}>
-          <TableCell>{client.name}</TableCell>
-          <TableCell>{client.email}</TableCell>
-          <TableCell className={classes.actionCell}>
-            <ClientMenu
-              onEdit={() => onClientEdit(client)}
-              onDelete={() => onClientDelete(client)}
-            />
-          </TableCell>
-        </TableRow>
-      ))}
-    </TableBody>
-  </Table>
+const ClientTable = ({ clients, onClientEdit, onClientDelete }) => (
+  <React.Fragment>
+    <Typography variant="h5" gutterBottom>Clients</Typography>
+    {clients && clients.map(client => (
+      <ExpansionPanel key={client.id} onChange={(event) => console.log("Expansion Changed", event)}>
+        <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+          <Grid container spacing={24} alignItems="center">
+            <Grid item>
+              <Badge badgeContent={Math.ceil(Math.random() * 10)} color="secondary">
+                <DeviceIcon />
+              </Badge>
+            </Grid>
+            <Grid item xs>
+              <Typography variant="subtitle1">{client.name}</Typography>
+            </Grid>
+            <Grid item>
+              <ClientMenu
+                onEdit={() => onClientEdit(client)}
+                onDelete={() => onClientDelete(client)}
+              />
+            </Grid>
+          </Grid>
+        </ExpansionPanelSummary>
+        <ExpansionPanelDetails>
+          <StationsList />
+        </ExpansionPanelDetails>
+      </ExpansionPanel>
+    ))}
+  </React.Fragment>
 );
 
 ClientTable.propTypes = {
-  classes: PropTypes.object.isRequired,
   clients: PropTypes.array,
   onClientEdit: PropTypes.func.isRequired,
   onClientDelete: PropTypes.func.isRequired,
 };
 
-export default React.memo(withStyles(styles)(ClientTable));
+export default React.memo(ClientTable);
