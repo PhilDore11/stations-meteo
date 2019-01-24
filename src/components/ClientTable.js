@@ -15,7 +15,8 @@ import {
   Router as DeviceIcon,
 } from "@material-ui/icons";
 
-import { ClientMenu, StationsList } from '.';
+import { StationsContainer } from "../containers";
+import { ClientMenu } from '.';
 
 const ClientTable = ({ clients, onClientEdit, onClientDelete }) => (
   <React.Fragment>
@@ -41,7 +42,7 @@ const ClientTable = ({ clients, onClientEdit, onClientDelete }) => (
           </Grid>
         </ExpansionPanelSummary>
         <ExpansionPanelDetails>
-          <StationsList />
+          <StationsContainer clientId={client.id} />
         </ExpansionPanelDetails>
       </ExpansionPanel>
     ))}

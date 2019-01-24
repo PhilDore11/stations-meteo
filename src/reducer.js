@@ -1,8 +1,9 @@
 import { combineReducers } from "redux";
 
-import { dashboardReducer, clientsReducer } from "./containers/reducers";
+import { clientsReducer, dashboardReducer, stationsReducer } from "./containers/reducers";
 
 export default combineReducers({
+  clients: clientsReducer,
   dashboard: dashboardReducer,
-  clients: clientsReducer
+  stations: stationsReducer,
 });

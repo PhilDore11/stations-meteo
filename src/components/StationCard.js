@@ -18,7 +18,6 @@ import {
 
 import {
   CheckCircle as CheckCircleIcon,
-  Error as ErrorIcon,
   LocationSearching as LocationSearchingIcon,
   Memory as DeviceIcon,
   Room as PinIcon,
@@ -39,17 +38,12 @@ const StationCard = ({ classes, station }) => (
   <Card>
     <CardHeader
       avatar={
-        station.status === "ON" ? (
-          <CheckCircleIcon
-            fontSize="large"
-            className={classes.successIcon}
-          />
-        ) : (
-          <ErrorIcon fontSize="large" className={classes.errorIcon} />
-        )
+        <CheckCircleIcon
+          fontSize="large"
+          className={classes.successIcon}
+        />
       }
       title={station.name}
-      action={<IconButton>{station.battery}</IconButton>}
     />
     <Divider />
     <CardContent>
@@ -72,7 +66,7 @@ const StationCard = ({ classes, station }) => (
     <CardActions>
       <Grid container justify="flex-end">
         <Grid item>
-          <IconButton aria-label="Add to favorites">
+          <IconButton aria-label={`${station.latitude}, ${station.longitude}`}>
             <PinIcon />
           </IconButton>
         </Grid>
