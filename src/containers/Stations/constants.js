@@ -1,3 +1,0 @@
-export const FETCH_STATIONS = "Stations/FETCH_STATIONS";
-export const FETCH_STATIONS_SUCCESS = "Stations/FETCH_STATIONS_SUCCESS";
-export const FETCH_STATIONS_ERROR = "Stations/FETCH_STATIONS_ERROR";

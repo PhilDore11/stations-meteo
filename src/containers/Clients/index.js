@@ -6,12 +6,13 @@ import { connect } from "react-redux";
 import {
   withStyles,
   Grid,
-  Fab
+  Fab,
+  Typography,
 } from "@material-ui/core";
 
 import { Add as AddIcon } from "@material-ui/icons";
 
-import { ClientTable, ClientModal, ClientForm } from "../../components";
+import { ClientRow, ClientModal, ClientForm } from "../../components";
 
 import { 
   fetchClients, 
@@ -41,10 +42,6 @@ class ClientsContainer extends React.PureComponent {
     this.props.setClientData(newClientData);
   }
 
-  onClientAdd = () => {
-    this.props.setClientData({name: "", email: ""});
-    this.props.toggleClientModal(true);
-  }
   onClientEdit = clientData => {
     this.props.setClientData(clientData);
     this.props.toggleClientModal(false);
@@ -64,17 +61,15 @@ class ClientsContainer extends React.PureComponent {
       clientData,
       toggleClientModal,
       isAdd,
-      deleteClient
     } = this.props;
 
     return (
       <Grid container spacing={24}>
         <Grid item xs={12}>
-          <ClientTable
-            clients={clients}
-            onClientEdit={this.onClientEdit}
-            onClientDelete={deleteClient}
-          />
+          <Typography variant="h5" gutterBottom>Clients</Typography>
+          {clients && clients.map(client => (
+            <ClientRow key={client.id} client={client} onClientEdit={this.onClientEdit} onClientDelete={this.props.deleteClient} />
+          ))}
           <Fab
             color="primary"
             aria-label="Add"

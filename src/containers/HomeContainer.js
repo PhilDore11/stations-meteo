@@ -1,9 +1,7 @@
 import React from "react";
 
-import {StationsContainer} from "./";
-
 const HomeContainer = ({ classes }) => (
-  <StationsContainer clientId={11} />
+  <div>Home</div>
 );
 
 export default React.memo(HomeContainer);
