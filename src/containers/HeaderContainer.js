@@ -5,8 +5,6 @@ import { withStyles } from "@material-ui/core/styles";
 
 import { AppBar, Toolbar, Typography, Grid, Button } from "@material-ui/core";
 
-// import { ClientMenu } from "../components";
-
 import logo from "../jfsa.png";
 
 const drawerWidth = 240;
@@ -21,7 +19,7 @@ const styles = theme => ({
   }
 });
 
-const HeaderContainer = ({ classes }) => (
+const HeaderContainer = ({ classes, loggedInUser }) => (
   <AppBar color="default" position="fixed" className={classes.header}>
     <Toolbar>
       <Grid container>
@@ -33,7 +31,7 @@ const HeaderContainer = ({ classes }) => (
         <Grid xs item container alignItems="center">
           <Grid xs item>
             <Typography variant="h6" noWrap>
-              Stations Météo
+              Stations Météo{loggedInUser && !loggedInUser.admin && loggedInUser.clients.length === 1 && ` > ${loggedInUser.clients[0].name}`}
             </Typography>
           </Grid>
         </Grid>
@@ -43,7 +41,8 @@ const HeaderContainer = ({ classes }) => (
 );
 
 HeaderContainer.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
+  loggedInUser: PropTypes.object,
 };
 
 export default React.memo(withStyles(styles)(HeaderContainer));

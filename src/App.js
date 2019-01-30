@@ -1,6 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { connect } from "react-redux";
+
+import _ from "lodash";
+
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 
 import { withStyles } from '@material-ui/core/styles';
@@ -23,6 +27,7 @@ import {
 } from '@material-ui/icons';
 
 import {
+  LoginContainer,
   HeaderContainer,
   HomeContainer,
   DashboardContainer,
@@ -52,16 +57,35 @@ const styles = theme => ({
   menuLink: {
     textDecoration: 'none'
   },
+  sidebar: {
+    padding: 0,
+  },
   sidebarTitle: {
     backgroundColor: theme.palette.background.default
   }
 });
 
-const App = ({ classes }) => (
+const sidebarItems = [
+  { divider: true, label: 'Client' },
+  { icon: <HomeIcon />, label: 'Acceuil', location: '/' },
+  {
+    icon: <DashboardIcon />,
+    label: 'Analyse',
+    location: 'dashboard'
+  },
+  { icon: <MapIcon />, label: 'Map', location: 'map' },
+];
+
+const adminSidebarItems = [
+  { divider: true, label: 'Admin' },
+  { icon: <PeopleIcon />, label: 'Gestion Clients', location: 'clients' }
+];
+
+const App = ({ classes, loggedInUser }) => (
   <Router>
     <div className={classes.root}>
       <CssBaseline />
-      <HeaderContainer />
+      <HeaderContainer loggedInUser={loggedInUser} />
       <Drawer
         className={classes.drawer}
         variant='permanent'
@@ -72,21 +96,10 @@ const App = ({ classes }) => (
       >
         <div className={classes.toolbar} />
         <Divider />
-        <List>
-          {[
-            { divider: true, label: 'Client' },
-            { icon: <HomeIcon />, label: 'Acceuil', location: '/' },
-            {
-              icon: <DashboardIcon />,
-              label: 'Analyse',
-              location: 'dashboard'
-            },
-            { icon: <MapIcon />, label: 'Map', location: 'map' },
-            { divider: true, label: 'Admin' },
-            { icon: <PeopleIcon />, label: 'Gestion Clients', location: 'clients' }
-          ].map((item, index) => {
+        <List className={classes.sidebar}>
+          {_.concat(sidebarItems, loggedInUser && loggedInUser.admin ? adminSidebarItems : []).map((item, index) => {
               return item.divider ? (
-                <React.Fragment>
+                <React.Fragment key={index}>
                   <Divider />
                   <ListItem className={classes.sidebarTitle}>
                     <ListItemText primary={item.label} />
@@ -115,13 +128,20 @@ const App = ({ classes }) => (
         </Switch>
         <div className={classes.toolbar} />
       </div>
-      <Divider />
+      <LoginContainer />
     </div>
   </Router>
 );
 
 App.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
+  loggedInUser: PropTypes.object,
 };
 
-export default React.memo(withStyles(styles)(App));
+const mapStateToProps = state => ({
+  loggedInUser: state.login.loggedInUser
+});
+
+export default connect(
+  mapStateToProps,
+)(withStyles(styles)(App));
