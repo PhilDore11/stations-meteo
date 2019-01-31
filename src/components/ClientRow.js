@@ -17,8 +17,8 @@ import {
 
 import { ClientMenu, StationCard } from "./";
 
-const ClientRow = ({client, onClientEdit, onClientDelete}) => (
-  <ExpansionPanel key={client.id}>
+const ClientRow = ({showActions, expanded, client, onClientEdit, onClientDelete}) => (
+  <ExpansionPanel expanded={expanded} key={client.id}>
     <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
       <Grid container spacing={24} alignItems="center">
         <Grid item>
@@ -29,22 +29,24 @@ const ClientRow = ({client, onClientEdit, onClientDelete}) => (
         <Grid item xs>
           <Typography variant="subtitle1">{client.name}</Typography>
         </Grid>
-        <Grid item>
-          <ClientMenu
-            onEdit={() => onClientEdit(client)}
-            onDelete={() => onClientDelete(client)}
-          />
-        </Grid>
+        {showActions ? (
+          <Grid item>
+            <ClientMenu
+              onEdit={() => onClientEdit(client)}
+              onDelete={() => onClientDelete(client)}
+            />
+          </Grid>
+        ) : ""}
       </Grid>
     </ExpansionPanelSummary>
     <ExpansionPanelDetails>
-    <Grid container spacing={24}>
-    {client.stations.map((station) => (
-      <Grid key={station.id} item xs={6} md={4} lg={3}>
-        <StationCard station={station} />
+      <Grid container spacing={24}>
+        {client.stations.map((station) => (
+          <Grid key={station.id} item xs={6} md={4} lg={3}>
+            <StationCard station={station} />
+          </Grid>
+        ))}
       </Grid>
-    ))}
-  </Grid>
     </ExpansionPanelDetails>
   </ExpansionPanel>
 );
@@ -52,6 +54,8 @@ const ClientRow = ({client, onClientEdit, onClientDelete}) => (
 ClientRow.propTypes = {
   client: PropTypes.object.isRequired,
   stations: PropTypes.array,
+  showActions: PropTypes.bool,
+  expanded: PropTypes.bool,
   onClientEdit: PropTypes.func.isRequired,
   onClientDelete: PropTypes.func.isRequired,
 };

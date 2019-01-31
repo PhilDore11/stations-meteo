@@ -15,8 +15,9 @@ import {
   SET_CLIENT_DATA,
 } from "./constants";
 
-export const fetchClients = currentDay => ({
-  type: FETCH_CLIENTS
+export const fetchClients = loggedInUser => ({
+  type: FETCH_CLIENTS,
+  loggedInUser,
 });
 
 export const fetchClientsSuccess = res => ({

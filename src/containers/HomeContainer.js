@@ -1,7 +1,9 @@
 import React from "react";
 
+import {ClientsContainer} from "./";
+
 const HomeContainer = ({ classes }) => (
-  <div>Home</div>
+  <ClientsContainer title="Acceuil" />
 );
 
 export default React.memo(HomeContainer);

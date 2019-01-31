@@ -5,15 +5,18 @@ import {
   DialogTitle,
   DialogContent,
   DialogActions,
-  Button
+  Button,
+  Divider,
 } from "@material-ui/core";
 
 const ClientModal = ({ body, isAdd, isOpen, onToggle, onSave }) => (
   <Dialog open={isOpen} onClose={onToggle}>
     <DialogTitle>{isAdd ? "Nouveau Client" : "Modifier Client"}</DialogTitle>
+    <Divider />
     <DialogContent>
       {body}
     </DialogContent>
+    <Divider />
     <DialogActions>
       <Button variant="outlined" onClick={onToggle} color="default">
         Annuler

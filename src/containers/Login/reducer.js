@@ -1,6 +1,7 @@
 import {
   LOGIN_SUCCESS,
   LOGIN_ERROR,
+  LOGOUT,
   SET_USERNAME,
   SET_PASSWORD,
 } from "./constants";
@@ -23,6 +24,14 @@ export default (state = initialState, action) => {
       return {
         ...state,
         loginError: action.error,
+        loggedInUser: null
+      };
+    case LOGOUT:
+      return {
+        ...state,
+        username: "",
+        password: "",
+        loginError: null,
         loggedInUser: null
       };
     case SET_USERNAME:

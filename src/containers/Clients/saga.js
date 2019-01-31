@@ -21,14 +21,21 @@ import {
   deleteClientError,
 } from "./actions";
 
-function* fetchClientsGenerator() {
+function* fetchClientsGenerator(action) {
   try {
-    const response = yield call(
-      jsonFetch,
-      `${process.env.REACT_APP_API_URL}/clients`
-    );
+    const {loggedInUser} = action;
+    if (loggedInUser) {
+      const clientIds = loggedInUser.clients.map((client) => `id=${client.id}`);
+      const response = yield call(
+        jsonFetch,
+        `${process.env.REACT_APP_API_URL}/clients?${clientIds.join('&')}`,
+        {clients: loggedInUser.clients}
+      );
 
-    yield put(fetchClientsSuccess(response.body));
+      yield put(fetchClientsSuccess(response.body));
+    } else {
+      yield put(fetchClientsSuccess([]));
+    }
   } catch (e) {
     yield put(fetchClientsError(e));
   }

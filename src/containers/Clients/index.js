@@ -33,7 +33,12 @@ const styles = theme => ({
 
 class ClientsContainer extends React.PureComponent {
   componentDidMount() {
-    this.props.fetchClients(this.props.currentDay);
+    this.props.fetchClients(this.props.loggedInUser);
+  }
+  componentDidUpdate(prevProps) {
+    if (this.props.loggedInUser !== prevProps.loggedInUser) {
+      this.props.fetchClients(this.props.loggedInUser);
+    }
   }
 
   onClientChange = (event, clientData) => {
@@ -56,6 +61,8 @@ class ClientsContainer extends React.PureComponent {
   render() {
     const {
       classes,
+      title,
+      loggedInUser,
       clients,
       clientModalOpen,
       clientData,
@@ -63,28 +70,41 @@ class ClientsContainer extends React.PureComponent {
       isAdd,
     } = this.props;
 
+    const isAdmin = loggedInUser && loggedInUser.admin;
+
     return (
       <Grid container spacing={24}>
         <Grid item xs={12}>
-          <Typography variant="h5" gutterBottom>Clients</Typography>
+          <Typography variant="h5" gutterBottom>{title || "Clients"}</Typography>
           {clients && clients.map(client => (
-            <ClientRow key={client.id} client={client} onClientEdit={this.onClientEdit} onClientDelete={this.props.deleteClient} />
+            <ClientRow
+              key={client.id}
+              client={client}
+              showActions={isAdmin}
+              expanded={!isAdmin}
+              onClientEdit={this.onClientEdit}
+              onClientDelete={this.props.deleteClient}
+            />
           ))}
-          <Fab
-            color="primary"
-            aria-label="Add"
-            className={classes.add}
-            onClick={this.onClientAdd}
-          >
-            <AddIcon />
-          </Fab>
-          <ClientModal
-            isOpen={clientModalOpen}
-            isAdd={isAdd}
-            onToggle={toggleClientModal}
-            onSave={this.onClientSave}
-            body={<ClientForm client={clientData} onChange={this.onClientChange} />}
-          />
+          {isAdmin ? (
+            <React.Fragment>
+              <Fab
+                color="primary"
+                aria-label="Add"
+                className={classes.add}
+                onClick={this.onClientAdd}
+              >
+                <AddIcon />
+              </Fab>
+              <ClientModal
+                isOpen={clientModalOpen}
+                isAdd={isAdd}
+                onToggle={toggleClientModal}
+                onSave={this.onClientSave}
+                body={<ClientForm client={clientData} onChange={this.onClientChange} />}
+              />
+            </React.Fragment>
+          ) : ""}
         </Grid>
       </Grid>
     );
@@ -93,12 +113,15 @@ class ClientsContainer extends React.PureComponent {
 
 ClientsContainer.propTypes = {
   classes: PropTypes.object.isRequired,
+  title: PropTypes.string,
   fetchClients: PropTypes.func.isRequired,
-  clients: PropTypes.array
+  clients: PropTypes.array,
+  loggedInUser: PropTypes.object,
 };
 
 const mapStateToProps = state => ({
-  ...state.clients
+  ...state.clients,
+  loggedInUser: state.login.loggedInUser,
 });
 
 const mapDispatchToProps = {

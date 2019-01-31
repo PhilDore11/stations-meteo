@@ -7,10 +7,10 @@ import {
   Dialog,
   DialogTitle,
   DialogContent,
-  DialogContentText,
   TextField,
   DialogActions,
   Button,
+  Divider,
 } from "@material-ui/core";
 
 import { 
@@ -20,19 +20,16 @@ import {
 } from "./actions";
 
 class LoginContainer extends React.PureComponent {
-  handleLogin = () => {
+  handleLogin = (event) => {
+    event.preventDefault()
     this.props.login(this.props);
   }
 
   handleUsernameChange = (event) => {
-    console.log('event.target', event.target);
-
     this.props.setUsername(event.target.value);
   }
 
   handlePasswordChange = (event) => {
-    console.log('event.target', event.target);
-
     this.props.setPassword(event.target.value);
   }
 
@@ -49,37 +46,19 @@ class LoginContainer extends React.PureComponent {
         aria-labelledby="form-dialog-title"
       >
         <DialogTitle id="form-dialog-title">Login</DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-            Please login to the portal.
-          </DialogContentText>
-          <TextField
-            autoFocus
-            id="username"
-            label="Nom d'utilisateur"
-            type="text"
-            value={username}
-            margin="normal"
-            variant="outlined"
-            fullWidth
-            onChange={this.handleUsernameChange}
-          />
-          <TextField
-            id="password"
-            label="Mot de passe"
-            type="password"
-            value={password}
-            margin="normal"
-            variant="outlined"
-            fullWidth
-            onChange={this.handlePasswordChange}
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={this.handleLogin} variant="contained" color="primary">
-            Entrer
-          </Button>
-        </DialogActions>
+        <Divider />
+        <form onSubmit={this.handleLogin}>
+          <DialogContent>
+            <TextField autoFocus id="username" label="Nom d'utilisateur" type="text" value={username} margin="normal" variant="outlined" fullWidth onChange={this.handleUsernameChange} />
+            <TextField id="password" label="Mot de passe" type="password" value={password} margin="normal" variant="outlined" fullWidth onChange={this.handlePasswordChange} />
+          </DialogContent>
+          <Divider />
+          <DialogActions>
+            <Button type="submit" variant="contained" color="primary">
+              Login
+            </Button>
+          </DialogActions>
+          </form>
       </Dialog>
     );
   }

@@ -2,6 +2,8 @@ import {
   LOGIN,
   LOGIN_SUCCESS,
   LOGIN_ERROR,
+  LOGOUT,
+  RESET_FORM,
   SET_USERNAME,
   SET_PASSWORD,
 } from "./constants";
@@ -20,6 +22,10 @@ export const loginSuccess = res => ({
 export const loginError = error => ({
   type: LOGIN_ERROR,
   error
+});
+
+export const logout = () => ({
+  type: LOGOUT,
 });
 
 export const setUsername = (username) => ({
