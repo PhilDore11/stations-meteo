@@ -3,7 +3,6 @@ import {
   LOGIN_SUCCESS,
   LOGIN_ERROR,
   LOGOUT,
-  RESET_FORM,
   SET_USERNAME,
   SET_PASSWORD,
 } from "./constants";
