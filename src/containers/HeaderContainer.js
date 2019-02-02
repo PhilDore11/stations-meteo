@@ -18,10 +18,6 @@ import {
 } from "@material-ui/icons";
 
 import {
-  SettingsMenu,
-} from "../components";
-
-import {
   logout,
 } from "./Login/actions"
 
