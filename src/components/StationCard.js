@@ -17,10 +17,10 @@ import {
 } from "@material-ui/core";
 
 import {
-  CheckCircle as CheckCircleIcon,
-  LocationSearching as LocationSearchingIcon,
-  Memory as DeviceIcon,
-  Room as PinIcon,
+  CheckCircleOutlined as CheckCircleIcon,
+  LocationSearchingOutlined as LocationSearchingIcon,
+  MemoryOutlined as DeviceIcon,
+  RoomOutlined as PinIcon,
 } from "@material-ui/icons";
 
 import { green, red } from "@material-ui/core/colors";

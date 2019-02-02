@@ -10,9 +10,9 @@ import {
 } from "@material-ui/core";
 
 import { 
-  MoreVert as MoreVertIcon, 
-  Edit as EditIcon,
-  Delete as DeleteIcon
+  MoreVertOutlined as MoreVertIcon, 
+  EditOutlined as EditIcon,
+  DeleteOutlined as DeleteIcon
 } from "@material-ui/icons";
 
 class ClientMenu extends React.PureComponent {

@@ -4,35 +4,33 @@ import jsonFetch from "json-fetch";
 
 import moment from "moment";
 
-import { FETCH_PRECIPITATION_DATA } from "./constants";
+import { FETCH_STATION_DATA } from "./constants";
 
 import {
-  fetchPrecipitationDataSuccess,
-  fetchPrecipitationDataError
+  fetchStationDataSuccess,
+  fetchStationDataError
 } from "./actions";
 
-function* fetchPrecipitationData(action) {
+function* fetchStationData(action) {
   try {
-    const { currentDay } = action;
+    const { clientId, currentDay } = action;
 
     const chartStart = moment(currentDay).startOf("day");
     const chartEnd = moment(currentDay).endOf("day");
 
     const response = yield call(
       jsonFetch,
-      `${
-        process.env.REACT_APP_API_URL
-      }/data?start=${chartStart.toISOString()}&end=${chartEnd.toISOString()}`
+      `${process.env.REACT_APP_API_URL}/stationData/${clientId}/?start=${chartStart.toISOString()}&end=${chartEnd.toISOString()}`
     );
 
-    yield put(fetchPrecipitationDataSuccess(response.body));
+    yield put(fetchStationDataSuccess(response.body));
   } catch (e) {
-    yield put(fetchPrecipitationDataError(e));
+    yield put(fetchStationDataError(e));
   }
 }
 
 function* defaultSaga() {
-  yield takeLatest(FETCH_PRECIPITATION_DATA, fetchPrecipitationData);
+  yield takeLatest(FETCH_STATION_DATA, fetchStationData);
 }
 
 export default defaultSaga;

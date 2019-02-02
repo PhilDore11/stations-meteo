@@ -28,8 +28,7 @@ function* fetchClientsGenerator(action) {
       const clientIds = loggedInUser.clients.map((client) => `id=${client.id}`);
       const response = yield call(
         jsonFetch,
-        `${process.env.REACT_APP_API_URL}/clients?${clientIds.join('&')}`,
-        {clients: loggedInUser.clients}
+        `${process.env.REACT_APP_API_URL}/clients?${clientIds.join('&')}`
       );
 
       yield put(fetchClientsSuccess(response.body));

@@ -1,23 +1,24 @@
 import {
-  FETCH_PRECIPITATION_DATA,
-  FETCH_PRECIPITATION_DATA_SUCCESS,
-  FETCH_PRECIPITATION_DATA_ERROR,
+  FETCH_STATION_DATA,
+  FETCH_STATION_DATA_SUCCESS,
+  FETCH_STATION_DATA_ERROR,
   INCREMENT_DAY,
   DECREMENT_DAY
 } from "./constants";
 
-export const fetchPrecipitationData = currentDay => ({
-  type: FETCH_PRECIPITATION_DATA,
-  currentDay
+export const fetchStationData = (clientId, currentDay) => ({
+  type: FETCH_STATION_DATA,
+  clientId,
+  currentDay,
 });
 
-export const fetchPrecipitationDataSuccess = res => ({
-  type: FETCH_PRECIPITATION_DATA_SUCCESS,
+export const fetchStationDataSuccess = res => ({
+  type: FETCH_STATION_DATA_SUCCESS,
   res
 });
 
-export const fetchPrecipitationDataError = error => ({
-  type: FETCH_PRECIPITATION_DATA_ERROR,
+export const fetchStationDataError = error => ({
+  type: FETCH_STATION_DATA_ERROR,
   error
 });
 

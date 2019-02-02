@@ -4,3 +4,5 @@ export { default as ClientModal } from "./ClientModal";
 export { default as ClientRow } from "./ClientRow";
 
 export { default as StationCard } from "./StationCard";
+
+export { default as ChartCard } from "./ChartCard";

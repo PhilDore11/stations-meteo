@@ -14,7 +14,7 @@ import {
   Tooltip,
 } from "@material-ui/core";
 import {
-  PowerSettingsNew as LogoutIcon,
+  PowerSettingsNewOutlined as LogoutIcon,
 } from "@material-ui/icons";
 
 import {

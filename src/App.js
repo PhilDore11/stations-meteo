@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { connect } from "react-redux";
 
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route, Link, Redirect } from 'react-router-dom';
 
 import { withStyles } from '@material-ui/core/styles';
 
@@ -18,10 +18,10 @@ import {
 } from '@material-ui/core';
 
 import {
-  Home as HomeIcon,
-  Dashboard as DashboardIcon,
-  Map as MapIcon,
-  People as PeopleIcon,
+  HomeOutlined as HomeIcon,
+  DashboardOutlined as DashboardIcon,
+  MapOutlined as MapIcon,
+  PeopleOutlined as PeopleIcon,
 } from '@material-ui/icons';
 
 import {
@@ -86,10 +86,22 @@ const adminSidebarItems = [
 ];
 
 class App extends React.PureComponent {
+  getSidebarItems() {
+    const { loggedInUser } = this.props; 
+    if (!loggedInUser) {
+      return [];
+    }
+    
+    return loggedInUser.admin ? adminSidebarItems : clientSidebarItems;
+  }
+
+  privateRouteRender(loggedInUser, container) {
+    return () => loggedInUser ? container : <Redirect to="/login" />;
+  }
+
   render() {
     const { classes, loggedInUser } = this.props;
 
-    const sidebarItems = loggedInUser && loggedInUser.admin ? adminSidebarItems : clientSidebarItems;
     return (
       <Router>
         <div className={classes.root}>
@@ -106,7 +118,7 @@ class App extends React.PureComponent {
             <div className={classes.toolbar} />
             <Divider />
             <List>
-              {sidebarItems.map((item, index) =>
+              {this.getSidebarItems().map((item, index) =>
                 item.divider ? (
                   <React.Fragment key={index}>
                     <Divider />
@@ -129,14 +141,26 @@ class App extends React.PureComponent {
           <div className={classes.content}>
             <div className={classes.toolbar} />
             <Switch>
-              <Route exact path='/' component={HomeContainer} />
-              <Route path='/dashboard' component={DashboardContainer} />
-              <Route path='/map' component={MapContainer} />
-              <Route path='/clients' component={ClientsContainer} />
+              <Route exact path="/" render={() => (
+                loggedInUser ? (
+                  <Redirect to={loggedInUser.admin ? '/clients' : '/home'} />
+                ) : (
+                  <Redirect to="/login"/>
+                )
+              )}/>
+              <Route path='/login' render={() => (
+                loggedInUser ? (
+                  <Redirect to={loggedInUser.admin ? '/clients' : '/home'} />
+                ) : (
+                  <LoginContainer />
+                )
+              )}/> />
+              <Route path='/home' render={this.privateRouteRender(loggedInUser, <HomeContainer />)} />
+              <Route path='/dashboard' render={this.privateRouteRender(loggedInUser, <DashboardContainer />)} />
+              <Route path='/map' render={this.privateRouteRender(loggedInUser, <MapContainer />)} />
+              <Route path='/clients' render={this.privateRouteRender(loggedInUser, <ClientsContainer />)} />
             </Switch>
-            <div className={classes.toolbar} />
           </div>
-          <LoginContainer />
         </div>
       </Router>
     );
@@ -152,6 +176,4 @@ const mapStateToProps = state => ({
   ...state.login
 });
 
-export default connect(
-  mapStateToProps,
-)(withStyles(styles)(App));
+export default connect(mapStateToProps)(withStyles(styles)(App));

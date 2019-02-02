@@ -1,8 +1,8 @@
 import moment from "moment";
 
 import {
-  FETCH_PRECIPITATION_DATA_SUCCESS,
-  FETCH_PRECIPITATION_DATA_ERROR,
+  FETCH_STATION_DATA_SUCCESS,
+  FETCH_STATION_DATA_ERROR,
   INCREMENT_DAY,
   DECREMENT_DAY
 } from "./constants";
@@ -19,12 +19,12 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case FETCH_PRECIPITATION_DATA_SUCCESS:
+    case FETCH_STATION_DATA_SUCCESS:
       return {
         ...state,
         precipitationData: action.res
       };
-    case FETCH_PRECIPITATION_DATA_ERROR:
+    case FETCH_STATION_DATA_ERROR:
       return {
         ...state,
         precipitationError: action.error

@@ -6,23 +6,20 @@ import { connect } from "react-redux";
 import moment from "moment";
 
 import {
-  Divider,
   Grid,
-  Card,
-  CardHeader,
-  CardContent,
   IconButton,
   Typography
 } from "@material-ui/core";
 
 import {
-  ChevronLeft as ChevronLeftIcon,
-  ChevronRight as ChevronRightIcon
+  ChevronLeftOutlined as ChevronLeftIcon,
+  ChevronRightOutlined as ChevronRightIcon
 } from "@material-ui/icons";
 
-import { defaults, Line } from "react-chartjs-2";
+import { defaults } from "react-chartjs-2";
 
-import { fetchPrecipitationData, incrementDay, decrementDay } from "./actions";
+import { fetchStationData, incrementDay, decrementDay } from "./actions";
+import { ChartCard } from "../../components";
 
 defaults.global.responsive = true;
 
@@ -41,24 +38,22 @@ class DashboardContainer extends React.PureComponent {
   constructor(props) {
     super(props);
 
-    this.chartOptions = {
-      scales: {
-        xAxes: [
-          {
-            type: "time"
-          }
-        ]
-      }
-    };
+    this.fetchStationData = this.fetchStationData.bind(this);
   }
-
+  
   componentDidMount() {
-    this.props.fetchPrecipitationData(this.props.currentDay);
+    this.fetchStationData();
   }
   componentDidUpdate(prevProps) {
     if (this.props.currentDay !== prevProps.currentDay) {
-      this.props.fetchPrecipitationData(this.props.currentDay);
+      this.fetchStationData();
     }
+  }
+
+  fetchStationData() {
+    const { loggedInUser } = this.props;
+    const clientId = loggedInUser && loggedInUser.clients[0].id
+    this.props.fetchStationData(clientId, this.props.currentDay);
   }
 
   render() {
@@ -107,14 +102,13 @@ class DashboardContainer extends React.PureComponent {
             </Grid>
           </Grid>
         </Grid>
-        <Grid item xs={12} lg={6}>
-          <Card>
-            <CardHeader title="Précipitations" subheader="Sous title" />
-            <Divider />
-            <CardContent>
-              <Line data={chartData} options={this.chartOptions} />
-            </CardContent>
-          </Card>
+        <Grid item xs={12}>
+          <ChartCard
+            title="Précipitations"
+            fetchData={this.fetchStationData}
+            chartData={chartData}
+            chartOptions={this.chartOptions}
+          />
         </Grid>
       </Grid>
     );
@@ -122,19 +116,21 @@ class DashboardContainer extends React.PureComponent {
 }
 
 DashboardContainer.propTypes = {
-  fetchPrecipitationData: PropTypes.func.isRequired,
+  fetchStationData: PropTypes.func.isRequired,
   precipitationData: PropTypes.array,
+  loggedInUser: PropTypes.object,
   incrementDay: PropTypes.func.isRequired,
   decrementDay: PropTypes.func.isRequired,
   currentDay: PropTypes.object
 };
 
 const mapStateToProps = state => ({
-  ...state.dashboard
+  ...state.dashboard,
+  ...state.login
 });
 
 const mapDispatchToProps = {
-  fetchPrecipitationData,
+  fetchStationData,
   incrementDay,
   decrementDay
 };

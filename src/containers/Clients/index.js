@@ -10,7 +10,7 @@ import {
   Typography,
 } from "@material-ui/core";
 
-import { Add as AddIcon } from "@material-ui/icons";
+import { AddOutlined as AddIcon } from "@material-ui/icons";
 
 import { ClientRow, ClientModal, ClientForm } from "../../components";
 
@@ -70,7 +70,7 @@ class ClientsContainer extends React.PureComponent {
       isAdd,
     } = this.props;
 
-    const isAdmin = loggedInUser && loggedInUser.admin;
+    const isAdmin = loggedInUser && loggedInUser.admin ? true : false;
 
     return (
       <Grid container spacing={24}>

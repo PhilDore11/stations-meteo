@@ -11,7 +11,7 @@ import {
   Typography
 } from "@material-ui/core";
 
-import { Room as PinIcon } from "@material-ui/icons";
+import { RoomOutlined as PinIcon } from "@material-ui/icons";
 
 import GoogleMapReact from "google-map-react";
 
