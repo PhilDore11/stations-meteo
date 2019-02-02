@@ -8,9 +8,15 @@ import rootSaga from "./saga";
 const sagaMiddleware = createSagaMiddleware();
 
 export default function rootStore() {
-  const store = createStore(rootReducer, applyMiddleware(sagaMiddleware));
+  const persistedState = sessionStorage.getItem('reduxState') ? JSON.parse(sessionStorage.getItem('reduxState')) : {}
+
+  const store = createStore(rootReducer, persistedState, applyMiddleware(sagaMiddleware));
 
   sagaMiddleware.run(rootSaga);
+
+  store.subscribe(()=>{
+    sessionStorage.setItem('reduxState', JSON.stringify(store.getState()))
+  });
 
   return store;
 }
