@@ -2,14 +2,16 @@ import {
   FETCH_STATION_DATA,
   FETCH_STATION_DATA_SUCCESS,
   FETCH_STATION_DATA_ERROR,
-  INCREMENT_DAY,
-  DECREMENT_DAY
+  INCREMENT,
+  DECREMENT,
+  SET_VIEW
 } from "./constants";
 
-export const fetchStationData = (clientId, currentDay) => ({
+export const fetchStationData = (clientId, start, end) => ({
   type: FETCH_STATION_DATA,
   clientId,
-  currentDay,
+  start,
+  end
 });
 
 export const fetchStationDataSuccess = res => ({
@@ -22,10 +24,15 @@ export const fetchStationDataError = error => ({
   error
 });
 
-export const incrementDay = () => ({
-  type: INCREMENT_DAY
+export const increment = () => ({
+  type: INCREMENT
 });
 
-export const decrementDay = () => ({
-  type: DECREMENT_DAY
+export const decrement = () => ({
+  type: DECREMENT
+});
+
+export const setView = (view) => ({
+  type: SET_VIEW,
+  view
 });

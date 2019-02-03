@@ -1,43 +1,62 @@
-import moment from "moment";
+import moment from 'moment';
 
 import {
+  FETCH_STATION_DATA,
   FETCH_STATION_DATA_SUCCESS,
   FETCH_STATION_DATA_ERROR,
-  INCREMENT_DAY,
-  DECREMENT_DAY
-} from "./constants";
+  INCREMENT,
+  DECREMENT,
+  SET_VIEW,
+} from './constants';
 
+const initialDay = moment().year(2018).month(3).date(19);
 const initialState = {
-  currentDay: moment()
-    .year(2018)
-    .month(3)
-    .date(19)
-    .startOf("day").toISOString(),
+  start: moment(initialDay).startOf('day').toISOString(),
+  end: moment(initialDay).endOf('day').toISOString(),
   stationData: [],
-  dashboardError: false
+  view: 'day',
+  dashboardError: false,
+  dashboardLoading: false
 };
 
 export default (state = initialState, action) => {
   switch (action.type) {
+    case FETCH_STATION_DATA:
+      return {
+        ...state,
+        dashboardLoading: true
+      };
     case FETCH_STATION_DATA_SUCCESS:
       return {
         ...state,
-        stationData: action.res
+        stationData: action.res,
+        dashboardError: false,
+        dashboardLoading: false
       };
     case FETCH_STATION_DATA_ERROR:
       return {
         ...state,
-        precipitationError: action.dashboardError
+        dashboardError: true,
+        dashboardLoading: false
       };
-    case INCREMENT_DAY:
+    case INCREMENT:
       return {
         ...state,
-        currentDay: moment(state.currentDay).add(1, "day").toISOString()
+        start: moment(state.start).add(1, state.view).toISOString(),
+        end: moment(state.end).add(1, state.view).toISOString()
       };
-    case DECREMENT_DAY:
+    case DECREMENT:
       return {
         ...state,
-        currentDay: moment(state.currentDay).subtract(1, "day").toISOString()
+        start: moment(state.start).subtract(1, state.view).toISOString(),
+        end: moment(state.end).subtract(1, state.view).toISOString()
+      };
+    case SET_VIEW:
+      return {
+        ...state,
+        view: action.view,
+        start: moment(state.start).startOf(action.view).toISOString(),
+        end: moment(state.start).endOf(action.view).toISOString()
       };
     default:
       return state;

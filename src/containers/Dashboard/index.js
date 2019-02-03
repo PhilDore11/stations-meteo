@@ -1,36 +1,38 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React from 'react';
+import PropTypes from 'prop-types';
 
-import { connect } from "react-redux";
+import { connect } from 'react-redux';
 
-import moment from "moment";
+import moment from 'moment';
 
 import {
   Grid,
   IconButton,
-  Typography
-} from "@material-ui/core";
+  Typography,
+  TextField,
+  MenuItem,
+} from '@material-ui/core';
 
 import {
   ChevronLeftOutlined as ChevronLeftIcon,
   ChevronRightOutlined as ChevronRightIcon
-} from "@material-ui/icons";
+} from '@material-ui/icons';
 
-import { defaults } from "react-chartjs-2";
+import { defaults } from 'react-chartjs-2';
 
-import { fetchStationData, incrementDay, decrementDay } from "./actions";
-import { ChartCard } from "../../components";
+import { fetchStationData, increment, decrement, setView } from './actions';
+import { ChartCard } from '../../components';
 
 defaults.global.responsive = true;
 
 const chartColors = {
   red: {
-    border: "rgb(255, 99, 132)",
-    background: "rgba(255, 99, 132, 0.2)"
+    border: 'rgb(255, 99, 132)',
+    background: 'rgba(255, 99, 132, 0.2)'
   },
   blue: {
-    border: "rgb(54, 162, 235)",
-    background: "rgba(54, 162, 235, 0.2)"
+    border: 'rgb(54, 162, 235)',
+    background: 'rgba(54, 162, 235, 0.2)'
   }
 };
 
@@ -39,29 +41,36 @@ class DashboardContainer extends React.PureComponent {
     super(props);
 
     this.fetchStationData = this.fetchStationData.bind(this);
+    this.handleViewChange = this.handleViewChange.bind(this);
   }
   
   componentDidMount() {
     this.fetchStationData();
   }
   componentDidUpdate(prevProps) {
-    if (this.props.currentDay !== prevProps.currentDay) {
+    if (this.props.start !== prevProps.start || this.props.end !== prevProps.end) {
       this.fetchStationData();
     }
   }
 
   fetchStationData() {
     const { loggedInUser } = this.props;
-    const clientId = loggedInUser && loggedInUser.clients[0].id
-    this.props.fetchStationData(clientId, this.props.currentDay);
+    if (loggedInUser) {
+      const clientId = loggedInUser.clients[0].id
+      this.props.fetchStationData(clientId, this.props.start, this.props.end);
+    }
+  }
+
+  handleViewChange(event) {
+    this.props.setView(event.target.value);
   }
 
   render() {
-    const { stationData, currentDay } = this.props;
+    const { stationData, start, end, view, dashboardError, dashboardLoading } = this.props;
     const chartData = {
       datasets: [
         {
-          label: "Précipitation (mm/h)",
+          label: 'Précipitation (mm/h)',
           backgroundColor: chartColors.blue.background,
           borderColor: chartColors.blue.border,
           data:
@@ -79,36 +88,60 @@ class DashboardContainer extends React.PureComponent {
     return (
       <Grid container spacing={24}>
         <Grid item xs={12}>
-          <Grid
-            container
-            spacing={24}
-            justify="space-between"
-            alignItems="center"
-          >
+          <Grid container spacing={24} alignItems='center'>
+            <Grid item xs />
             <Grid item>
-              <IconButton onClick={this.props.decrementDay}>
+              <IconButton onClick={this.props.decrement}>
                 <ChevronLeftIcon />
               </IconButton>
             </Grid>
             <Grid item>
-              <Typography variant="h6">
-                {moment(currentDay).format("MMMM DD")}
+              <Typography variant='h6'>
+                {moment(start).format('MMMM DD')}
               </Typography>
-              <Typography style={{textAlign: 'center'}} variant="caption">{moment(currentDay).format("YYYY")}</Typography>
+              <Typography style={{textAlign: 'center'}} variant='caption'>{moment(start).format('YYYY')}</Typography>
+            </Grid>
+            <Grid item>{' - '}</Grid>
+            <Grid item>
+              <Typography variant='h6'>
+                {moment(end).format('MMMM DD')}
+              </Typography>
+              <Typography style={{textAlign: 'center'}} variant='caption'>{moment(end).format('YYYY')}</Typography>
             </Grid>
             <Grid item>
-              <IconButton onClick={this.props.incrementDay}>
+              <IconButton onClick={this.props.increment}>
                 <ChevronRightIcon />
               </IconButton>
+            </Grid>
+            <Grid item xs>
+              <Grid container justify='flex-end'>
+                <Grid item>
+                  <TextField
+                    select
+                    value={view}
+                    onChange={this.handleViewChange}
+                    margin='normal'
+                    variant='outlined'
+                  >
+                    {['day', 'week', 'month', 'year'].map(view => (
+                      <MenuItem key={view} value={view}>
+                        {view}
+                      </MenuItem>
+                    ))}
+                  </TextField>
+                </Grid>
+              </Grid>
             </Grid>
           </Grid>
         </Grid>
         <Grid item xs={12}>
           <ChartCard
-            title="Précipitations"
+            title='Précipitations'
             fetchData={this.fetchStationData}
             chartData={chartData}
             chartOptions={this.chartOptions}
+            error={dashboardError}
+            loading={dashboardLoading}
           />
         </Grid>
       </Grid>
@@ -120,9 +153,12 @@ DashboardContainer.propTypes = {
   fetchStationData: PropTypes.func.isRequired,
   stationData: PropTypes.array,
   loggedInUser: PropTypes.object,
-  incrementDay: PropTypes.func.isRequired,
-  decrementDay: PropTypes.func.isRequired,
-  currentDay: PropTypes.string
+  increment: PropTypes.func.isRequired,
+  decrement: PropTypes.func.isRequired,
+  start: PropTypes.string,
+  end: PropTypes.string,
+  dashboardError: PropTypes.bool,
+  dashboardLoading: PropTypes.bool
 };
 
 const mapStateToProps = state => ({
@@ -132,8 +168,9 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   fetchStationData,
-  incrementDay,
-  decrementDay
+  increment,
+  decrement,
+  setView
 };
 
 export default connect(

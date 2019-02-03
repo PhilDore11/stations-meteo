@@ -2,5 +2,6 @@ export const FETCH_STATION_DATA = "Dashboard/FETCH_STATION_DATA";
 export const FETCH_STATION_DATA_SUCCESS = "Dashboard/FETCH_STATION_DATA_SUCCESS";
 export const FETCH_STATION_DATA_ERROR = "Dashboard/FETCH_STATION_DATA_ERROR";
 
-export const INCREMENT_DAY = "Dashboard/INCREMENT_DAY";
-export const DECREMENT_DAY = "Dashboard/DECREMENT_DAY";
+export const INCREMENT = "Dashboard/INCREMENT";
+export const DECREMENT = "Dashboard/DECREMENT";
+export const SET_VIEW = "Dashboard/SET_VIEW";

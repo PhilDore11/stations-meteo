@@ -2,8 +2,6 @@ import { call, takeLatest } from "redux-saga/effects";
 
 import jsonFetch from "json-fetch";
 
-import moment from "moment";
-
 import { requestHandler, errorHandler } from '../../utils/sagaHelpers'
 
 import { FETCH_STATION_DATA } from "./constants";
@@ -20,14 +18,11 @@ function* fetchStationData(action) {
   };
 
   try {
-    const { clientId, currentDay } = action;
-
-    const chartStart = moment(currentDay).startOf("day");
-    const chartEnd = moment(currentDay).endOf("day");
+    const { clientId, start, end } = action;
 
     const response = yield call(
       jsonFetch,
-      `${process.env.REACT_APP_API_URL}/stationData/${clientId}/?start=${chartStart.toISOString()}&end=${chartEnd.toISOString()}`
+      `${process.env.REACT_APP_API_URL}/stationData/${clientId}/?start=${start}&end=${end}`
     );
 
     yield requestHandler(response, {action: fetchStationDataSuccess}, errorObject);

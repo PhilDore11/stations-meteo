@@ -11,7 +11,7 @@ import {
 
 import {
   ExpandMoreOutlined as ExpandMoreIcon,
-  CloudOutlined as CloudIcon,
+  CloudOutlined as CloudIcon
 } from "@material-ui/icons";
 
 import { Line } from "react-chartjs-2";
@@ -41,7 +41,7 @@ class ChartCard extends React.PureComponent {
   }
 
   render() {
-    const { title, chartData } = this.props;
+    const { title, chartData, error, loading } = this.props;
     const { expanded, chartOptions } = this.state;
     
     return (
@@ -57,9 +57,7 @@ class ChartCard extends React.PureComponent {
           </Grid>
         </ExpansionPanelSummary>
         <ExpansionPanelDetails>
-          <Grid container spacing={24}>
-            <Line data={chartData} options={chartOptions} />
-          </Grid>
+          {!error && !loading ? <Line data={chartData} options={chartOptions} /> : <Typography variant="h6">Loading...</Typography>}
         </ExpansionPanelDetails>
       </ExpansionPanel>
     );
