@@ -31,7 +31,7 @@ import {
   DashboardContainer,
   MapContainer,
   ClientsContainer
-} from './containers';
+} from '../';
 
 const drawerWidth = 240;
 

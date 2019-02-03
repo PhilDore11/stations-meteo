@@ -1,3 +1,5 @@
+export { default as AppContainer } from "./App";
+
 export { default as ClientsContainer } from "./Clients";
 export { default as DashboardContainer } from "./Dashboard";
 export { default as LoginContainer } from "./Login";
