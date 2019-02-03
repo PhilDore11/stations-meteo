@@ -4,7 +4,7 @@ import { success, error } from '../containers/actions';
 
 export function* requestHandler(response, successArgs, errorArgs) {
   if (response.status === 200) {
-    yield* successHandler({...successArgs, response});
+    yield* successHandler({...successArgs, response: response.body});
   } else {
     yield* errorHandler({...errorArgs, response});
   }
@@ -12,7 +12,7 @@ export function* requestHandler(response, successArgs, errorArgs) {
 
 export function* successHandler({action, message, response}) {
   if (message) yield put(success(message));
-  yield put(action(response.body));
+  yield put(action(response));
 }
 
 export function* errorHandler({action, message, response}) {

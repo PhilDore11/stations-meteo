@@ -21,67 +21,84 @@ import {
   deleteClientError,
 } from "./actions";
 
+import { requestHandler, errorHandler } from '../../utils/sagaHelpers'
+
 function* fetchClientsGenerator(action) {
+  const errorObject = {
+    action: fetchClientsError, 
+    message: 'Error Fetching Clients'
+  };
+
   try {
     const {loggedInUser} = action;
-    if (loggedInUser) {
-      const clientIds = loggedInUser.clients.map((client) => `id=${client.id}`);
-      const response = yield call(
-        jsonFetch,
-        `${process.env.REACT_APP_API_URL}/clients?${clientIds.join('&')}`
-      );
+    const clientIds = loggedInUser && loggedInUser.clients.map((client) => `id=${client.id}`);
+    const response = yield call(
+      jsonFetch,
+      `${process.env.REACT_APP_API_URL}/clients?${clientIds.join('&')}`
+    );
 
-      yield put(fetchClientsSuccess(response.body));
-    } else {
-      yield put(fetchClientsSuccess([]));
-    }
+    yield requestHandler(response, {action: fetchClientsSuccess}, errorObject);
   } catch (e) {
-    yield put(fetchClientsError(e));
+    yield errorHandler(errorObject);
   }
 }
 
 function* addClientGenerator(action) {
+  const errorObject = {
+    action: addClientError, 
+    message: 'Error Adding Client'
+  };
+
   try {
-    yield call(
+    const response = yield call(
       jsonFetch,
       `${process.env.REACT_APP_API_URL}/clients`,
       { body: action.clientData, method: "POST" }
     );
-
-    yield put(addClientSuccess());
+    yield requestHandler(response, {action: addClientSuccess}, errorObject);
     yield put(fetchClients());
   } catch (e) {
-    yield put(addClientError(e));
+    yield errorHandler(errorObject);
   }
 }
 
 function* editClientGenerator(action) {
+  const errorObject = {
+    action: editClientError, 
+    message: 'Error Editing Client'
+  };
+
   try {
-    yield call(
+    const response = yield call(
       jsonFetch,
       `${process.env.REACT_APP_API_URL}/clients`,
       { body: action.clientData, method: "PUT" }
     );
 
-    yield put(editClientSuccess());
+    yield requestHandler(response, {action: editClientSuccess}, errorObject);
     yield put(fetchClients());
   } catch (e) {
-    yield put(editClientError(e));
+    yield errorHandler(errorObject);
   }
 }
 
 function* deleteClientGenerator(action) {
+  const errorObject = {
+    action: deleteClientError, 
+    message: 'Error Editing Client'
+  };
+
   try {
-    yield call(
+    const response = yield call(
       jsonFetch,
       `${process.env.REACT_APP_API_URL}/clients`,
       { body: action.clientData, method: "DELETE" }
     );
 
-    yield put(deleteClientSuccess());
+    yield requestHandler(response, {action: deleteClientSuccess}, errorObject);
     yield put(fetchClients());
   } catch (e) {
-    yield put(deleteClientError(e));
+    yield errorHandler(errorObject);
   }
 }
 

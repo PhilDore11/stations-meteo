@@ -14,6 +14,11 @@ import {
 } from "./actions";
 
 function* fetchStationData(action) {
+  const errorObject = {
+    action: fetchStationDataError,
+    message: 'Error Fetching Client Stations Data'
+  };
+
   try {
     const { clientId, currentDay } = action;
 
@@ -25,14 +30,9 @@ function* fetchStationData(action) {
       `${process.env.REACT_APP_API_URL}/stationData/${clientId}/?start=${chartStart.toISOString()}&end=${chartEnd.toISOString()}`
     );
 
-    yield requestHandler(response, {
-      action: fetchStationDataSuccess
-    }, {
-      action: fetchStationDataError,
-      message: 'Error Fetching Client Stations Data'
-    });
+    yield requestHandler(response, {action: fetchStationDataSuccess}, errorObject);
   } catch (e) {
-    yield errorHandler(fetchStationDataError, 'Error Fetching Client Stations Data');
+    yield errorHandler(errorObject);
   }
 }
 

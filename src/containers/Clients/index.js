@@ -33,10 +33,12 @@ const styles = theme => ({
 
 class ClientsContainer extends React.PureComponent {
   componentDidMount() {
-    this.props.fetchClients(this.props.loggedInUser);
+    if (this.props.loggedInUser) {
+      this.props.fetchClients(this.props.loggedInUser);
+    }
   }
   componentDidUpdate(prevProps) {
-    if (this.props.loggedInUser !== prevProps.loggedInUser) {
+    if (this.props.loggedInUser && this.props.loggedInUser !== prevProps.loggedInUser) {
       this.props.fetchClients(this.props.loggedInUser);
     }
   }

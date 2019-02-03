@@ -14,21 +14,20 @@ import {
 } from './actions';
 
 function* loginGenerator(action) {
+  const errorObject = {
+    action: loginError, 
+    message: 'Login Error'
+  };
+
   try {
     const response = yield call(
       jsonFetch,
       `${process.env.REACT_APP_API_URL}/login`,
       { body: action, method: 'POST' }
     );
-    yield requestHandler(response, {
-      action: loginSuccess, 
-      message: 'Login Successful'
-    }, {
-      action: loginError, 
-      message: 'Login Error'
-    });
+    yield requestHandler(response, {action: loginSuccess, message: 'Login Successful'}, errorObject);
   } catch (e) {
-    yield errorHandler(loginError, 'Login Error', e);
+    yield errorHandler(errorObject);
   }
 }
 
