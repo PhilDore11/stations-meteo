@@ -11,8 +11,8 @@ const initialState = {
   loggedInUser: null,
   username: "",
   password: "",
-  loading: false,
-  error: null,
+  loginLoading: false,
+  loginError: false,
 };
 
 export default (state = initialState, action) => {
@@ -20,7 +20,7 @@ export default (state = initialState, action) => {
     case LOGIN:
       return {
         ...state,
-        loading: true
+        loginLoading: true
       };
     case LOGIN_SUCCESS:
       return {
@@ -30,8 +30,8 @@ export default (state = initialState, action) => {
     case LOGIN_ERROR:
       return {
         ...state,
-        loading: false,
-        error: true,
+        loginLoading: false,
+        loginError: true,
       };
     case LOGOUT:
       return {

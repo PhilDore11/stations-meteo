@@ -1,4 +1,4 @@
-import { call, put, takeLatest } from "redux-saga/effects";
+import { call, put, takeLatest, select } from "redux-saga/effects";
 
 import jsonFetch from "json-fetch";
 
@@ -21,16 +21,18 @@ import {
   deleteClientError,
 } from "./actions";
 
-import { requestHandler, errorHandler } from '../../utils/sagaHelpers'
+import { requestHandler, errorHandler } from '../../utils/sagaHelpers';
 
-function* fetchClientsGenerator(action) {
+export const selectLoggedInUser = (state) => state.login.loggedInUser;
+
+function* fetchClientsGenerator() {
   const errorObject = {
     action: fetchClientsError, 
     message: 'Error Fetching Clients'
   };
 
   try {
-    const {loggedInUser} = action;
+    const loggedInUser = yield select(selectLoggedInUser);
     const clientIds = loggedInUser && loggedInUser.clients.map((client) => `id=${client.id}`);
     const response = yield call(
       jsonFetch,
@@ -69,10 +71,11 @@ function* editClientGenerator(action) {
   };
 
   try {
+    const { id, ...rest } = action.clientData;
     const response = yield call(
       jsonFetch,
-      `${process.env.REACT_APP_API_URL}/clients`,
-      { body: action.clientData, method: "PUT" }
+      `${process.env.REACT_APP_API_URL}/clients/${id}`,
+      { body: rest, method: "PUT" }
     );
 
     yield requestHandler(response, {action: editClientSuccess}, errorObject);
@@ -89,10 +92,11 @@ function* deleteClientGenerator(action) {
   };
 
   try {
+    const { id } = action.clientData;
     const response = yield call(
       jsonFetch,
-      `${process.env.REACT_APP_API_URL}/clients`,
-      { body: action.clientData, method: "DELETE" }
+      `${process.env.REACT_APP_API_URL}/clients/${id}`,
+      { method: "DELETE" }
     );
 
     yield requestHandler(response, {action: deleteClientSuccess}, errorObject);

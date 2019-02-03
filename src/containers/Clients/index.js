@@ -34,12 +34,12 @@ const styles = theme => ({
 class ClientsContainer extends React.PureComponent {
   componentDidMount() {
     if (this.props.loggedInUser) {
-      this.props.fetchClients(this.props.loggedInUser);
+      this.props.fetchClients();
     }
   }
   componentDidUpdate(prevProps) {
     if (this.props.loggedInUser && this.props.loggedInUser !== prevProps.loggedInUser) {
-      this.props.fetchClients(this.props.loggedInUser);
+      this.props.fetchClients();
     }
   }
 
@@ -70,6 +70,8 @@ class ClientsContainer extends React.PureComponent {
       clientData,
       toggleClientModal,
       isAdd,
+      clientsError,
+      clientsLoading,
     } = this.props;
 
     const isAdmin = loggedInUser && loggedInUser.admin ? true : false;
@@ -103,7 +105,7 @@ class ClientsContainer extends React.PureComponent {
                 isAdd={isAdd}
                 onToggle={toggleClientModal}
                 onSave={this.onClientSave}
-                body={<ClientForm client={clientData} onChange={this.onClientChange} />}
+                body={<ClientForm client={clientData} error={clientsError} loading={clientsLoading} onChange={this.onClientChange} />}
               />
             </React.Fragment>
           ) : ""}
@@ -115,6 +117,8 @@ class ClientsContainer extends React.PureComponent {
 
 ClientsContainer.propTypes = {
   classes: PropTypes.object.isRequired,
+  clientsError: PropTypes.bool,
+  clientsLoading: PropTypes.bool,
   title: PropTypes.string,
   fetchClients: PropTypes.func.isRequired,
   clients: PropTypes.array,

@@ -38,8 +38,8 @@ class LoginContainer extends React.PureComponent {
       loggedInUser,
       username,
       password,
-      error,
-      loading,
+      loginError,
+      loginLoading,
     } = this.props;
 
     return (
@@ -52,7 +52,8 @@ class LoginContainer extends React.PureComponent {
         <form onSubmit={this.handleLogin}>
           <DialogContent>
             <TextField
-              error={error}
+              error={loginError}
+              disabled={loginLoading}
               autoFocus
               id="username"
               label="Nom d'utilisateur"
@@ -64,7 +65,8 @@ class LoginContainer extends React.PureComponent {
               onChange={this.handleUsernameChange}
             />
             <TextField
-              error={error}
+              error={loginError}
+              disabled={loginLoading}
               id="password"
               label="Mot de passe"
               type="password"
@@ -77,7 +79,7 @@ class LoginContainer extends React.PureComponent {
           </DialogContent>
           <Divider />
           <DialogActions>
-            <Button disabled={loading} type="submit" variant="contained" color="primary">
+            <Button disabled={loginLoading} type="submit" variant="contained" color="primary">
               Login
             </Button>
           </DialogActions>

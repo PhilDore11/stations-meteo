@@ -9,7 +9,7 @@ import {
   Divider,
 } from "@material-ui/core";
 
-const ClientModal = ({ body, isAdd, isOpen, onToggle, onSave }) => (
+const ClientModal = ({ body, isAdd, loading, isOpen, onToggle, onSave }) => (
   <Dialog open={isOpen} onClose={onToggle}>
     <DialogTitle>{isAdd ? "Nouveau Client" : "Modifier Client"}</DialogTitle>
     <Divider />
@@ -18,10 +18,10 @@ const ClientModal = ({ body, isAdd, isOpen, onToggle, onSave }) => (
     </DialogContent>
     <Divider />
     <DialogActions>
-      <Button variant="outlined" onClick={onToggle} color="default">
+      <Button disabled={loading} variant="outlined" onClick={onToggle} color="default">
         Annuler
       </Button>
-      <Button variant="contained" onClick={onSave} color="primary">
+      <Button disabled={loading} variant="contained" onClick={onSave} color="primary">
         {isAdd ? "Créer" : "Modifier"}
       </Button>
     </DialogActions>
@@ -31,6 +31,7 @@ const ClientModal = ({ body, isAdd, isOpen, onToggle, onSave }) => (
 ClientModal.propTypes = {
   body: PropTypes.node,
   isAdd: PropTypes.bool,
+  loading: PropTypes.bool,
   isOpen: PropTypes.bool.isRequired,
   onToggle: PropTypes.func.isRequired,
   onSave: PropTypes.func.isRequired

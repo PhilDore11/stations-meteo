@@ -12,9 +12,9 @@ const initialState = {
     .year(2018)
     .month(3)
     .date(19)
-    .startOf("day"),
-  precipitationData: [],
-  precipitationError: null
+    .startOf("day").toISOString(),
+  stationData: [],
+  dashboardError: false
 };
 
 export default (state = initialState, action) => {
@@ -22,22 +22,22 @@ export default (state = initialState, action) => {
     case FETCH_STATION_DATA_SUCCESS:
       return {
         ...state,
-        precipitationData: action.res
+        stationData: action.res
       };
     case FETCH_STATION_DATA_ERROR:
       return {
         ...state,
-        precipitationError: action.error
+        precipitationError: action.dashboardError
       };
     case INCREMENT_DAY:
       return {
         ...state,
-        currentDay: moment(state.currentDay).add(1, "day")
+        currentDay: moment(state.currentDay).add(1, "day").toISOString()
       };
     case DECREMENT_DAY:
       return {
         ...state,
-        currentDay: moment(state.currentDay).subtract(1, "day")
+        currentDay: moment(state.currentDay).subtract(1, "day").toISOString()
       };
     default:
       return state;

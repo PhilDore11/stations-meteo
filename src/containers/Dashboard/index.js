@@ -57,7 +57,7 @@ class DashboardContainer extends React.PureComponent {
   }
 
   render() {
-    const { precipitationData, currentDay } = this.props;
+    const { stationData, currentDay } = this.props;
     const chartData = {
       datasets: [
         {
@@ -65,8 +65,8 @@ class DashboardContainer extends React.PureComponent {
           backgroundColor: chartColors.blue.background,
           borderColor: chartColors.blue.border,
           data:
-            precipitationData &&
-            precipitationData.map(data => {
+            stationData &&
+            stationData.map(data => {
               return {
                 t: moment(data.date),
                 y: data.intensity
@@ -94,6 +94,7 @@ class DashboardContainer extends React.PureComponent {
               <Typography variant="h6">
                 {moment(currentDay).format("MMMM DD")}
               </Typography>
+              <Typography style={{textAlign: 'center'}} variant="caption">{moment(currentDay).format("YYYY")}</Typography>
             </Grid>
             <Grid item>
               <IconButton onClick={this.props.incrementDay}>
@@ -117,11 +118,11 @@ class DashboardContainer extends React.PureComponent {
 
 DashboardContainer.propTypes = {
   fetchStationData: PropTypes.func.isRequired,
-  precipitationData: PropTypes.array,
+  stationData: PropTypes.array,
   loggedInUser: PropTypes.object,
   incrementDay: PropTypes.func.isRequired,
   decrementDay: PropTypes.func.isRequired,
-  currentDay: PropTypes.object
+  currentDay: PropTypes.string
 };
 
 const mapStateToProps = state => ({

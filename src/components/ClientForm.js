@@ -12,9 +12,11 @@ const styles = theme => ({
   }
 });
 
-const ClientForm = ({ classes, client, onChange }) => (
+const ClientForm = ({ classes, client, error, loading, onChange }) => (
   <form noValidate autoComplete="off">
     <TextField
+      error={error}
+      disabled={loading}
       className={classes.textField}
       autoFocus
       id="name"
@@ -26,6 +28,8 @@ const ClientForm = ({ classes, client, onChange }) => (
       onChange={(event) => onChange(event, client)}
       />
     <TextField
+      error={error}
+      disabled={loading}
       className={classes.textField}
       id="email"
       label="Addresse courriel"
@@ -40,8 +44,10 @@ const ClientForm = ({ classes, client, onChange }) => (
 
 ClientForm.propTypes = {
   classes: PropTypes.object.isRequired,
+  client: PropTypes.object.isRequired,
+  error: PropTypes.bool,
+  loading: PropTypes.bool,
   onChange: PropTypes.func.isRequired,
-  client: PropTypes.object,
 };
 
 export default React.memo(withStyles(styles)(ClientForm));

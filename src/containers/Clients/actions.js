@@ -15,9 +15,8 @@ import {
   SET_CLIENT_DATA,
 } from "./constants";
 
-export const fetchClients = loggedInUser => ({
+export const fetchClients = () => ({
   type: FETCH_CLIENTS,
-  loggedInUser,
 });
 
 export const fetchClientsSuccess = res => ({

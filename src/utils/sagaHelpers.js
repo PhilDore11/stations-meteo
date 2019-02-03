@@ -16,6 +16,6 @@ export function* successHandler({action, message, response}) {
 }
 
 export function* errorHandler({action, message, response}) {
-  if (message) yield put(error(`${message}: ${response.text}`));
+  if (message && response) yield put(error(`${message}: ${response.text}`));
   yield put(action());
 }

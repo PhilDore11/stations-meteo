@@ -1,5 +1,5 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React from 'react';
+import PropTypes from 'prop-types';
 
 import {
   Grid,
@@ -8,14 +8,14 @@ import {
   ExpansionPanelDetails,
   Badge,
   Typography,
-} from "@material-ui/core";
+} from '@material-ui/core';
 
 import {
   ExpandMoreOutlined as ExpandMoreIcon,
   RouterOutlined as DeviceIcon,
-} from "@material-ui/icons";
+} from '@material-ui/icons';
 
-import { ClientMenu, StationCard } from "./";
+import { ClientMenu, StationCard } from './';
 
 class ClientRow extends React.PureComponent {
   constructor(props) {
@@ -38,14 +38,14 @@ class ClientRow extends React.PureComponent {
     return (
       <ExpansionPanel expanded={expanded} key={client.id} onChange={this.handleExpand}>
         <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-          <Grid container spacing={24} alignItems="center">
+          <Grid container spacing={24} alignItems='center'>
             <Grid item>
-              <Badge badgeContent={(client.stations.length) || 0} color="secondary">
+              <Badge badgeContent={(client.stations.length) || 0} color='secondary'>
                 <DeviceIcon />
               </Badge>
             </Grid>
             <Grid item xs>
-              <Typography variant="subtitle1">{client.name}</Typography>
+              <Typography variant='subtitle1'>{client.name}</Typography>
             </Grid>
             {showActions ? (
               <Grid item>
@@ -54,7 +54,7 @@ class ClientRow extends React.PureComponent {
                   onDelete={() => onClientDelete(client)}
                 />
               </Grid>
-            ) : ""}
+            ) : ''}
           </Grid>
         </ExpansionPanelSummary>
         <ExpansionPanelDetails>

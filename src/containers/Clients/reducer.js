@@ -9,72 +9,49 @@ import {
   DELETE_CLIENT_ERROR,
   TOGGLE_CLIENT_MODAL,
   SET_CLIENT_DATA,
-} from "./constants";
+} from './constants';
 
 const initialState = {
   clients: [],
-  clientsError: null,
   clientData: {},
   clientModalOpen: false,
-  isAdd: true
+  isAdd: true,
+  clientsError: false
 };
 
 export default (state = initialState, action) => {
   switch (action.type) {
+    case ADD_CLIENT_SUCCESS:
+    case EDIT_CLIENT_SUCCESS:
+    case DELETE_CLIENT_SUCCESS:
+      return {
+        ...initialState,
+        clientsError: false
+      };
+    case FETCH_CLIENTS_ERROR:
+    case ADD_CLIENT_ERROR:
+    case EDIT_CLIENT_ERROR:
+    case DELETE_CLIENT_ERROR:
+      return {
+        ...state,
+        clientsError: true
+      };
     case FETCH_CLIENTS_SUCCESS:
       return {
         ...state,
         clients: action.res
       };
-    case FETCH_CLIENTS_ERROR:
-      return {
-        ...state,
-        clientsError: action.error
-      };
-    case ADD_CLIENT_SUCCESS:
-      return {
-        ...state,
-        clientModalOpen: false,
-        clientsError: null
-      };
-    case ADD_CLIENT_ERROR:
-      return {
-        ...state,
-        clientModalOpen: false,
-        clientsError: action.error
-      };
-    case EDIT_CLIENT_SUCCESS:
-      return {
-        ...state,
-        clientModalOpen: false,
-        clientsError: null
-      };
-    case EDIT_CLIENT_ERROR:
-      return {
-        ...state,
-        clientModalOpen: false,
-        clientsError: action.error
-      };
-    case DELETE_CLIENT_SUCCESS:
-      return {
-        ...state,
-        clientsError: null
-      };
-    case DELETE_CLIENT_ERROR:
-      return {
-        ...state,
-        clientsError: action.error
-      };
     case TOGGLE_CLIENT_MODAL:
       return {
         ...state,
         clientModalOpen: !state.clientModalOpen,
-        isAdd: action.isAdd
+        isAdd: action.isAdd,
+        clientsError: false
       };
     case SET_CLIENT_DATA:
       return {
         ...state,
-        clientData: action.clientData
+        clientData: {...action.clientData}
       };
     default:
       return state;
