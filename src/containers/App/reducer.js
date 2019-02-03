@@ -2,6 +2,7 @@ import {
   ERROR,
   WARNING,
   SUCCESS,
+  RESET_ALERTS,
 } from "./constants";
 
 const initialState = {
@@ -30,6 +31,10 @@ export default (state = initialState, action) => {
         ...initialState,
         error: true,
         message: action.message
+      };
+    case RESET_ALERTS:
+      return {
+        ...initialState
       };
     default:
       return state;

@@ -38,6 +38,8 @@ class LoginContainer extends React.PureComponent {
       loggedInUser,
       username,
       password,
+      error,
+      loading,
     } = this.props;
 
     return (
@@ -49,16 +51,37 @@ class LoginContainer extends React.PureComponent {
         <Divider />
         <form onSubmit={this.handleLogin}>
           <DialogContent>
-            <TextField autoFocus id="username" label="Nom d'utilisateur" type="text" value={username} margin="normal" variant="outlined" fullWidth onChange={this.handleUsernameChange} />
-            <TextField id="password" label="Mot de passe" type="password" value={password} margin="normal" variant="outlined" fullWidth onChange={this.handlePasswordChange} />
+            <TextField
+              error={error}
+              autoFocus
+              id="username"
+              label="Nom d'utilisateur"
+              type="text"
+              value={username}
+              margin="normal"
+              variant="outlined"
+              fullWidth
+              onChange={this.handleUsernameChange}
+            />
+            <TextField
+              error={error}
+              id="password"
+              label="Mot de passe"
+              type="password"
+              value={password}
+              margin="normal"
+              variant="outlined"
+              fullWidth
+              onChange={this.handlePasswordChange}
+            />
           </DialogContent>
           <Divider />
           <DialogActions>
-            <Button type="submit" variant="contained" color="primary">
+            <Button disabled={loading} type="submit" variant="contained" color="primary">
               Login
             </Button>
           </DialogActions>
-          </form>
+        </form>
       </Dialog>
     );
   }

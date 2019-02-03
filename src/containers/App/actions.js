@@ -2,6 +2,7 @@ import {
   SUCCESS,
   WARNING,
   ERROR,
+  RESET_ALERTS,
 } from "./constants";
 
 export const success = (message) => ({
@@ -18,3 +19,7 @@ export const error = (message) => ({
   type: ERROR,
   message
 });
+
+export const resetAlerts = () => ({
+  type: RESET_ALERTS,
+})

@@ -33,6 +33,10 @@ import {
   ClientsContainer
 } from '../';
 
+import { Alert } from '../../components';
+
+import { resetAlerts } from './actions';
+
 const drawerWidth = 240;
 
 const styles = theme => ({
@@ -99,70 +103,80 @@ class App extends React.PureComponent {
     return () => loggedInUser ? container : <Redirect to="/login" />;
   }
 
+  getAlertVariant() {
+    if (this.props.success) return 'success';
+    if (this.props.warning) return 'warning';
+    if (this.props.error) return 'error';
+    return 'info';
+  };
+
   render() {
-    const { classes, loggedInUser } = this.props;
+    const { classes, loggedInUser, message } = this.props;
 
     return (
-      <Router>
-        <div className={classes.root}>
-          <CssBaseline />
-          <HeaderContainer />
-          <Drawer
-            className={classes.drawer}
-            variant='permanent'
-            classes={{
-              paper: classes.drawerPaper
-            }}
-            anchor='left'
-          >
-            <div className={classes.toolbar} />
-            <Divider />
-            <List>
-              {this.getSidebarItems().map((item, index) =>
-                item.divider ? (
-                  <React.Fragment key={index}>
-                    <Divider />
-                    <ListItem className={classes.sidebarTitle}>
-                      <ListItemText primary={item.label} />
-                    </ListItem>
-                    <Divider />
-                  </React.Fragment>
-                ) : (
-                  <Link key={index} to={item.location} className={classes.menuLink}>
-                    <ListItem button>
-                      <ListItemIcon>{item.icon}</ListItemIcon>
-                      <ListItemText primary={item.label} />
-                    </ListItem>
-                  </Link>
-                )
-              )}
-            </List>
-          </Drawer>
-          <div className={classes.content}>
-            <div className={classes.toolbar} />
-            <Switch>
-              <Route exact path="/" render={() => (
-                loggedInUser ? (
-                  <Redirect to={loggedInUser.admin ? '/clients' : '/home'} />
-                ) : (
-                  <Redirect to="/login"/>
-                )
-              )}/>
-              <Route path='/login' render={() => (
-                loggedInUser ? (
-                  <Redirect to={loggedInUser.admin ? '/clients' : '/home'} />
-                ) : (
-                  <LoginContainer />
-                )
-              )}/> />
-              <Route path='/home' render={this.privateRouteRender(loggedInUser, <HomeContainer />)} />
-              <Route path='/dashboard' render={this.privateRouteRender(loggedInUser, <DashboardContainer />)} />
-              <Route path='/map' render={this.privateRouteRender(loggedInUser, <MapContainer />)} />
-              <Route path='/clients' render={this.privateRouteRender(loggedInUser, <ClientsContainer />)} />
-            </Switch>
+      <React.Fragment>
+        {message && <Alert variant={this.getAlertVariant()} message={message} resetAlerts={this.props.resetAlerts} />}
+        <Router>
+          <div className={classes.root}>
+            <CssBaseline />
+            <HeaderContainer />
+            <Drawer
+              className={classes.drawer}
+              variant='permanent'
+              classes={{
+                paper: classes.drawerPaper
+              }}
+              anchor='left'
+            >
+              <div className={classes.toolbar} />
+              <Divider />
+              <List>
+                {this.getSidebarItems().map((item, index) =>
+                  item.divider ? (
+                    <React.Fragment key={index}>
+                      <Divider />
+                      <ListItem className={classes.sidebarTitle}>
+                        <ListItemText primary={item.label} />
+                      </ListItem>
+                      <Divider />
+                    </React.Fragment>
+                  ) : (
+                    <Link key={index} to={item.location} className={classes.menuLink}>
+                      <ListItem button>
+                        <ListItemIcon>{item.icon}</ListItemIcon>
+                        <ListItemText primary={item.label} />
+                      </ListItem>
+                    </Link>
+                  )
+                )}
+              </List>
+            </Drawer>
+            <div className={classes.content}>
+              <div className={classes.toolbar} />
+              <Switch>
+                <Route exact path="/" render={() => (
+                  loggedInUser ? (
+                    <Redirect to={loggedInUser.admin ? '/clients' : '/home'} />
+                  ) : (
+                    <Redirect to="/login"/>
+                  )
+                )}/>
+                <Route path='/login' render={() => (
+                  loggedInUser ? (
+                    <Redirect to={loggedInUser.admin ? '/clients' : '/home'} />
+                  ) : (
+                    <LoginContainer />
+                  )
+                )}/> />
+                <Route path='/home' render={this.privateRouteRender(loggedInUser, <HomeContainer />)} />
+                <Route path='/dashboard' render={this.privateRouteRender(loggedInUser, <DashboardContainer />)} />
+                <Route path='/map' render={this.privateRouteRender(loggedInUser, <MapContainer />)} />
+                <Route path='/clients' render={this.privateRouteRender(loggedInUser, <ClientsContainer />)} />
+              </Switch>
+            </div>
           </div>
-        </div>
-      </Router>
+        </Router>
+      </React.Fragment>
     );
   }
 }
@@ -170,10 +184,16 @@ class App extends React.PureComponent {
 App.propTypes = {
   classes: PropTypes.object.isRequired,
   loggedInUser: PropTypes.object,
+  resetAlerts: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
+  ...state.app,
   ...state.login
 });
 
-export default connect(mapStateToProps)(withStyles(styles)(App));
+const mapDispatchToProps = {
+  resetAlerts,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(App));

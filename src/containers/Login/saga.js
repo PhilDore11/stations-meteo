@@ -1,27 +1,34 @@
-import { call, put, takeLatest } from "redux-saga/effects";
+import { call, takeLatest } from 'redux-saga/effects';
 
-import jsonFetch from "json-fetch";
+import jsonFetch from 'json-fetch';
+
+import { requestHandler, errorHandler } from '../../utils/sagaHelpers'
 
 import {
   LOGIN,
-} from "./constants";
+} from './constants';
 
 import {
   loginSuccess,
   loginError,
-} from "./actions";
+} from './actions';
 
 function* loginGenerator(action) {
   try {
     const response = yield call(
       jsonFetch,
       `${process.env.REACT_APP_API_URL}/login`,
-      { body: action, method: "POST" }
+      { body: action, method: 'POST' }
     );
-
-    yield put(loginSuccess(response.body));
+    yield requestHandler(response, {
+      action: loginSuccess, 
+      message: 'Login Successful'
+    }, {
+      action: loginError, 
+      message: 'Login Error'
+    });
   } catch (e) {
-    yield put(loginError(e));
+    yield errorHandler(loginError, 'Login Error', e);
   }
 }
 

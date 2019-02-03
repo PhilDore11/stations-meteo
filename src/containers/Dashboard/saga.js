@@ -1,8 +1,10 @@
-import { call, put, takeLatest } from "redux-saga/effects";
+import { call, takeLatest } from "redux-saga/effects";
 
 import jsonFetch from "json-fetch";
 
 import moment from "moment";
+
+import { requestHandler, errorHandler } from '../../utils/sagaHelpers'
 
 import { FETCH_STATION_DATA } from "./constants";
 
@@ -23,9 +25,14 @@ function* fetchStationData(action) {
       `${process.env.REACT_APP_API_URL}/stationData/${clientId}/?start=${chartStart.toISOString()}&end=${chartEnd.toISOString()}`
     );
 
-    yield put(fetchStationDataSuccess(response.body));
+    yield requestHandler(response, {
+      action: fetchStationDataSuccess
+    }, {
+      action: fetchStationDataError,
+      message: 'Error Fetching Client Stations Data'
+    });
   } catch (e) {
-    yield put(fetchStationDataError(e));
+    yield errorHandler(fetchStationDataError, 'Error Fetching Client Stations Data');
   }
 }
 
