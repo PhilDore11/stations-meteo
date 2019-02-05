@@ -1,4 +1,5 @@
 export { default as Alert } from "./Alert";
+export { default as Sidebar } from "./Sidebar";
 
 export { default as ClientForm } from "./ClientForm";
 export { default as ClientMenu } from "./ClientMenu";

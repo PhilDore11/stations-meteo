@@ -104,7 +104,7 @@ class ChartHeader extends React.PureComponent {
 ChartHeader.propTypes = {
   start: PropTypes.string.isRequired,
   end: PropTypes.string.isRequired,
-  view: PropTypes.oneOf(VIEWS.keys()).isRequired,
+  view: PropTypes.string.isRequired,
   increment: PropTypes.func.isRequired,
   decrement: PropTypes.func.isRequired,
   onViewChange: PropTypes.func.isRequired

@@ -15,7 +15,7 @@ import {
 
 import {
   ExpandMoreOutlined as ExpandMoreIcon,
-  CloudOutlined as CloudIcon
+  CloudOutlined as CloudIcon,
 } from '@material-ui/icons';
 
 import { blue } from '@material-ui/core/colors';
@@ -43,7 +43,7 @@ class ChartCard extends React.PureComponent {
   }
 
   handleExpand() {
-    this.setState({expanded: !this.state.expanded})
+    this.setState({ expanded: !this.state.expanded });
   }
 
   render() {
@@ -57,12 +57,12 @@ class ChartCard extends React.PureComponent {
           {
             type: 'time',
             time: {
-              unit: view === 'day' ? 'hour' : 'day'
-            }
-          }
-        ]
-      }
-    }
+              unit: view === 'day' ? 'hour' : 'day',
+            },
+          },
+        ],
+      },
+    };
 
     const chartData = {
       datasets: [
@@ -70,30 +70,40 @@ class ChartCard extends React.PureComponent {
           label: 'Précipitation (mm/h)',
           fill: false,
           borderColor: blue[500],
-          data: stationData && stationData.map(data => {
+          data:
+            stationData &&
+            stationData.map(data => {
               return {
                 t: moment(data.date),
-                y: data.intensity
+                y: data.intensity,
               };
-            })
-        }
-      ]
-    }
-    
+            }),
+        },
+      ],
+    };
+
     return (
       <ExpansionPanel expanded={expanded} onChange={this.handleExpand}>
         <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-          <Grid container spacing={24} alignItems='center'>
+          <Grid container spacing={24} alignItems="center">
             <Grid item>
               <CloudIcon />
             </Grid>
             <Grid item xs>
-              <Typography variant='subtitle1'>{title}</Typography>
+              <Typography variant="subtitle1">{title}</Typography>
             </Grid>
           </Grid>
         </ExpansionPanelSummary>
         <ExpansionPanelDetails className={classes.chartArea}>
-          {!error && !loading ? <Line className={classes.chart} data={chartData} options={chartOptions} /> : <CircularProgress className={classes.loading} />}
+          {!error && !loading ? (
+            <Line
+              className={classes.chart}
+              data={chartData}
+              options={chartOptions}
+            />
+          ) : (
+            <CircularProgress className={classes.loading} />
+          )}
         </ExpansionPanelDetails>
       </ExpansionPanel>
     );
@@ -104,7 +114,7 @@ ChartCard.propTypes = {
   classes: PropTypes.object.isRequired,
   title: PropTypes.string,
   view: PropTypes.string.isRequired,
-  stationData: PropTypes.object.isRequired,
+  stationData: PropTypes.array.isRequired,
   error: PropTypes.bool,
   loading: PropTypes.bool,
 };

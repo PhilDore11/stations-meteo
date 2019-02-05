@@ -7,7 +7,6 @@ import {
   withStyles,
   Grid,
   Fab,
-  Typography,
 } from "@material-ui/core";
 
 import { AddOutlined as AddIcon } from "@material-ui/icons";
@@ -63,7 +62,6 @@ class ClientsContainer extends React.PureComponent {
   render() {
     const {
       classes,
-      title,
       loggedInUser,
       clients,
       clientModalOpen,
@@ -79,7 +77,6 @@ class ClientsContainer extends React.PureComponent {
     return (
       <Grid container spacing={24}>
         <Grid item xs={12}>
-          <Typography variant="h5" gutterBottom>{title || "Clients"}</Typography>
           {clients && clients.map(client => (
             <ClientRow
               key={client.id}
@@ -119,7 +116,6 @@ ClientsContainer.propTypes = {
   classes: PropTypes.object.isRequired,
   clientsError: PropTypes.bool,
   clientsLoading: PropTypes.bool,
-  title: PropTypes.string,
   fetchClients: PropTypes.func.isRequired,
   clients: PropTypes.array,
   loggedInUser: PropTypes.object,
