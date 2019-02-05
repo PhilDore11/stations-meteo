@@ -3,38 +3,10 @@ import PropTypes from 'prop-types';
 
 import { connect } from 'react-redux';
 
-import moment from 'moment';
-
-import {
-  Grid,
-  IconButton,
-  Typography,
-  TextField,
-  MenuItem,
-} from '@material-ui/core';
-
-import {
-  ChevronLeftOutlined as ChevronLeftIcon,
-  ChevronRightOutlined as ChevronRightIcon
-} from '@material-ui/icons';
-
-import { defaults } from 'react-chartjs-2';
+import { Grid } from '@material-ui/core';
 
 import { fetchStationData, increment, decrement, setView } from './actions';
-import { ChartCard } from '../../components';
-
-defaults.global.responsive = true;
-
-const chartColors = {
-  red: {
-    border: 'rgb(255, 99, 132)',
-    background: 'rgba(255, 99, 132, 0.2)'
-  },
-  blue: {
-    border: 'rgb(54, 162, 235)',
-    background: 'rgba(54, 162, 235, 0.2)'
-  }
-};
+import { ChartCard, ChartHeader } from '../../components';
 
 class DashboardContainer extends React.PureComponent {
   constructor(props) {
@@ -67,79 +39,24 @@ class DashboardContainer extends React.PureComponent {
 
   render() {
     const { stationData, start, end, view, dashboardError, dashboardLoading } = this.props;
-    const chartData = {
-      datasets: [
-        {
-          label: 'Précipitation (mm/h)',
-          backgroundColor: chartColors.blue.background,
-          borderColor: chartColors.blue.border,
-          data:
-            stationData &&
-            stationData.map(data => {
-              return {
-                t: moment(data.date),
-                y: data.intensity
-              };
-            })
-        }
-      ]
-    };
 
     return (
       <Grid container spacing={24}>
         <Grid item xs={12}>
-          <Grid container spacing={24} alignItems='center'>
-            <Grid item xs />
-            <Grid item>
-              <IconButton onClick={this.props.decrement}>
-                <ChevronLeftIcon />
-              </IconButton>
-            </Grid>
-            <Grid item>
-              <Typography variant='h6'>
-                {moment(start).format('MMMM DD')}
-              </Typography>
-              <Typography style={{textAlign: 'center'}} variant='caption'>{moment(start).format('YYYY')}</Typography>
-            </Grid>
-            <Grid item>{' - '}</Grid>
-            <Grid item>
-              <Typography variant='h6'>
-                {moment(end).format('MMMM DD')}
-              </Typography>
-              <Typography style={{textAlign: 'center'}} variant='caption'>{moment(end).format('YYYY')}</Typography>
-            </Grid>
-            <Grid item>
-              <IconButton onClick={this.props.increment}>
-                <ChevronRightIcon />
-              </IconButton>
-            </Grid>
-            <Grid item xs>
-              <Grid container justify='flex-end'>
-                <Grid item>
-                  <TextField
-                    select
-                    value={view}
-                    onChange={this.handleViewChange}
-                    margin='normal'
-                    variant='outlined'
-                  >
-                    {['day', 'week', 'month', 'year'].map(view => (
-                      <MenuItem key={view} value={view}>
-                        {view}
-                      </MenuItem>
-                    ))}
-                  </TextField>
-                </Grid>
-              </Grid>
-            </Grid>
-          </Grid>
+          <ChartHeader 
+            start={start}
+            end={end}
+            view={view}
+            increment={this.props.increment}
+            decrement={this.props.decrement}
+            onViewChange={this.handleViewChange}
+          />
         </Grid>
         <Grid item xs={12}>
           <ChartCard
             title='Précipitations'
-            fetchData={this.fetchStationData}
-            chartData={chartData}
-            chartOptions={this.chartOptions}
+            view={view}
+            stationData={stationData}
             error={dashboardError}
             loading={dashboardLoading}
           />
