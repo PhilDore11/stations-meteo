@@ -44,7 +44,7 @@ const clientSidebarItems = [
   { 
     icon: <HomeIcon />,
     label: 'Acceuil',
-    location: '/' },
+    location: '/home' },
   {
     icon: <DashboardIcon />,
     label: 'Analyse',
