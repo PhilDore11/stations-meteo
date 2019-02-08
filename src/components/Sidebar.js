@@ -1,24 +1,18 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React from 'react';
+import PropTypes from 'prop-types';
 
 import { Link, withRouter } from 'react-router-dom';
 
 import { withStyles } from '@material-ui/core/styles';
 
-import {
-  Drawer,
-  List,
-  Divider,
-  ListItem,
-  ListItemIcon,
-  ListItemText
-} from '@material-ui/core';
+import { Drawer, List, Divider, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
 
 import {
   HomeOutlined as HomeIcon,
   DashboardOutlined as DashboardIcon,
   MapOutlined as MapIcon,
   PeopleOutlined as PeopleIcon,
+  AssessmentOutlined as ReportIcon,
 } from '@material-ui/icons';
 
 const drawerWidth = 240;
@@ -26,39 +20,45 @@ const drawerWidth = 240;
 const styles = theme => ({
   drawer: {
     width: drawerWidth,
-    flexShrink: 0
+    flexShrink: 0,
   },
   drawerPaper: {
-    width: drawerWidth
+    width: drawerWidth,
   },
   toolbar: theme.mixins.toolbar,
   menuLink: {
-    textDecoration: 'none'
+    textDecoration: 'none',
   },
   sidebarTitle: {
-    backgroundColor: theme.palette.background.default
-  }
+    backgroundColor: theme.palette.background.default,
+  },
 });
 
 const clientSidebarItems = [
-  { 
+  {
     icon: <HomeIcon />,
     label: 'Acceuil',
-    location: '/home' },
+    location: '/home',
+  },
   {
     icon: <DashboardIcon />,
     label: 'Analyse',
-    location: '/dashboard'
+    location: '/dashboard',
   },
-  { 
+  {
+    icon: <ReportIcon />,
+    label: 'Rapports',
+    location: '/reports',
+  },
+  {
     icon: <MapIcon />,
     label: 'Map',
-    location: '/map'
+    location: '/map',
   },
 ];
 
 const adminSidebarItems = [
-  { 
+  {
     icon: <PeopleIcon />,
     label: 'Clients',
     location: '/clients',
@@ -68,12 +68,11 @@ const adminSidebarItems = [
 const Sidebar = ({ classes, isAdmin, sidebarItems = isAdmin ? adminSidebarItems : clientSidebarItems, location }) => (
   <Drawer
     className={classes.drawer}
-    variant='permanent'
+    variant="permanent"
     classes={{
-      paper: classes.drawerPaper
+      paper: classes.drawerPaper,
     }}
-    anchor='left'
-  >
+    anchor="left">
     <div className={classes.toolbar} />
     <Divider />
     <List>

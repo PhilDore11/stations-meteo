@@ -3,7 +3,14 @@ import PropTypes from 'prop-types';
 
 import { connect } from 'react-redux';
 
+import moment from 'moment';
+
 import { Grid } from '@material-ui/core';
+import { CloudOutlined as PrecipitationIcon } from '@material-ui/icons';
+
+import { blue } from '@material-ui/core/colors';
+
+import { Bar } from 'react-chartjs-2';
 
 import { fetchStationData, increment, decrement, setView } from './actions';
 import { ChartCard, ChartHeader } from '../../components';
@@ -15,7 +22,7 @@ class DashboardContainer extends React.PureComponent {
     this.fetchStationData = this.fetchStationData.bind(this);
     this.handleViewChange = this.handleViewChange.bind(this);
   }
-  
+
   componentDidMount() {
     this.fetchStationData();
   }
@@ -28,7 +35,7 @@ class DashboardContainer extends React.PureComponent {
   fetchStationData() {
     const { loggedInUser } = this.props;
     if (loggedInUser) {
-      const clientId = loggedInUser.clients[0].id
+      const clientId = loggedInUser.clients[0].id;
       this.props.fetchStationData(clientId, this.props.start, this.props.end);
     }
   }
@@ -40,10 +47,43 @@ class DashboardContainer extends React.PureComponent {
   render() {
     const { stationData, start, end, view, dashboardError, dashboardLoading } = this.props;
 
+    const precipitationChartOptions = {
+      maintainAspectRatio: false,
+      scales: {
+        xAxes: [
+          {
+            type: 'time',
+            time: {
+              unit: view === 'day' ? 'hour' : 'day',
+            },
+          },
+        ],
+      },
+    };
+
+    const precipitationChartData = {
+      datasets: [
+        {
+          label: 'Précipitation (mm)',
+          fill: false,
+          backgroundColor: blue[600],
+          borderColor: blue[800],
+          data:
+            stationData &&
+            stationData.map(data => {
+              return {
+                t: moment(data.date),
+                y: data.intensity,
+              };
+            }),
+        },
+      ],
+    };
+
     return (
       <Grid container spacing={24}>
         <Grid item xs={12}>
-          <ChartHeader 
+          <ChartHeader
             start={start}
             end={end}
             view={view}
@@ -54,12 +94,12 @@ class DashboardContainer extends React.PureComponent {
         </Grid>
         <Grid item xs={12}>
           <ChartCard
-            title='Précipitations'
-            view={view}
-            stationData={stationData}
+            title="Précipitations"
+            icon={<PrecipitationIcon />}
             error={dashboardError}
-            loading={dashboardLoading}
-          />
+            loading={dashboardLoading}>
+            <Bar data={precipitationChartData} options={precipitationChartOptions} />
+          </ChartCard>
         </Grid>
       </Grid>
     );
@@ -75,22 +115,22 @@ DashboardContainer.propTypes = {
   start: PropTypes.string,
   end: PropTypes.string,
   dashboardError: PropTypes.bool,
-  dashboardLoading: PropTypes.bool
+  dashboardLoading: PropTypes.bool,
 };
 
 const mapStateToProps = state => ({
   ...state.dashboard,
-  ...state.login
+  ...state.login,
 });
 
 const mapDispatchToProps = {
   fetchStationData,
   increment,
   decrement,
-  setView
+  setView,
 };
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 )(DashboardContainer);

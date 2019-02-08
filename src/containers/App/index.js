@@ -1,14 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { connect } from "react-redux";
+import { connect } from 'react-redux';
 
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Redirect
-} from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 
 import { withStyles } from '@material-ui/core/styles';
 
@@ -20,7 +15,8 @@ import {
   HomeContainer,
   DashboardContainer,
   MapContainer,
-  ClientsContainer
+  ClientsContainer,
+  ReportsContainer,
 } from '../';
 
 import { Alert, Sidebar } from '../../components';
@@ -29,19 +25,19 @@ import { resetAlerts } from './actions';
 
 const styles = theme => ({
   root: {
-    display: 'flex'
+    display: 'flex',
   },
   toolbar: theme.mixins.toolbar,
   content: {
     flexGrow: 1,
     backgroundColor: theme.palette.background.default,
-    padding: theme.spacing.unit * 3
-  }
+    padding: theme.spacing.unit * 3,
+  },
 });
 
 class App extends React.PureComponent {
   privateRouteRender(loggedInUser, container) {
-    return () => loggedInUser ? container : <Redirect to="/login" />;
+    return () => (loggedInUser ? container : <Redirect to="/login" />);
   }
 
   getAlertVariant() {
@@ -49,7 +45,7 @@ class App extends React.PureComponent {
     if (this.props.warning) return 'warning';
     if (this.props.error) return 'error';
     return 'info';
-  };
+  }
 
   render() {
     const { classes, loggedInUser, message } = this.props;
@@ -65,24 +61,29 @@ class App extends React.PureComponent {
             <div className={classes.content}>
               <div className={classes.toolbar} />
               <Switch>
-                <Route exact path="/" render={() => (
-                  loggedInUser ? (
-                    <Redirect to={loggedInUser.admin ? '/clients' : '/home'} />
-                  ) : (
-                    <Redirect to="/login"/>
-                  )
-                )}/>
-                <Route path='/login' render={() => (
-                  loggedInUser ? (
-                    <Redirect to={loggedInUser.admin ? '/clients' : '/home'} />
-                  ) : (
-                    <LoginContainer />
-                  )
-                )}/> />
-                <Route path='/home' render={this.privateRouteRender(loggedInUser, <HomeContainer />)} />
-                <Route path='/dashboard' render={this.privateRouteRender(loggedInUser, <DashboardContainer />)} />
-                <Route path='/map' render={this.privateRouteRender(loggedInUser, <MapContainer />)} />
-                <Route path='/clients' render={this.privateRouteRender(loggedInUser, <ClientsContainer />)} />
+                <Route
+                  exact
+                  path="/"
+                  render={() =>
+                    loggedInUser ? (
+                      <Redirect to={loggedInUser.admin ? '/clients' : '/home'} />
+                    ) : (
+                      <Redirect to="/login" />
+                    )
+                  }
+                />
+                <Route
+                  path="/login"
+                  render={() =>
+                    loggedInUser ? <Redirect to={loggedInUser.admin ? '/clients' : '/home'} /> : <LoginContainer />
+                  }
+                />{' '}
+                />
+                <Route path="/home" render={this.privateRouteRender(loggedInUser, <HomeContainer />)} />
+                <Route path="/dashboard" render={this.privateRouteRender(loggedInUser, <DashboardContainer />)} />
+                <Route path="/reports" render={this.privateRouteRender(loggedInUser, <ReportsContainer />)} />
+                <Route path="/map" render={this.privateRouteRender(loggedInUser, <MapContainer />)} />
+                <Route path="/clients" render={this.privateRouteRender(loggedInUser, <ClientsContainer />)} />
               </Switch>
             </div>
           </div>
@@ -100,11 +101,14 @@ App.propTypes = {
 
 const mapStateToProps = state => ({
   ...state.app,
-  ...state.login
+  ...state.login,
 });
 
 const mapDispatchToProps = {
   resetAlerts,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(App));
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(withStyles(styles)(App));

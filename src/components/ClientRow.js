@@ -8,12 +8,10 @@ import {
   ExpansionPanelDetails,
   Badge,
   Typography,
+  Divider,
 } from '@material-ui/core';
 
-import {
-  ExpandMoreOutlined as ExpandMoreIcon,
-  RouterOutlined as DeviceIcon,
-} from '@material-ui/icons';
+import { ExpandMoreOutlined as ExpandMoreIcon, RouterOutlined as DeviceIcon } from '@material-ui/icons';
 
 import { ClientMenu, StationCard } from './';
 
@@ -29,7 +27,7 @@ class ClientRow extends React.PureComponent {
   }
 
   handleExpand() {
-    this.setState({expanded: !this.state.expanded})
+    this.setState({ expanded: !this.state.expanded });
   }
 
   render() {
@@ -38,28 +36,28 @@ class ClientRow extends React.PureComponent {
     return (
       <ExpansionPanel expanded={expanded} key={client.id} onChange={this.handleExpand}>
         <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-          <Grid container spacing={24} alignItems='center'>
+          <Grid container spacing={24} alignItems="center">
             <Grid item>
-              <Badge badgeContent={(client.stations.length) || 0} color='secondary'>
+              <Badge badgeContent={client.stations.length || 0} color="secondary">
                 <DeviceIcon />
               </Badge>
             </Grid>
             <Grid item xs>
-              <Typography variant='subtitle1'>{client.name}</Typography>
+              <Typography variant="subtitle1">{client.name}</Typography>
             </Grid>
             {showActions ? (
               <Grid item>
-                <ClientMenu
-                  onEdit={() => onClientEdit(client)}
-                  onDelete={() => onClientDelete(client)}
-                />
+                <ClientMenu onEdit={() => onClientEdit(client)} onDelete={() => onClientDelete(client)} />
               </Grid>
-            ) : ''}
+            ) : (
+              ''
+            )}
           </Grid>
         </ExpansionPanelSummary>
+        <Divider />
         <ExpansionPanelDetails>
           <Grid container spacing={24}>
-            {client.stations.map((station) => (
+            {client.stations.map(station => (
               <Grid key={station.id} item xs={6} md={4} lg={3}>
                 <StationCard station={station} />
               </Grid>

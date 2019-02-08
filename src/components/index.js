@@ -10,3 +10,5 @@ export { default as StationCard } from "./StationCard";
 
 export { default as ChartCard } from "./ChartCard";
 export { default as ChartHeader } from "./ChartHeader";
+
+export { default as ReportHeader } from "./ReportHeader";
