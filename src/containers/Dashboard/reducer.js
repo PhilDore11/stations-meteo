@@ -1,11 +1,15 @@
 import moment from 'moment';
 
 import {
+  FETCH_CLIENT_STATIONS,
+  FETCH_CLIENT_STATIONS_SUCCESS,
+  FETCH_CLIENT_STATIONS_ERROR,
   FETCH_STATION_DATA,
   FETCH_STATION_DATA_SUCCESS,
   FETCH_STATION_DATA_ERROR,
   INCREMENT,
   DECREMENT,
+  SET_STATION,
   SET_VIEW,
 } from '../constants';
 
@@ -20,7 +24,9 @@ const initialState = {
   end: moment(initialDay)
     .endOf('day')
     .toISOString(),
+  clientStations: [],
   stationData: [],
+  stationId: null,
   view: 'day',
   dashboardError: false,
   dashboardLoading: false,
@@ -29,6 +35,25 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
+    case FETCH_CLIENT_STATIONS:
+      return {
+        ...state,
+        dashboardLoading: true,
+      };
+    case FETCH_CLIENT_STATIONS_SUCCESS:
+      return {
+        ...state,
+        clientStations: action.res,
+        stationId: action.res[0].id,
+        dashboardError: false,
+        dashboardLoading: false,
+      };
+    case FETCH_CLIENT_STATIONS_ERROR:
+      return {
+        ...state,
+        dashboardError: true,
+        dashboardLoading: false,
+      };
     case FETCH_STATION_DATA:
       return {
         ...state,
@@ -66,6 +91,11 @@ export default (state = initialState, action) => {
         end: moment(state.end)
           .subtract(1, state.view)
           .toISOString(),
+      };
+    case SET_STATION:
+      return {
+        ...state,
+        stationId: action.stationId
       };
     case SET_VIEW:
       return {

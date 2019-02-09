@@ -11,7 +11,7 @@ import { CloudOutlined as PrecipitationIcon } from '@material-ui/icons';
 
 import { blue } from '@material-ui/core/colors';
 
-import { fetchStationData, increment, decrement, setView } from '../actions';
+import { fetchClientStations, fetchStationData, increment, decrement, setStation, setView } from '../actions';
 import { ChartCard, DashboardHeader } from '../../components';
 
 class DashboardContainer extends React.PureComponent {
@@ -19,11 +19,13 @@ class DashboardContainer extends React.PureComponent {
     super(props);
 
     this.fetchStationData = this.fetchStationData.bind(this);
+    this.handleStationChange = this.handleStationChange.bind(this);
     this.handleViewChange = this.handleViewChange.bind(this);
   }
 
   componentDidMount() {
     this.fetchStationData();
+    this.fetchClientStations();
   }
   componentDidUpdate(prevProps) {
     if (this.props.start !== prevProps.start || this.props.end !== prevProps.end) {
@@ -39,12 +41,24 @@ class DashboardContainer extends React.PureComponent {
     }
   }
 
+  fetchClientStations() {
+    const { loggedInUser } = this.props;
+    if (loggedInUser) {
+      const clientId = loggedInUser.clients[0].id;
+      this.props.fetchClientStations(clientId);
+    }
+  }
+
+  handleStationChange(event) {
+    this.props.setStation(event.target.value);
+  }
+
   handleViewChange(event) {
     this.props.setView(event.target.value);
   }
 
   render() {
-    const { stationData, start, end, view, dashboardError, dashboardLoading } = this.props;
+    const { clientStations, stationId, stationData, start, end, view, dashboardError, dashboardLoading } = this.props;
 
     const precipitationChartOptions = {
       maintainAspectRatio: false,
@@ -92,6 +106,9 @@ class DashboardContainer extends React.PureComponent {
       <Grid container spacing={24}>
         <Grid item xs={12}>
           <DashboardHeader
+            stations={clientStations}
+            stationId={stationId}
+            onStationChange={this.handleStationChange}
             start={start}
             end={end}
             view={view}
@@ -118,7 +135,10 @@ class DashboardContainer extends React.PureComponent {
 }
 
 DashboardContainer.propTypes = {
+  fetchClientStations: PropTypes.func.isRequired,
   fetchStationData: PropTypes.func.isRequired,
+  clientStations: PropTypes.array,
+  stationId: PropTypes.number,
   stationData: PropTypes.array,
   loggedInUser: PropTypes.object,
   increment: PropTypes.func.isRequired,
@@ -127,6 +147,8 @@ DashboardContainer.propTypes = {
   end: PropTypes.string,
   dashboardError: PropTypes.bool,
   dashboardLoading: PropTypes.bool,
+  setStation: PropTypes.func.isRequired,
+  setView: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -135,9 +157,11 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
+  fetchClientStations,
   fetchStationData,
   increment,
   decrement,
+  setStation,
   setView,
 };
 

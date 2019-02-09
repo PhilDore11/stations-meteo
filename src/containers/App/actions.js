@@ -3,6 +3,9 @@ import {
   WARNING,
   ERROR,
   RESET_ALERTS,
+  FETCH_CLIENT_STATIONS,
+  FETCH_CLIENT_STATIONS_SUCCESS,
+  FETCH_CLIENT_STATIONS_ERROR,
   FETCH_STATION_DATA,
   FETCH_STATION_DATA_SUCCESS,
   FETCH_STATION_DATA_ERROR,
@@ -28,6 +31,21 @@ export const error = message => ({
 
 export const resetAlerts = () => ({
   type: RESET_ALERTS,
+});
+
+export const fetchClientStations = (clientId) => ({
+  type: FETCH_CLIENT_STATIONS,
+  clientId,
+});
+
+export const fetchClientStationsSuccess = res => ({
+  type: FETCH_CLIENT_STATIONS_SUCCESS,
+  res,
+});
+
+export const fetchClientStationsError = error => ({
+  type: FETCH_CLIENT_STATIONS_ERROR,
+  error,
 });
 
 export const fetchStationData = (clientId, start, end, view = 'day') => ({

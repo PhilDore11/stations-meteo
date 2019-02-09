@@ -1,5 +1,7 @@
 export const INCREMENT = "Dashboard/INCREMENT";
 export const DECREMENT = "Dashboard/DECREMENT";
+
+export const SET_STATION = "Dashboard/SET_STATION";
 export const SET_VIEW = "Dashboard/SET_VIEW";
 
 export const VIEWS = [{

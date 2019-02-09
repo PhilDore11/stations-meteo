@@ -9,9 +9,17 @@ import { ChevronLeftOutlined as ChevronLeftIcon, ChevronRightOutlined as Chevron
 
 import { VIEWS } from '../containers/Dashboard/constants';
 
-const ChartHeader = ({ start, end, view, increment, decrement, onViewChange }) => (
+const ChartHeader = ({ start, end, increment, decrement, stations, stationId, onStationChange, view, onViewChange }) => (
   <Grid container spacing={24} alignItems="center">
-    <Grid item xs={2} />
+    <Grid item xs={2}>
+      <TextField select value={stationId} onChange={onStationChange} fullWidth margin="normal" variant="outlined">
+        {stations && stations.map(station => (
+          <MenuItem key={station.id} value={station.id}>
+            {station.name}
+          </MenuItem>
+        ))}
+      </TextField>
+    </Grid>
     <Grid item xs>
       <Grid container spacing={24} justify="center" alignItems="center">
         <Grid item>
@@ -58,9 +66,12 @@ const ChartHeader = ({ start, end, view, increment, decrement, onViewChange }) =
 ChartHeader.propTypes = {
   start: PropTypes.string.isRequired,
   end: PropTypes.string.isRequired,
-  view: PropTypes.string.isRequired,
   increment: PropTypes.func.isRequired,
   decrement: PropTypes.func.isRequired,
+  stations: PropTypes.array.isRequired,
+  stationId: PropTypes.number,
+  onStationChange: PropTypes.func.isRequired,
+  view: PropTypes.string.isRequired,
   onViewChange: PropTypes.func.isRequired,
 };
 
