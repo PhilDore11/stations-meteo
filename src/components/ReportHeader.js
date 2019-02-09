@@ -18,12 +18,11 @@ const ReportHeader = ({ maxMonth, month, onMonthChange }) => (
     <Grid item xs={2}>
       <TextField select value={month} onChange={onMonthChange} fullWidth margin="normal" variant="outlined">
         {moment.months().map(
-          (month, index) =>
-            index <= maxMonth && (
-              <MenuItem key={index} value={index}>
-                {month}
-              </MenuItem>
-            ),
+          (month, index) => (
+            <MenuItem key={index} value={index}>
+              {month}
+            </MenuItem>
+          )
         )}
       </TextField>
     </Grid>

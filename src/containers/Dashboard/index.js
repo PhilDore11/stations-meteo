@@ -50,6 +50,13 @@ class DashboardContainer extends React.PureComponent {
     const precipitationChartOptions = {
       maintainAspectRatio: false,
       scales: {
+        yAxes: [
+          {
+            ticks: {
+              min: 0,
+            },
+          },
+        ],
         xAxes: [
           {
             type: 'time',
