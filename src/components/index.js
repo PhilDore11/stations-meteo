@@ -1,4 +1,6 @@
 export { default as Alert } from './Alert';
+export { default as NoData } from './NoData';
+export { default as Loading } from './Loading';
 export { default as Sidebar } from './Sidebar';
 
 export { default as ClientForm } from './ClientForm';

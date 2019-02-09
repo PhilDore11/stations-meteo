@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import moment from 'moment';
+import { isEmpty } from 'lodash';
 
 import { Grid } from '@material-ui/core';
 import { CloudOutlined as PrecipitationIcon } from '@material-ui/icons';
@@ -104,6 +105,7 @@ class DashboardContainer extends React.PureComponent {
             type="bar"
             title="Précipitations"
             icon={<PrecipitationIcon />}
+            hasData={!isEmpty(stationData)}
             data={precipitationChartData}
             options={precipitationChartOptions}
             error={dashboardError}

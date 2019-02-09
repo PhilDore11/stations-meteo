@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import moment from 'moment';
+import { isEmpty } from 'lodash';
 
 import { Grid } from '@material-ui/core';
 import { MultilineChartOutlined as IdfIcon, CloudOutlined as PrecipitationIcon } from '@material-ui/icons';
@@ -136,8 +137,16 @@ class ReportsContainer extends React.PureComponent {
             type: 'time',
             time: {
               unit: 'day',
-              min: moment().year(year).month(month).startOf('month').valueOf(),
-              max: moment().year(year).month(month).endOf('month').valueOf(),
+              min: moment()
+                .year(year)
+                .month(month)
+                .startOf('month')
+                .valueOf(),
+              max: moment()
+                .year(year)
+                .month(month)
+                .endOf('month')
+                .valueOf(),
             },
           },
         ],
@@ -183,6 +192,7 @@ class ReportsContainer extends React.PureComponent {
             type="line"
             title="IDF"
             icon={<IdfIcon />}
+            hasData={!isEmpty(idfData)}
             data={idfChartData}
             options={idfChartOptions}
             error={reportsError}
@@ -194,6 +204,7 @@ class ReportsContainer extends React.PureComponent {
             type="bar"
             title="Precipitations"
             icon={<PrecipitationIcon />}
+            hasData={!isEmpty(stationData)}
             data={precipitationChartData}
             options={precipitationChartOptions}
             error={dashboardError}

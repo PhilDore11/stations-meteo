@@ -8,22 +8,18 @@ import {
   ExpansionPanelSummary,
   ExpansionPanelDetails,
   Typography,
-  CircularProgress,
   Divider,
 } from '@material-ui/core';
 
-import {
-  ExpandMoreOutlined as ExpandMoreIcon,
-} from '@material-ui/icons';
+import { ExpandMoreOutlined as ExpandMoreIcon } from '@material-ui/icons';
 
 import { Line, Bar } from 'react-chartjs-2';
+
+import { Loading, NoData } from './';
 
 const styles = () => ({
   chartArea: {
     height: 500,
-  },
-  loading: {
-    margin: 'auto',
   },
 });
 
@@ -43,17 +39,18 @@ class ChartCard extends React.PureComponent {
   }
 
   getChartType(type) {
-    switch(type) {
-      case 'line': 
+    switch (type) {
+      case 'line':
         return Line;
-      case 'bar': 
+      case 'bar':
         return Bar;
-      default: return Line;
+      default:
+        return Line;
     }
   }
 
   render() {
-    const { classes, type, title, icon, data, options, error, loading } = this.props;
+    const { classes, type, title, icon, hasData, data, options, error, loading } = this.props;
     const { expanded } = this.state;
 
     const CartType = this.getChartType(type);
@@ -62,9 +59,7 @@ class ChartCard extends React.PureComponent {
       <ExpansionPanel expanded={expanded} onChange={this.handleExpand}>
         <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
           <Grid container spacing={24} alignItems="center">
-            <Grid item>
-              {icon}
-            </Grid>
+            <Grid item>{icon}</Grid>
             <Grid item xs>
               <Typography variant="subtitle1">{title}</Typography>
             </Grid>
@@ -72,11 +67,7 @@ class ChartCard extends React.PureComponent {
         </ExpansionPanelSummary>
         <Divider />
         <ExpansionPanelDetails className={classes.chartArea}>
-          {!error && !loading ? (
-            <CartType data={data} options={options} />
-          ) : (
-            <CircularProgress className={classes.loading} />
-          )}
+          {!error && !loading ? hasData ? <CartType data={data} options={options} /> : <NoData /> : <Loading />}
         </ExpansionPanelDetails>
       </ExpansionPanel>
     );
@@ -85,9 +76,12 @@ class ChartCard extends React.PureComponent {
 
 ChartCard.propTypes = {
   classes: PropTypes.object.isRequired,
-  children: PropTypes.element,
+  type: PropTypes.oneOf(['line', 'bar']),
   title: PropTypes.string,
   icon: PropTypes.element,
+  hasdata: PropTypes.bool,
+  data: PropTypes.object,
+  options: PropTypes.object,
   error: PropTypes.bool,
   loading: PropTypes.bool,
 };

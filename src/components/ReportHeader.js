@@ -7,7 +7,7 @@ import { Grid, TextField, MenuItem, Typography } from '@material-ui/core';
 
 const ReportHeader = ({ years, year, month, onYearChange, onMonthChange }) => (
   <Grid container spacing={24} alignItems="center">
-    <Grid item xs={2} />
+    <Grid item xs={4} />
     <Grid item xs>
       <Grid container justify="center">
         <Grid item>
@@ -15,7 +15,7 @@ const ReportHeader = ({ years, year, month, onYearChange, onMonthChange }) => (
         </Grid>
       </Grid>
     </Grid>
-    <Grid item xs={1}>
+    <Grid item xs={2}>
       <TextField select value={month} onChange={onMonthChange} fullWidth margin="normal" variant="outlined">
         {moment.months().map((month, index) => (
           <MenuItem key={index} value={index}>
@@ -24,7 +24,7 @@ const ReportHeader = ({ years, year, month, onYearChange, onMonthChange }) => (
         ))}
       </TextField>
     </Grid>
-    <Grid item xs={1}>
+    <Grid item xs={2}>
       <TextField select value={year} onChange={onYearChange} fullWidth margin="normal" variant="outlined">
         {years.map((year) => (
           <MenuItem key={year} value={year}>
