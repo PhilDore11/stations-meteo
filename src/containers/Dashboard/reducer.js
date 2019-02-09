@@ -7,16 +7,24 @@ import {
   INCREMENT,
   DECREMENT,
   SET_VIEW,
-} from './constants';
+} from '../constants';
 
-const initialDay = moment().year(2018).month(3).date(19);
+const initialDay = moment()
+  .year(2018)
+  .month(3)
+  .date(19);
 const initialState = {
-  start: moment(initialDay).startOf('day').toISOString(),
-  end: moment(initialDay).endOf('day').toISOString(),
+  start: moment(initialDay)
+    .startOf('day')
+    .toISOString(),
+  end: moment(initialDay)
+    .endOf('day')
+    .toISOString(),
   stationData: [],
   view: 'day',
   dashboardError: false,
-  dashboardLoading: false
+  dashboardLoading: false,
+
 };
 
 export default (state = initialState, action) => {
@@ -24,39 +32,51 @@ export default (state = initialState, action) => {
     case FETCH_STATION_DATA:
       return {
         ...state,
-        dashboardLoading: true
+        dashboardLoading: true,
       };
     case FETCH_STATION_DATA_SUCCESS:
       return {
         ...state,
         stationData: action.res,
         dashboardError: false,
-        dashboardLoading: false
+        dashboardLoading: false,
       };
     case FETCH_STATION_DATA_ERROR:
       return {
         ...state,
         dashboardError: true,
-        dashboardLoading: false
+        dashboardLoading: false,
       };
     case INCREMENT:
       return {
         ...state,
-        start: moment(state.start).add(1, state.view).toISOString(),
-        end: moment(state.end).add(1, state.view).toISOString()
+        start: moment(state.start)
+          .add(1, state.view)
+          .toISOString(),
+        end: moment(state.end)
+          .add(1, state.view)
+          .toISOString(),
       };
     case DECREMENT:
       return {
         ...state,
-        start: moment(state.start).subtract(1, state.view).toISOString(),
-        end: moment(state.end).subtract(1, state.view).toISOString()
+        start: moment(state.start)
+          .subtract(1, state.view)
+          .toISOString(),
+        end: moment(state.end)
+          .subtract(1, state.view)
+          .toISOString(),
       };
     case SET_VIEW:
       return {
         ...state,
         view: action.view,
-        start: moment(state.start).startOf(action.view).toISOString(),
-        end: moment(state.start).endOf(action.view).toISOString()
+        start: moment(state.start)
+          .startOf(action.view)
+          .toISOString(),
+        end: moment(state.start)
+          .endOf(action.view)
+          .toISOString(),
       };
     default:
       return state;

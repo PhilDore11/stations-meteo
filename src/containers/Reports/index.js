@@ -214,13 +214,10 @@ ReportsContainer.propTypes = {
   month: PropTypes.number,
   reportsError: PropTypes.bool,
   reportsLoading: PropTypes.bool,
-  dashboardError: PropTypes.bool,
-  dashboardLoading: PropTypes.bool,
 };
 
 const mapStateToProps = state => ({
   ...state.reports,
-  ...state.dashboard,
   ...state.login,
 });
 

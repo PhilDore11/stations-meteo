@@ -10,7 +10,7 @@ import { CloudOutlined as PrecipitationIcon } from '@material-ui/icons';
 
 import { blue } from '@material-ui/core/colors';
 
-import { fetchStationData, increment, decrement, setView } from './actions';
+import { fetchStationData, increment, decrement, setView } from '../actions';
 import { ChartCard, DashboardHeader } from '../../components';
 
 class DashboardContainer extends React.PureComponent {

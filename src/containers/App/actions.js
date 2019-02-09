@@ -3,23 +3,62 @@ import {
   WARNING,
   ERROR,
   RESET_ALERTS,
-} from "./constants";
+  FETCH_STATION_DATA,
+  FETCH_STATION_DATA_SUCCESS,
+  FETCH_STATION_DATA_ERROR,
+  FETCH_IDF_DATA,
+  FETCH_IDF_DATA_SUCCESS,
+  FETCH_IDF_DATA_ERROR,
+} from '../constants';
 
-export const success = (message) => ({
+export const success = message => ({
   type: SUCCESS,
-  message
+  message,
 });
 
-export const warning = (message) => ({
+export const warning = message => ({
   type: WARNING,
-  message
+  message,
 });
 
-export const error = (message) => ({
+export const error = message => ({
   type: ERROR,
-  message
+  message,
 });
 
 export const resetAlerts = () => ({
   type: RESET_ALERTS,
-})
+});
+
+export const fetchStationData = (clientId, start, end, view = 'day') => ({
+  type: FETCH_STATION_DATA,
+  clientId,
+  start,
+  end,
+  view,
+});
+
+export const fetchStationDataSuccess = res => ({
+  type: FETCH_STATION_DATA_SUCCESS,
+  res,
+});
+
+export const fetchStationDataError = error => ({
+  type: FETCH_STATION_DATA_ERROR,
+  error,
+});
+
+export const fetchIdfData = clientId => ({
+  type: FETCH_IDF_DATA,
+  clientId,
+});
+
+export const fetchIdfDataSuccess = res => ({
+  type: FETCH_IDF_DATA_SUCCESS,
+  res,
+});
+
+export const fetchIdfDataError = error => ({
+  type: FETCH_IDF_DATA_ERROR,
+  error,
+});
