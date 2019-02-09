@@ -1,8 +1,9 @@
 import moment from 'moment';
 
-import { FETCH_IDF_DATA, FETCH_IDF_DATA_SUCCESS, FETCH_IDF_DATA_ERROR, SET_MONTH } from './constants';
+import { FETCH_IDF_DATA, FETCH_IDF_DATA_SUCCESS, FETCH_IDF_DATA_ERROR, SET_YEAR, SET_MONTH } from './constants';
 
 const initialState = {
+  year: moment().year(),
   month: moment().month(),
   idfData: [],
   reportsError: false,
@@ -28,6 +29,11 @@ export default (state = initialState, action) => {
         ...state,
         reportsError: true,
         reportsLoading: false,
+      };
+    case SET_YEAR:
+      return {
+        ...state,
+        year: action.year,
       };
     case SET_MONTH:
       return {

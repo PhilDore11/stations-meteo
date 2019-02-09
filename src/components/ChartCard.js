@@ -16,6 +16,8 @@ import {
   ExpandMoreOutlined as ExpandMoreIcon,
 } from '@material-ui/icons';
 
+import { Line, Bar } from 'react-chartjs-2';
+
 const styles = () => ({
   chartArea: {
     height: 500,
@@ -40,9 +42,21 @@ class ChartCard extends React.PureComponent {
     this.setState({ expanded: !this.state.expanded });
   }
 
+  getChartType(type) {
+    switch(type) {
+      case 'line': 
+        return Line;
+      case 'bar': 
+        return Bar;
+      default: return Line;
+    }
+  }
+
   render() {
-    const { classes, children, title, icon, error, loading } = this.props;
+    const { classes, type, title, icon, data, options, error, loading } = this.props;
     const { expanded } = this.state;
+
+    const CartType = this.getChartType(type);
 
     return (
       <ExpansionPanel expanded={expanded} onChange={this.handleExpand}>
@@ -59,7 +73,7 @@ class ChartCard extends React.PureComponent {
         <Divider />
         <ExpansionPanelDetails className={classes.chartArea}>
           {!error && !loading ? (
-            <React.Fragment>{children}</React.Fragment>
+            <CartType data={data} options={options} />
           ) : (
             <CircularProgress className={classes.loading} />
           )}

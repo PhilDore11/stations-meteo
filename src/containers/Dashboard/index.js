@@ -10,8 +10,6 @@ import { CloudOutlined as PrecipitationIcon } from '@material-ui/icons';
 
 import { blue } from '@material-ui/core/colors';
 
-import { Bar } from 'react-chartjs-2';
-
 import { fetchStationData, increment, decrement, setView } from './actions';
 import { ChartCard, DashboardHeader } from '../../components';
 
@@ -101,12 +99,14 @@ class DashboardContainer extends React.PureComponent {
         </Grid>
         <Grid item xs={12}>
           <ChartCard
+            type="bar"
             title="Précipitations"
             icon={<PrecipitationIcon />}
+            data={precipitationChartData}
+            options={precipitationChartOptions}
             error={dashboardError}
-            loading={dashboardLoading}>
-            <Bar data={precipitationChartData} options={precipitationChartOptions} />
-          </ChartCard>
+            loading={dashboardLoading}
+          />
         </Grid>
       </Grid>
     );

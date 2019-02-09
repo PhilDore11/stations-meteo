@@ -10,9 +10,7 @@ import { MultilineChartOutlined as IdfIcon, CloudOutlined as PrecipitationIcon }
 
 import { blue, red, orange, green, cyan, purple } from '@material-ui/core/colors';
 
-import { Line, Bar } from 'react-chartjs-2';
-
-import { fetchStationData, fetchIdfData, setMonth } from '../actions';
+import { fetchStationData, fetchIdfData, setYear, setMonth } from '../actions';
 import { ChartCard, ReportHeader } from '../../components';
 
 const chartColors = [blue, red, orange, green, cyan, purple];
@@ -22,6 +20,7 @@ class ReportsContainer extends React.PureComponent {
     super(props);
 
     this.fetchIdfData = this.fetchIdfData.bind(this);
+    this.handleYearChange = this.handleYearChange.bind(this);
     this.handleMonthChange = this.handleMonthChange.bind(this);
   }
 
@@ -45,16 +44,16 @@ class ReportsContainer extends React.PureComponent {
   }
 
   fetchStationData() {
-    const { loggedInUser, month } = this.props;
+    const { loggedInUser, year, month } = this.props;
     const start = moment()
+      .year(year)
       .month(month)
       .startOf('month')
-      .subtract(1, 'year')
       .toISOString();
     const end = moment()
+      .year(year)
       .month(month)
       .endOf('month')
-      .subtract(1, 'year')
       .toISOString();
 
     if (loggedInUser) {
@@ -67,8 +66,21 @@ class ReportsContainer extends React.PureComponent {
     this.props.setMonth(event.target.value);
   }
 
+  handleYearChange(event) {
+    this.props.setYear(event.target.value);
+  }
+
   render() {
-    const { idfData, stationData, month, reportsError, reportsLoading, dashboardError, dashboardLoading } = this.props;
+    const {
+      idfData,
+      stationData,
+      year,
+      month,
+      reportsError,
+      reportsLoading,
+      dashboardError,
+      dashboardLoading,
+    } = this.props;
 
     const idfChartData = {
       labels: ['5 mins', '10 mins', '15 mins', '30 mins', '1 hr', '2 hrs', '6 hrs', '12 hrs', '24hrs'],
@@ -150,24 +162,42 @@ class ReportsContainer extends React.PureComponent {
       ],
     };
 
+    const currentYear = moment().year();
+    const reportYears = [];
+    [0, 1, 2, 3, 4, 5].forEach(index => reportYears.push(currentYear - index));
+
     return (
       <Grid container spacing={24}>
         <Grid item xs={12}>
-          <ReportHeader month={month} onMonthChange={this.handleMonthChange} />
-        </Grid>
-        <Grid item xs={12}>
-          <ChartCard title="IDF" icon={<IdfIcon />} error={reportsError} loading={reportsLoading}>
-            <Line data={idfChartData} options={idfChartOptions} />
-          </ChartCard>
+          <ReportHeader
+            years={reportYears}
+            year={year}
+            month={month}
+            onYearChange={this.handleYearChange}
+            onMonthChange={this.handleMonthChange}
+          />
         </Grid>
         <Grid item xs={12}>
           <ChartCard
+            type="line"
+            title="IDF"
+            icon={<IdfIcon />}
+            data={idfChartData}
+            options={idfChartOptions}
+            error={reportsError}
+            loading={reportsLoading}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <ChartCard
+            type="bar"
             title="Precipitations"
             icon={<PrecipitationIcon />}
+            data={precipitationChartData}
+            options={precipitationChartOptions}
             error={dashboardError}
-            loading={dashboardLoading}>
-            <Bar data={precipitationChartData} options={precipitationChartOptions} />
-          </ChartCard>
+            loading={dashboardLoading}
+          />
         </Grid>
       </Grid>
     );
@@ -196,6 +226,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
   fetchStationData,
   fetchIdfData,
+  setYear,
   setMonth,
 };
 
