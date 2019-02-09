@@ -13,7 +13,7 @@ import { blue } from '@material-ui/core/colors';
 import { Bar } from 'react-chartjs-2';
 
 import { fetchStationData, increment, decrement, setView } from './actions';
-import { ChartCard, ChartHeader } from '../../components';
+import { ChartCard, DashboardHeader } from '../../components';
 
 class DashboardContainer extends React.PureComponent {
   constructor(props) {
@@ -90,7 +90,7 @@ class DashboardContainer extends React.PureComponent {
     return (
       <Grid container spacing={24}>
         <Grid item xs={12}>
-          <ChartHeader
+          <DashboardHeader
             start={start}
             end={end}
             view={view}

@@ -5,7 +5,7 @@ import moment from 'moment';
 
 import { Grid, TextField, MenuItem, Typography } from '@material-ui/core';
 
-const ReportHeader = ({ maxMonth, month, onMonthChange }) => (
+const ReportHeader = ({ month, onMonthChange }) => (
   <Grid container spacing={24} alignItems="center">
     <Grid item xs={2} />
     <Grid item xs>
@@ -30,7 +30,6 @@ const ReportHeader = ({ maxMonth, month, onMonthChange }) => (
 );
 
 ReportHeader.propTypes = {
-  maxMonth: PropTypes.number,
   month: PropTypes.number.isRequired,
   onMonthChange: PropTypes.func.isRequired,
 };
