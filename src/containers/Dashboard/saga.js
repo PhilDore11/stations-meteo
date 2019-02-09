@@ -18,11 +18,11 @@ function* fetchStationData(action) {
   };
 
   try {
-    const { clientId, start, end } = action;
+    const { clientId, start, end, view } = action;
 
     const response = yield call(
       jsonFetch,
-      `${process.env.REACT_APP_API_URL}/stationData/${clientId}/?start=${start}&end=${end}`
+      `${process.env.REACT_APP_API_URL}/stationData/${clientId}/?start=${start}&end=${end}&view=${view}`
     );
 
     yield requestHandler(response, {action: fetchStationDataSuccess}, errorObject);

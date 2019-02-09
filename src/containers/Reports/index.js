@@ -107,7 +107,6 @@ class ReportsContainer extends React.PureComponent {
 
     const idfChartOptions = {
       maintainAspectRatio: false,
-      showLines: true,
       scales: {
         yAxes: [
           {
@@ -137,6 +136,8 @@ class ReportsContainer extends React.PureComponent {
             type: 'time',
             time: {
               unit: 'day',
+              min: moment().year(year).month(month).startOf('month').valueOf(),
+              max: moment().year(year).month(month).endOf('month').valueOf(),
             },
           },
         ],

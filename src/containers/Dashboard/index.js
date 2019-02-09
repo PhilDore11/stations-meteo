@@ -31,10 +31,10 @@ class DashboardContainer extends React.PureComponent {
   }
 
   fetchStationData() {
-    const { loggedInUser } = this.props;
+    const { loggedInUser, start, end, view } = this.props;
     if (loggedInUser) {
       const clientId = loggedInUser.clients[0].id;
-      this.props.fetchStationData(clientId, this.props.start, this.props.end);
+      this.props.fetchStationData(clientId, start, end, view);
     }
   }
 
@@ -60,6 +60,8 @@ class DashboardContainer extends React.PureComponent {
             type: 'time',
             time: {
               unit: view === 'day' ? 'hour' : 'day',
+              min: moment(start).valueOf(),
+              max: moment(end).valueOf(),
             },
           },
         ],
