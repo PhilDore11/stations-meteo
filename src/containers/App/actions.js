@@ -12,6 +12,9 @@ import {
   FETCH_IDF_DATA,
   FETCH_IDF_DATA_SUCCESS,
   FETCH_IDF_DATA_ERROR,
+  FETCH_IDF_STATION_DATA,
+  FETCH_IDF_STATION_DATA_SUCCESS,
+  FETCH_IDF_STATION_DATA_ERROR,
 } from '../constants';
 
 export const success = message => ({
@@ -33,7 +36,7 @@ export const resetAlerts = () => ({
   type: RESET_ALERTS,
 });
 
-export const fetchClientStations = (clientId) => ({
+export const fetchClientStations = clientId => ({
   type: FETCH_CLIENT_STATIONS,
   clientId,
 });
@@ -48,9 +51,9 @@ export const fetchClientStationsError = error => ({
   error,
 });
 
-export const fetchStationData = (clientId, start, end, view = 'day') => ({
+export const fetchStationData = (stationId, start, end, view = 'day') => ({
   type: FETCH_STATION_DATA,
-  clientId,
+  stationId,
   start,
   end,
   view,
@@ -66,9 +69,9 @@ export const fetchStationDataError = error => ({
   error,
 });
 
-export const fetchIdfData = clientId => ({
+export const fetchIdfData = stationId => ({
   type: FETCH_IDF_DATA,
-  clientId,
+  stationId,
 });
 
 export const fetchIdfDataSuccess = res => ({
@@ -78,5 +81,21 @@ export const fetchIdfDataSuccess = res => ({
 
 export const fetchIdfDataError = error => ({
   type: FETCH_IDF_DATA_ERROR,
+  error,
+});
+
+export const fetchIdfStationData = (stationId, month) => ({
+  type: FETCH_IDF_STATION_DATA,
+  stationId,
+  month,
+});
+
+export const fetchIdfStationDataSuccess = res => ({
+  type: FETCH_IDF_STATION_DATA_SUCCESS,
+  res,
+});
+
+export const fetchIdfStationDataError = error => ({
+  type: FETCH_IDF_STATION_DATA_ERROR,
   error,
 });

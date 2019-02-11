@@ -11,42 +11,34 @@ import { CloudOutlined as PrecipitationIcon } from '@material-ui/icons';
 
 import { blue } from '@material-ui/core/colors';
 
-import { fetchClientStations, fetchStationData, increment, decrement, setStation, setView } from '../actions';
+import { fetchStationData, increment, decrement, setStation, setView } from '../actions';
 import { ChartCard, DashboardHeader } from '../../components';
 
 class DashboardContainer extends React.PureComponent {
   constructor(props) {
     super(props);
 
-    this.fetchStationData = this.fetchStationData.bind(this);
     this.handleStationChange = this.handleStationChange.bind(this);
     this.handleViewChange = this.handleViewChange.bind(this);
   }
 
   componentDidMount() {
     this.fetchStationData();
-    this.fetchClientStations();
   }
   componentDidUpdate(prevProps) {
-    if (this.props.start !== prevProps.start || this.props.end !== prevProps.end) {
+    if (
+      this.props.stationId !== prevProps.stationId ||
+      this.props.start !== prevProps.start ||
+      this.props.end !== prevProps.end ||
+      this.props.view !== prevProps.view
+    ) {
       this.fetchStationData();
     }
   }
 
   fetchStationData() {
-    const { loggedInUser, start, end, view } = this.props;
-    if (loggedInUser) {
-      const clientId = loggedInUser.clients[0].id;
-      this.props.fetchStationData(clientId, start, end, view);
-    }
-  }
-
-  fetchClientStations() {
-    const { loggedInUser } = this.props;
-    if (loggedInUser) {
-      const clientId = loggedInUser.clients[0].id;
-      this.props.fetchClientStations(clientId);
-    }
+    const { stationId, start, end, view } = this.props;
+    this.props.fetchStationData(stationId, start, end, view);
   }
 
   handleStationChange(event) {
@@ -135,12 +127,10 @@ class DashboardContainer extends React.PureComponent {
 }
 
 DashboardContainer.propTypes = {
-  fetchClientStations: PropTypes.func.isRequired,
   fetchStationData: PropTypes.func.isRequired,
   clientStations: PropTypes.array,
-  stationId: PropTypes.number,
+  stationId: PropTypes.string,
   stationData: PropTypes.array,
-  loggedInUser: PropTypes.object,
   increment: PropTypes.func.isRequired,
   decrement: PropTypes.func.isRequired,
   start: PropTypes.string,
@@ -152,12 +142,11 @@ DashboardContainer.propTypes = {
 };
 
 const mapStateToProps = state => ({
+  ...state.app,
   ...state.dashboard,
-  ...state.login,
 });
 
 const mapDispatchToProps = {
-  fetchClientStations,
   fetchStationData,
   increment,
   decrement,

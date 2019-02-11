@@ -4,7 +4,7 @@ import jsonFetch from 'json-fetch';
 
 import { requestHandler, errorHandler } from '../../utils/sagaHelpers';
 
-import { FETCH_CLIENT_STATIONS, FETCH_STATION_DATA, FETCH_IDF_DATA } from '../constants';
+import { FETCH_CLIENT_STATIONS, FETCH_STATION_DATA, FETCH_IDF_DATA, FETCH_IDF_STATION_DATA } from '../constants';
 
 import {
   fetchClientStationsSuccess,
@@ -13,6 +13,8 @@ import {
   fetchStationDataError,
   fetchIdfDataSuccess,
   fetchIdfDataError,
+  fetchIdfStationDataSuccess,
+  fetchIdfStationDataError,
 } from '../actions';
 
 function* fetchStationData(action) {
@@ -22,11 +24,11 @@ function* fetchStationData(action) {
   };
 
   try {
-    const { clientId, start, end, view } = action;
+    const { stationId, start, end, view } = action;
 
     const response = yield call(
       jsonFetch,
-      `${process.env.REACT_APP_API_URL}/stationData/${clientId}/?start=${start}&end=${end}&view=${view}`,
+      `${process.env.REACT_APP_API_URL}/stationData/${stationId}/?start=${start}&end=${end}&view=${view}`,
     );
 
     yield requestHandler(response, { action: fetchStationDataSuccess }, errorObject);
@@ -42,11 +44,28 @@ function* fetchIdfData(action) {
   };
 
   try {
-    const { clientId } = action;
+    const { stationId } = action;
 
-    const response = yield call(jsonFetch, `${process.env.REACT_APP_API_URL}/idfData/${clientId}`);
+    const response = yield call(jsonFetch, `${process.env.REACT_APP_API_URL}/idfData/${stationId}`);
 
     yield requestHandler(response, { action: fetchIdfDataSuccess }, errorObject);
+  } catch (e) {
+    yield errorHandler(errorObject);
+  }
+}
+
+function* fetchIdfStationData(action) {
+  const errorObject = {
+    action: fetchIdfStationDataError,
+    message: 'Error Fetching Client Stations Data',
+  };
+
+  try {
+    const { stationId, month } = action;
+
+    const response = yield call(jsonFetch, `${process.env.REACT_APP_API_URL}/idfData/${stationId}/stationData?month=${month}`);
+
+    yield requestHandler(response, { action: fetchIdfStationDataSuccess }, errorObject);
   } catch (e) {
     yield errorHandler(errorObject);
   }
@@ -73,6 +92,7 @@ function* defaultSaga() {
   yield takeLatest(FETCH_CLIENT_STATIONS, fetchClientStations);
   yield takeLatest(FETCH_STATION_DATA, fetchStationData);
   yield takeLatest(FETCH_IDF_DATA, fetchIdfData);
+  yield takeLatest(FETCH_IDF_STATION_DATA, fetchIdfStationData);
 }
 
 export default defaultSaga;

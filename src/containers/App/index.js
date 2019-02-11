@@ -21,7 +21,7 @@ import {
 
 import { Alert, Sidebar } from '../../components';
 
-import { resetAlerts } from './actions';
+import { fetchClientStations, resetAlerts } from '../actions';
 
 const styles = theme => ({
   root: {
@@ -36,6 +36,24 @@ const styles = theme => ({
 });
 
 class App extends React.PureComponent {
+  componentDidMount() {
+    this.fetchClientStations();
+  }
+  componentDidUpdate(prevProps) {
+    if (this.props.loggedInUser !== prevProps.loggedInUser) {
+      this.fetchClientStations();
+    }
+  }
+  
+  fetchClientStations() {
+    const { loggedInUser } = this.props;
+    if (loggedInUser) {
+      const clientId = loggedInUser.clients[0].id;
+      this.props.fetchClientStations(clientId);
+    }
+  }
+
+
   privateRouteRender(loggedInUser, container) {
     return () => (loggedInUser ? container : <Redirect to="/login" />);
   }
@@ -105,6 +123,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
+  fetchClientStations,
   resetAlerts,
 };
 

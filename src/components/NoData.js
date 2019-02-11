@@ -12,7 +12,7 @@ const styles = theme => ({
 });
 
 const NoData = ({ classes }) => (
-  <Grid container direction="column" spacing={12} justify="center" alignItems="center">
+  <Grid container direction="column" justify="center" alignItems="center">
     <Grid item>
       <WarningIcon fontSize="large" color="action" className={classes.icon} />
     </Grid>

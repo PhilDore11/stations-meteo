@@ -14,7 +14,7 @@ const ChartHeader = ({ start, end, increment, decrement, stations, stationId, on
     <Grid item xs={2}>
       <TextField select value={stationId} onChange={onStationChange} fullWidth margin="normal" variant="outlined">
         {stations && stations.map(station => (
-          <MenuItem key={station.id} value={station.id}>
+          <MenuItem key={station.stationId} value={station.stationId}>
             {station.name}
           </MenuItem>
         ))}
@@ -69,7 +69,7 @@ ChartHeader.propTypes = {
   increment: PropTypes.func.isRequired,
   decrement: PropTypes.func.isRequired,
   stations: PropTypes.array.isRequired,
-  stationId: PropTypes.number,
+  stationId: PropTypes.string,
   onStationChange: PropTypes.func.isRequired,
   view: PropTypes.string.isRequired,
   onViewChange: PropTypes.func.isRequired,

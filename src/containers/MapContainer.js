@@ -1,106 +1,94 @@
-import React from "react";
+import React from 'react';
+import PropTypes from 'prop-types';
+
+import { connect } from 'react-redux';
 
 import {
+  withStyles,
   Divider,
   Grid,
-  Card,
-  CardHeader,
-  CardContent,
-  Button,
-  Popover,
-  Typography
-} from "@material-ui/core";
+  ExpansionPanel,
+  ExpansionPanelSummary,
+  Typography,
+  ExpansionPanelDetails,
+} from '@material-ui/core';
 
-import { RoomOutlined as PinIcon } from "@material-ui/icons";
+import { ExpandMoreOutlined as ExpandMoreIcon, MapOutlined as MapIcon } from '@material-ui/icons';
 
-import GoogleMapReact from "google-map-react";
+import GoogleMapReact from 'google-map-react';
+
+import { StationPin } from '../components';
+
+const styles = () => ({
+  chartArea: {
+    height: 500,
+  },
+});
 
 class MapContainer extends React.PureComponent {
   constructor(props) {
     super(props);
 
     this.state = {
-      anchorEl: null
+      expanded: true,
     };
 
-    this.handleClick = this.handleClick.bind(this);
-    this.handleClose = this.handleClose.bind(this);
+    this.handleExpand = this.handleExpand.bind(this);
   }
 
-  handleClick(event) {
-    this.setState({ anchorEl: event.currentTarget });
-  }
-
-  handleClose() {
-    this.setState({ anchorEl: null });
+  handleExpand() {
+    this.setState({ expanded: !this.state.expanded });
   }
 
   render() {
-    const { anchorEl } = this.state;
-    const open = Boolean(anchorEl);
+    const { classes, clientStations } = this.props;
+    const { expanded } = this.state;
 
     return (
       <Grid container spacing={24}>
         <Grid item xs={12}>
-          <Card>
-            <CardHeader title="Map" subheader="Sous-titre" />
+          <ExpansionPanel expanded={expanded} onChange={this.handleExpand}>
+            <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+              <Grid container spacing={24} alignItems="center">
+                <Grid item>
+                  <MapIcon />
+                </Grid>
+                <Grid item xs>
+                  <Typography variant="subtitle1">Carte de Stations</Typography>
+                </Grid>
+              </Grid>
+            </ExpansionPanelSummary>
             <Divider />
-            <CardContent>
-              <div style={{ height: "60vh", width: "100%" }}>
-                <GoogleMapReact
-                  bootstrapURLKeys={{
-                    key: "AIzaSyBBzPnmM8AuGNrNyLwL-mwXqUXQf0R4Mc8"
-                  }}
-                  center={{
-                    lat: 45.435117,
-                    lng: -73.15692
-                  }}
-                  zoom={11}
-                >
-                  <Button
-                    lat={45.435117}
-                    lng={-73.15692}
-                    aria-owns={open ? "simple-popper" : undefined}
-                    aria-haspopup="true"
-                    variant="fab"
-                    color="secondary"
-                    mini
-                    onClick={this.handleClick}
-                  >
-                    <PinIcon />
-                  </Button>
-                  <Popover
-                    id="simple-popper"
-                    open={open}
-                    anchorEl={anchorEl}
-                    onClose={this.handleClose}
-                    anchorOrigin={{
-                      vertical: "bottom",
-                      horizontal: "right"
-                    }}
-                    transformOrigin={{
-                      vertical: "top",
-                      horizontal: "left"
-                    }}
-                  >
-                    <Card>
-                      <CardHeader title="Station 1" subheader="Sous-title" />
-                      <Divider />
-                      <CardContent>
-                        <Typography variant="body1">
-                          Information au sujet de la station.
-                        </Typography>
-                      </CardContent>
-                    </Card>
-                  </Popover>
-                </GoogleMapReact>
-              </div>
-            </CardContent>
-          </Card>
+            <ExpansionPanelDetails className={classes.chartArea}>
+              <GoogleMapReact
+                bootstrapURLKeys={{
+                  key: 'AIzaSyBBzPnmM8AuGNrNyLwL-mwXqUXQf0R4Mc8',
+                }}
+                center={{
+                  lat: clientStations[0].latitude,
+                  lng: clientStations[0].longitude,
+                }}
+                zoom={12}>
+                {clientStations &&
+                  clientStations.map(station => (
+                    <StationPin key={station.id} lat={station.latitude} lng={station.longitude} station={station} />
+                  ))}
+              </GoogleMapReact>
+            </ExpansionPanelDetails>
+          </ExpansionPanel>
         </Grid>
       </Grid>
     );
   }
 }
 
-export default MapContainer;
+MapContainer.propTypes = {
+  clientStations: PropTypes.array,
+};
+
+const mapStateToProps = state => ({
+  ...state.app,
+  ...state.reports,
+});
+
+export default connect(mapStateToProps)(withStyles(styles)(MapContainer));

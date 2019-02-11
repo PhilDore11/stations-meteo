@@ -52,7 +52,7 @@ const clientSidebarItems = [
   },
   {
     icon: <MapIcon />,
-    label: 'Map',
+    label: 'Carte de Stations',
     location: '/map',
   },
 ];

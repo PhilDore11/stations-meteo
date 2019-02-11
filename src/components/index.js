@@ -9,8 +9,11 @@ export { default as ClientModal } from './ClientModal';
 export { default as ClientRow } from './ClientRow';
 
 export { default as StationCard } from './StationCard';
+export { default as StationPin } from './StationPin';
 
 export { default as ChartCard } from './ChartCard';
 
 export { default as DashboardHeader } from './DashboardHeader';
 export { default as ReportHeader } from './ReportHeader';
+
+export { default as ReportTableCard } from './ReportTableCard';
