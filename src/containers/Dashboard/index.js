@@ -38,7 +38,7 @@ class DashboardContainer extends React.PureComponent {
 
   fetchStationData() {
     const { stationId, start, end, view } = this.props;
-    this.props.fetchStationData(stationId, start, end, view);
+    stationId && this.props.fetchStationData(stationId, start, end, view);
   }
 
   handleStationChange(event) {
@@ -141,10 +141,13 @@ DashboardContainer.propTypes = {
   setView: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = state => ({
-  ...state.app,
-  ...state.dashboard,
-});
+const mapStateToProps = state => {
+  console.log('app', state.app);
+  return {
+    ...state.app,
+    ...state.dashboard,
+  };
+};
 
 const mapDispatchToProps = {
   fetchStationData,

@@ -11,7 +11,7 @@ import {
 import {
   loginSuccess,
   loginError,
-} from './actions';
+} from '../actions';
 
 function* loginGenerator(action) {
   const errorObject = {
@@ -26,6 +26,7 @@ function* loginGenerator(action) {
       { body: action, method: 'POST' }
     );
     yield requestHandler(response, {action: loginSuccess, message: 'Login Successful'}, errorObject);
+    yield 
   } catch (e) {
     yield errorHandler(errorObject);
   }

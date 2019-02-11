@@ -62,7 +62,7 @@ class ReportsContainer extends React.PureComponent {
       .endOf('month')
       .toISOString();
 
-    this.props.fetchStationData(stationId, start, end);
+    stationId && this.props.fetchStationData(stationId, start, end);
   }
 
   handleStationChange(event) {

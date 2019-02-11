@@ -1,4 +1,11 @@
-import { ERROR, WARNING, SUCCESS, RESET_ALERTS } from '../constants';
+import {
+  LOGOUT,
+  ERROR,
+  WARNING,
+  SUCCESS,
+  RESET_ALERTS,
+  SET_STATION,
+} from '../constants';
 
 const initialState = {
   success: false,
@@ -9,6 +16,10 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
+    case LOGOUT:
+      return {
+        ...initialState,
+      };
     case SUCCESS:
       return {
         ...state,
@@ -30,6 +41,11 @@ export default (state = initialState, action) => {
     case RESET_ALERTS:
       return {
         ...initialState,
+      };
+    case SET_STATION:
+      return {
+        ...state,
+        stationId: action.stationId,
       };
     default:
       return state;

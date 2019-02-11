@@ -65,8 +65,8 @@ class MapContainer extends React.PureComponent {
                   key: 'AIzaSyBBzPnmM8AuGNrNyLwL-mwXqUXQf0R4Mc8',
                 }}
                 center={{
-                  lat: clientStations[0].latitude,
-                  lng: clientStations[0].longitude,
+                  lat: clientStations && clientStations[0].latitude,
+                  lng: clientStations && clientStations[0].longitude,
                 }}
                 zoom={12}>
                 {clientStations &&
@@ -87,7 +87,6 @@ MapContainer.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  ...state.app,
   ...state.reports,
 });
 
