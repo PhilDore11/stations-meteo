@@ -22,12 +22,15 @@ const initialState = {
   year: moment().year(),
   month: moment().month(),
   stationData: [],
+  stationDataLoading: false,
   idfData: [],
+  idfDataLoading: false,
   idfStationData: [],
+  idfStationDataLoading: false,
   clientStations: [],
+  clientStationsLoading: [],
   stationId: '',
   reportsError: false,
-  reportsLoading: false,
 };
 
 export default (state = initialState, action) => {
@@ -39,74 +42,74 @@ export default (state = initialState, action) => {
     case FETCH_CLIENT_STATIONS:
       return {
         ...state,
-        reportsLoading: true,
+        clientStationsLoading: true,
       };
     case FETCH_CLIENT_STATIONS_SUCCESS:
       return {
         ...state,
-        reportsLoading: false,
+        clientStationsLoading: false,
         clientStations: action.res,
         stationId: action.res[0].stationId,
       };
     case FETCH_CLIENT_STATIONS_ERROR:
       return {
         ...state,
-        reportsLoading: false,
+        clientStationsLoading: false,
         reportsError: true,
       };
     case FETCH_STATION_DATA:
       return {
         ...state,
-        reportsLoading: true,
+        stationDataLoading: true,
       };
     case FETCH_STATION_DATA_SUCCESS:
       return {
         ...state,
         stationData: action.res,
         reportsError: false,
-        reportsLoading: false,
+        stationDataLoading: false,
       };
     case FETCH_STATION_DATA_ERROR:
       return {
         ...state,
         reportsError: true,
-        reportsLoading: false,
+        stationDataLoading: false,
       };
     case FETCH_IDF_DATA:
       return {
         ...state,
-        reportsLoading: true,
+        idfDataLoading: true,
       };
     case FETCH_IDF_DATA_SUCCESS:
       return {
         ...state,
         idfData: action.res,
         reportsError: false,
-        reportsLoading: false,
+        idfDataLoading: false,
       };
     case FETCH_IDF_DATA_ERROR:
       return {
         ...state,
         reportsError: true,
-        reportsLoading: false,
+        idfDataLoading: false,
       };
     case FETCH_IDF_STATION_DATA:
       return {
         ...state,
-        reportsLoading: true,
+        idfStationDataLoading: true,
       };
     case FETCH_IDF_STATION_DATA_SUCCESS:
       return {
         ...state,
         idfStationData: action.res,
         reportsError: false,
-        reportsLoading: false,
+        idfStationDataLoading: false,
       };
     case FETCH_IDF_STATION_DATA_ERROR:
       return {
         ...state,
         reportsError: true,
-        reportsLoading: false,
+        idfStationDataLoading: false,
       };
     case SET_YEAR:
       return {

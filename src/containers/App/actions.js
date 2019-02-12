@@ -84,10 +84,9 @@ export const fetchIdfDataError = error => ({
   error,
 });
 
-export const fetchIdfStationData = (stationId, month) => ({
+export const fetchIdfStationData = stationData => ({
   type: FETCH_IDF_STATION_DATA,
-  stationId,
-  month,
+  stationData,
 });
 
 export const fetchIdfStationDataSuccess = res => ({

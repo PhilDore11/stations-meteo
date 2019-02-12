@@ -73,8 +73,8 @@ class ReportTableCard extends React.PureComponent {
                       Intensite (mm/h)
                     </TableCell>
                     {data.map(stationData => (
-                      <TableCell>
-                        {parseFloat((stationData.intensity * 60) / stationData.increment).toFixed(2)}
+                      <TableCell key={stationData.increment}>
+                        {parseFloat(stationData.intensity * (60 / stationData.increment) * 1.0068).toFixed(2)}
                       </TableCell>
                     ))}
                   </TableRow>

@@ -7,18 +7,15 @@ import moment from 'moment';
 import { isEmpty, chain } from 'lodash';
 
 import { Grid } from '@material-ui/core';
-import { MultilineChartOutlined as IdfIcon, CloudOutlined as PrecipitationIcon, ListOutlined as TableIcon } from '@material-ui/icons';
+import {
+  MultilineChartOutlined as IdfIcon,
+  CloudOutlined as PrecipitationIcon,
+  ListOutlined as TableIcon,
+} from '@material-ui/icons';
 
 import { grey, blue } from '@material-ui/core/colors';
 
-import {
-  fetchStationData,
-  fetchIdfData,
-  fetchIdfStationData,
-  setStation,
-  setYear,
-  setMonth,
-} from '../actions';
+import { fetchStationData, fetchIdfData, fetchIdfStationData, setStation, setYear, setMonth } from '../actions';
 import { ChartCard, ReportHeader, ReportTableCard } from '../../components';
 
 const chartColors = [grey[400], grey[500], grey[600]];
@@ -37,16 +34,23 @@ class ReportsContainer extends React.PureComponent {
     this.fetchStationData();
   }
   componentDidUpdate(prevProps) {
-    if (this.props.month !== prevProps.month || this.props.stationId !== prevProps.stationId) {
-      this.fetchIdfData();
+    const { year, month, stationId, stationData } = this.props;
+    if (year !== prevProps.year || month !== prevProps.month || stationId !== prevProps.stationId) {
       this.fetchStationData();
+    }
+
+    if (stationId !== prevProps.stationId) {
+      this.fetchIdfData();
+    }
+
+    if (stationData && stationData !== prevProps.stationData) {
+      this.props.fetchIdfStationData(stationData);
     }
   }
 
   fetchIdfData() {
-    const { stationId, month } = this.props;
+    const { stationId } = this.props;
     this.props.fetchIdfData(stationId);
-    stationId && this.props.fetchIdfStationData(stationId, month);
   }
 
   fetchStationData() {
@@ -78,6 +82,7 @@ class ReportsContainer extends React.PureComponent {
   }
 
   render() {
+    console.log('RENDER', this.props);
     const {
       clientStations,
       stationId,
@@ -87,9 +92,10 @@ class ReportsContainer extends React.PureComponent {
       year,
       month,
       reportsError,
-      reportsLoading,
-      reportError,
-      reportLoading,
+      clientStationsLoading,
+      idfDataLoading,
+      idfStationDataLoading,
+      stationDataLoading,
     } = this.props;
 
     const idfChartData = {
@@ -217,7 +223,7 @@ class ReportsContainer extends React.PureComponent {
             data={idfChartData}
             options={idfChartOptions}
             error={reportsError}
-            loading={reportsLoading}
+            loading={clientStationsLoading || idfDataLoading || idfStationDataLoading}
           />
         </Grid>
         <Grid item xs={12}>
@@ -226,8 +232,8 @@ class ReportsContainer extends React.PureComponent {
             icon={<TableIcon />}
             hasData={!isEmpty(idfStationData)}
             data={idfStationData}
-            error={reportError}
-            loading={reportLoading}
+            error={reportsError}
+            loading={clientStationsLoading || idfDataLoading || idfStationDataLoading}
           />
         </Grid>
         <Grid item xs={12}>
@@ -238,8 +244,8 @@ class ReportsContainer extends React.PureComponent {
             hasData={!isEmpty(stationData)}
             data={precipitationChartData}
             options={precipitationChartOptions}
-            error={reportError}
-            loading={reportLoading}
+            error={reportsError}
+            loading={clientStationsLoading || stationDataLoading}
           />
         </Grid>
       </Grid>
@@ -266,7 +272,6 @@ ReportsContainer.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  ...state.app,
   ...state.reports,
 });
 

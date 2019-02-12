@@ -141,13 +141,9 @@ DashboardContainer.propTypes = {
   setView: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = state => {
-  console.log('app', state.app);
-  return {
-    ...state.app,
-    ...state.dashboard,
-  };
-};
+const mapStateToProps = state => ({
+  ...state.dashboard,
+});
 
 const mapDispatchToProps = {
   fetchStationData,

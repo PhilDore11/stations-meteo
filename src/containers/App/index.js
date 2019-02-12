@@ -66,8 +66,7 @@ class App extends React.PureComponent {
   }
 
   render() {
-    const { classes, loggedInUser, clientStations, message } = this.props;
-    console.log('clientStations', clientStations);
+    const { classes, loggedInUser, message } = this.props;
 
     return (
       <React.Fragment>

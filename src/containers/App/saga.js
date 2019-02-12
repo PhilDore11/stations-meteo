@@ -1,3 +1,4 @@
+import { reduce, concat } from 'lodash';
 import { call, takeLatest } from 'redux-saga/effects';
 
 import jsonFetch from 'json-fetch';
@@ -54,6 +55,35 @@ function* fetchIdfData(action) {
   }
 }
 
+const getMaxStationData = (data, interval) => {
+  let maxValue = 0;
+  const arrayOfIndexes = Array.from({ length: interval / 5 }, (v, k) => k);
+
+  const dataLength = data.length;
+
+  data.forEach((dataItem, i) => {
+    const subStationData = reduce(
+      arrayOfIndexes,
+      (result, index) => {
+        if (i + index < dataLength) {
+          return concat(result, data[i + index]);
+        }
+
+        return result;
+      },
+      [],
+    );
+
+    const newSum = reduce(subStationData, (result, data) => result + data.intensity, 0);
+
+    if (newSum > maxValue) {
+      maxValue = newSum;
+    }
+  });
+
+  return maxValue;
+};
+
 function* fetchIdfStationData(action) {
   const errorObject = {
     action: fetchIdfStationDataError,
@@ -61,11 +91,20 @@ function* fetchIdfStationData(action) {
   };
 
   try {
-    const { stationId, month } = action;
+    const { stationData } = action;
+    const idfStationData = [
+      { increment: 5, intensity: yield getMaxStationData(stationData, 5) },
+      { increment: 10, intensity: yield getMaxStationData(stationData, 10) },
+      { increment: 15, intensity: yield getMaxStationData(stationData, 15) },
+      { increment: 30, intensity: yield getMaxStationData(stationData, 30) },
+      { increment: 60, intensity: yield getMaxStationData(stationData, 60) },
+      { increment: 120, intensity: yield getMaxStationData(stationData, 120) },
+      { increment: 360, intensity: yield getMaxStationData(stationData, 360) },
+      { increment: 720, intensity: yield getMaxStationData(stationData, 720) },
+      { increment: 1440, intensity: yield getMaxStationData(stationData, 1440) },
+    ];
 
-    const response = yield call(jsonFetch, `${process.env.REACT_APP_API_URL}/idfData/${stationId}/stationData?month=${month}`);
-
-    yield requestHandler(response, { action: fetchIdfStationDataSuccess }, errorObject);
+    yield requestHandler({ status: 200, body: idfStationData }, { action: fetchIdfStationDataSuccess }, errorObject);
   } catch (e) {
     yield errorHandler(errorObject);
   }
