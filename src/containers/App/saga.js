@@ -87,21 +87,28 @@ const getMaxStationData = (data, interval) => {
 function* fetchIdfStationData(action) {
   const errorObject = {
     action: fetchIdfStationDataError,
-    message: 'Error Fetching Client Stations Data',
+    message: 'Error Fetching Client IDF Stations Data',
   };
 
   try {
-    const { stationData } = action;
+    const { stationId, start, end, view } = action;
+
+    const response = yield call(
+      jsonFetch,
+      `${process.env.REACT_APP_API_URL}/stationData/${stationId}/?start=${start}&end=${end}&view=${view}`,
+    );
+
+    const stationData = response.body;
     const idfStationData = [
-      { increment: 5, intensity: yield getMaxStationData(stationData, 5) },
-      { increment: 10, intensity: yield getMaxStationData(stationData, 10) },
-      { increment: 15, intensity: yield getMaxStationData(stationData, 15) },
-      { increment: 30, intensity: yield getMaxStationData(stationData, 30) },
-      { increment: 60, intensity: yield getMaxStationData(stationData, 60) },
-      { increment: 120, intensity: yield getMaxStationData(stationData, 120) },
-      { increment: 360, intensity: yield getMaxStationData(stationData, 360) },
-      { increment: 720, intensity: yield getMaxStationData(stationData, 720) },
-      { increment: 1440, intensity: yield getMaxStationData(stationData, 1440) },
+      { increment: 5, intensity: getMaxStationData(stationData, 5) },
+      { increment: 10, intensity: getMaxStationData(stationData, 10) },
+      { increment: 15, intensity: getMaxStationData(stationData, 15) },
+      { increment: 30, intensity: getMaxStationData(stationData, 30) },
+      { increment: 60, intensity: getMaxStationData(stationData, 60) },
+      { increment: 120, intensity: getMaxStationData(stationData, 120) },
+      { increment: 360, intensity: getMaxStationData(stationData, 360) },
+      { increment: 720, intensity: getMaxStationData(stationData, 720) },
+      { increment: 1440, intensity: getMaxStationData(stationData, 1440) },
     ];
 
     yield requestHandler({ status: 200, body: idfStationData }, { action: fetchIdfStationDataSuccess }, errorObject);

@@ -7,6 +7,7 @@ import {
   dashboardReducer,
   reportsReducer,
   stationReducer,
+  idfReducer,
 } from './containers/reducers';
 
 export default combineReducers({
@@ -16,4 +17,5 @@ export default combineReducers({
   dashboard: dashboardReducer,
   reports: reportsReducer,
   station: stationReducer,
+  idf: idfReducer,
 });

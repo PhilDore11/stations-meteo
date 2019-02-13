@@ -84,9 +84,12 @@ export const fetchIdfDataError = error => ({
   error,
 });
 
-export const fetchIdfStationData = stationData => ({
+export const fetchIdfStationData = (stationId, start, end, view = 'day') => ({
   type: FETCH_IDF_STATION_DATA,
-  stationData,
+  stationId,
+  start,
+  end,
+  view,
 });
 
 export const fetchIdfStationDataSuccess = res => ({

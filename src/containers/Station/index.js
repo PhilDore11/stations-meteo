@@ -6,7 +6,6 @@ import { connect } from 'react-redux';
 import moment from 'moment';
 import { isEmpty } from 'lodash';
 
-import { Grid } from '@material-ui/core';
 import { CloudOutlined as PrecipitationIcon } from '@material-ui/icons';
 
 import { blue } from '@material-ui/core/colors';
@@ -14,7 +13,7 @@ import { blue } from '@material-ui/core/colors';
 import { fetchStationData } from '../actions';
 import { ChartCard } from '../../components';
 
-class StationDataContainer extends React.PureComponent {
+class StationContainer extends React.PureComponent {
   componentDidMount() {
     this.fetchStationData();
   }
@@ -76,23 +75,21 @@ class StationDataContainer extends React.PureComponent {
     };
 
     return (
-      <Grid item xs={12}>
-        <ChartCard
-          type="bar"
-          title="Précipitations"
-          icon={<PrecipitationIcon />}
-          hasData={!isEmpty(stationData)}
-          data={precipitationChartData}
-          options={precipitationChartOptions}
-          error={error}
-          loading={loading}
-        />
-      </Grid>
+      <ChartCard
+        type="bar"
+        title="Précipitations"
+        icon={<PrecipitationIcon />}
+        hasData={!isEmpty(stationData)}
+        data={precipitationChartData}
+        options={precipitationChartOptions}
+        error={error}
+        loading={loading}
+      />
     );
   }
 }
 
-StationDataContainer.propTypes = {
+StationContainer.propTypes = {
   fetchStationData: PropTypes.func.isRequired,
   stationData: PropTypes.array,
   stationId: PropTypes.string.isRequired,
@@ -113,4 +110,4 @@ const mapDispatchToProps = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(StationDataContainer);
+)(StationContainer);
