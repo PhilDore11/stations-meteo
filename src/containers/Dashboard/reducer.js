@@ -5,9 +5,6 @@ import {
   FETCH_CLIENT_STATIONS,
   FETCH_CLIENT_STATIONS_SUCCESS,
   FETCH_CLIENT_STATIONS_ERROR,
-  FETCH_STATION_DATA,
-  FETCH_STATION_DATA_SUCCESS,
-  FETCH_STATION_DATA_ERROR,
   INCREMENT,
   DECREMENT,
   SET_VIEW,
@@ -24,12 +21,11 @@ const initialState = {
   end: moment(initialDay)
     .endOf('day')
     .toISOString(),
-  stationData: [],
   view: 'day',
   clientStations: [],
   stationId: '',
-  dashboardError: false,
-  dashboardLoading: false,
+  error: false,
+  loading: false,
 };
 
 export default (state = initialState, action) => {
@@ -55,24 +51,6 @@ export default (state = initialState, action) => {
         ...state,
         dashboardLoading: false,
         dashboardError: true,
-      };
-    case FETCH_STATION_DATA:
-      return {
-        ...state,
-        dashboardLoading: true,
-      };
-    case FETCH_STATION_DATA_SUCCESS:
-      return {
-        ...state,
-        stationData: action.res,
-        dashboardError: false,
-        dashboardLoading: false,
-      };
-    case FETCH_STATION_DATA_ERROR:
-      return {
-        ...state,
-        dashboardError: true,
-        dashboardLoading: false,
       };
     case INCREMENT:
       return {

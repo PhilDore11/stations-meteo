@@ -1,6 +1,13 @@
 import { combineReducers } from 'redux';
 
-import { loginReducer, appReducer, clientsReducer, dashboardReducer, reportsReducer } from './containers/reducers';
+import {
+  loginReducer,
+  appReducer,
+  clientsReducer,
+  dashboardReducer,
+  reportsReducer,
+  stationReducer,
+} from './containers/reducers';
 
 export default combineReducers({
   app: appReducer,
@@ -8,4 +15,5 @@ export default combineReducers({
   clients: clientsReducer,
   dashboard: dashboardReducer,
   reports: reportsReducer,
+  station: stationReducer,
 });

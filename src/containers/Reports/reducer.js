@@ -5,9 +5,6 @@ import {
   FETCH_CLIENT_STATIONS,
   FETCH_CLIENT_STATIONS_SUCCESS,
   FETCH_CLIENT_STATIONS_ERROR,
-  FETCH_STATION_DATA,
-  FETCH_STATION_DATA_SUCCESS,
-  FETCH_STATION_DATA_ERROR,
   FETCH_IDF_DATA,
   FETCH_IDF_DATA_SUCCESS,
   FETCH_IDF_DATA_ERROR,
@@ -21,8 +18,8 @@ import {
 const initialState = {
   year: moment().year(),
   month: moment().month(),
-  stationData: [],
-  stationDataLoading: false,
+  start: moment().startOf('month'),
+  end: moment().endOf('month'),
   idfData: [],
   idfDataLoading: false,
   idfStationData: [],
@@ -56,24 +53,6 @@ export default (state = initialState, action) => {
         ...state,
         clientStationsLoading: false,
         reportsError: true,
-      };
-    case FETCH_STATION_DATA:
-      return {
-        ...state,
-        stationDataLoading: true,
-      };
-    case FETCH_STATION_DATA_SUCCESS:
-      return {
-        ...state,
-        stationData: action.res,
-        reportsError: false,
-        stationDataLoading: false,
-      };
-    case FETCH_STATION_DATA_ERROR:
-      return {
-        ...state,
-        reportsError: true,
-        stationDataLoading: false,
       };
     case FETCH_IDF_DATA:
       return {
@@ -115,11 +94,27 @@ export default (state = initialState, action) => {
       return {
         ...state,
         year: action.year,
+        start: moment(action.year)
+          .month(state.month)
+          .startOf('month')
+          .toISOString(),
+        end: moment(action.year)
+          .month(state.month)
+          .endOf('month')
+          .toISOString(),
       };
     case SET_MONTH:
       return {
         ...state,
         month: action.month,
+        start: moment(state.year)
+          .month(action.month)
+          .startOf('month')
+          .toISOString(),
+        end: moment(state.year)
+          .month(action.month)
+          .endOf('month')
+          .toISOString(),
       };
     default:
       return state;
