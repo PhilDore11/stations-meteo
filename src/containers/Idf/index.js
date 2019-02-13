@@ -8,7 +8,7 @@ import { isEmpty, chain } from 'lodash';
 import { Grid } from '@material-ui/core';
 import { MultilineChartOutlined as IdfIcon, ListOutlined as TableIcon } from '@material-ui/icons';
 
-import { grey, blue, amber, green, indigo, red, pink } from '@material-ui/core/colors';
+import { blue, amber, green, indigo, red, pink } from '@material-ui/core/colors';
 
 import { fetchIdfData, fetchIdfStationData } from '../actions';
 import { ChartCard, ReportTableCard } from '../../components';
@@ -50,6 +50,7 @@ class idfContainer extends React.PureComponent {
             label: `${data.interval} ans`,
             fill: false,
             lineTension: 0,
+            borderDash: [10, 5],
             backgroundColor: chartColors[index],
             borderColor: chartColors[index],
             data: [
@@ -68,9 +69,11 @@ class idfContainer extends React.PureComponent {
             label: 'Donnees mensuelles',
             fill: false,
             lineTension: 0,
-            backgroundColor: grey[800],
-            borderColor: grey[800],
-            data: idfStationData.map(stationData => parseFloat(stationData.intensity * (60 / stationData.increment)).toFixed(2)),
+            backgroundColor: blue[800],
+            borderColor: blue[800],
+            data: idfStationData.map(stationData =>
+              parseFloat(stationData.intensity * (60 / stationData.increment)).toFixed(2),
+            ),
           })
           .value(),
     };
@@ -80,6 +83,10 @@ class idfContainer extends React.PureComponent {
       scales: {
         yAxes: [
           {
+            scaleLabel: {
+              display: true,
+              labelString: 'Intensite de pluie (mm/h)',
+            },
             type: 'logarithmic',
             ticks: {
               min: 0,

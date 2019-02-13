@@ -47,12 +47,12 @@ const clientSidebarItems = [
   },
   {
     icon: <ReportIcon />,
-    label: 'Rapports',
-    location: '/reports',
+    label: 'Rapport',
+    location: '/report',
   },
   {
     icon: <MapIcon />,
-    label: 'Carte de Stations',
+    label: 'Carte',
     location: '/map',
   },
 ];

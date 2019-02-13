@@ -22,6 +22,7 @@ import {
 import { Alert, Sidebar } from '../../components';
 
 import { fetchClientStations, resetAlerts } from '../actions';
+import { grey } from '@material-ui/core/colors';
 
 const styles = theme => ({
   root: {
@@ -30,7 +31,7 @@ const styles = theme => ({
   toolbar: theme.mixins.toolbar,
   content: {
     flexGrow: 1,
-    backgroundColor: theme.palette.background.default,
+    backgroundColor: grey[200],
     padding: theme.spacing.unit * 3,
   },
 });
@@ -44,7 +45,7 @@ class App extends React.PureComponent {
       this.fetchClientStations();
     }
   }
-  
+
   fetchClientStations() {
     const { loggedInUser } = this.props;
     if (loggedInUser) {
@@ -52,7 +53,6 @@ class App extends React.PureComponent {
       this.props.fetchClientStations(clientId);
     }
   }
-
 
   privateRouteRender(loggedInUser, container) {
     return () => (loggedInUser ? container : <Redirect to="/login" />);
@@ -99,7 +99,7 @@ class App extends React.PureComponent {
                 />
                 <Route path="/home" render={this.privateRouteRender(loggedInUser, <HomeContainer />)} />
                 <Route path="/dashboard" render={this.privateRouteRender(loggedInUser, <DashboardContainer />)} />
-                <Route path="/reports" render={this.privateRouteRender(loggedInUser, <ReportsContainer />)} />
+                <Route path="/report" render={this.privateRouteRender(loggedInUser, <ReportsContainer />)} />
                 <Route path="/map" render={this.privateRouteRender(loggedInUser, <MapContainer />)} />
                 <Route path="/clients" render={this.privateRouteRender(loggedInUser, <ClientsContainer />)} />
               </Switch>

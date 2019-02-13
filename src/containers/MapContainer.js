@@ -54,7 +54,7 @@ class MapContainer extends React.PureComponent {
                   <MapIcon />
                 </Grid>
                 <Grid item xs>
-                  <Typography variant="subtitle1">Carte de Stations</Typography>
+                  <Typography variant="subtitle1">Carte</Typography>
                 </Grid>
               </Grid>
             </ExpansionPanelSummary>

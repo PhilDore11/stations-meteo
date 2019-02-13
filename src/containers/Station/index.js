@@ -34,9 +34,14 @@ class StationContainer extends React.PureComponent {
 
     const precipitationChartOptions = {
       maintainAspectRatio: false,
+      legend: false,
       scales: {
         yAxes: [
           {
+            scaleLabel: {
+              display: true,
+              labelString: 'Precipitations (mm)',
+            },
             ticks: {
               min: 0,
             },
@@ -44,6 +49,10 @@ class StationContainer extends React.PureComponent {
         ],
         xAxes: [
           {
+            scaleLabel: {
+              display: true,
+              labelString: view === 'day' || view === 'week' ? 'Heure (sur une base 24 heures et non AM et PM)' : 'Date',
+            },
             type: 'time',
             time: {
               unit: view === 'day' ? 'hour' : 'day',
@@ -67,7 +76,7 @@ class StationContainer extends React.PureComponent {
             stationData.map(data => {
               return {
                 t: moment(data.date),
-                y: data.intensity,
+                y: parseFloat(data.intensity).toFixed(2),
               };
             }),
         },
