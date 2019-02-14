@@ -3,6 +3,8 @@ import { call, takeLatest } from 'redux-saga/effects';
 
 import jsonFetch from 'json-fetch';
 
+import { isEmpty } from 'lodash';
+
 import { requestHandler, errorHandler } from '../../utils/sagaHelpers';
 
 import { FETCH_CLIENT_STATIONS, FETCH_STATION_DATA, FETCH_IDF_DATA, FETCH_IDF_STATION_DATA } from '../constants';
@@ -99,18 +101,20 @@ function* fetchIdfStationData(action) {
     );
 
     const stationData = response.body;
-    const idfStationData = [
-      { increment: 5, intensity: getMaxStationData(stationData, 5) },
-      { increment: 10, intensity: getMaxStationData(stationData, 10) },
-      { increment: 15, intensity: getMaxStationData(stationData, 15) },
-      { increment: 30, intensity: getMaxStationData(stationData, 30) },
-      { increment: 60, intensity: getMaxStationData(stationData, 60) },
-      { increment: 120, intensity: getMaxStationData(stationData, 120) },
-      { increment: 360, intensity: getMaxStationData(stationData, 360) },
-      { increment: 720, intensity: getMaxStationData(stationData, 720) },
-      { increment: 1440, intensity: getMaxStationData(stationData, 1440) },
-    ];
-
+    let idfStationData = [];
+    if (!isEmpty(stationData)) {
+      idfStationData = [
+        { increment: 5, intensity: getMaxStationData(stationData, 5) },
+        { increment: 10, intensity: getMaxStationData(stationData, 10) },
+        { increment: 15, intensity: getMaxStationData(stationData, 15) },
+        { increment: 30, intensity: getMaxStationData(stationData, 30) },
+        { increment: 60, intensity: getMaxStationData(stationData, 60) },
+        { increment: 120, intensity: getMaxStationData(stationData, 120) },
+        { increment: 360, intensity: getMaxStationData(stationData, 360) },
+        { increment: 720, intensity: getMaxStationData(stationData, 720) },
+        { increment: 1440, intensity: getMaxStationData(stationData, 1440) },
+      ];
+    }
     yield requestHandler({ status: 200, body: idfStationData }, { action: fetchIdfStationDataSuccess }, errorObject);
   } catch (e) {
     yield errorHandler(errorObject);

@@ -14,6 +14,7 @@ import {
   PeopleOutlined as PeopleIcon,
   AssessmentOutlined as ReportIcon,
 } from '@material-ui/icons';
+import { blue, grey } from '@material-ui/core/colors';
 
 const drawerWidth = 240;
 
@@ -31,6 +32,10 @@ const styles = theme => ({
   },
   sidebarTitle: {
     backgroundColor: theme.palette.background.default,
+  },
+  selectedItem: {
+    backgroundColor: `${grey[100]} !important`,
+    borderRight: `5px solid ${blue[500]}`,
   },
 });
 
@@ -78,7 +83,7 @@ const Sidebar = ({ classes, isAdmin, sidebarItems = isAdmin ? adminSidebarItems 
     <List>
       {sidebarItems.map((item, index) => (
         <Link key={index} to={item.location} className={classes.menuLink}>
-          <ListItem button selected={item.location === location.pathname}>
+          <ListItem button selected={item.location === location.pathname} classes={{selected: classes.selectedItem}}>
             <ListItemIcon>{item.icon}</ListItemIcon>
             <ListItemText primary={item.label} />
           </ListItem>

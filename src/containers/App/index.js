@@ -33,6 +33,7 @@ const styles = theme => ({
     flexGrow: 1,
     backgroundColor: grey[200],
     padding: theme.spacing.unit * 3,
+    minHeight: '100vh',
   },
 });
 

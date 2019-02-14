@@ -3,21 +3,48 @@ import PropTypes from 'prop-types';
 
 import moment from 'moment';
 
-import { Grid, IconButton, Typography, TextField, MenuItem } from '@material-ui/core';
+import { withStyles, Grid, IconButton, Typography, TextField, MenuItem } from '@material-ui/core';
 
 import { ChevronLeftOutlined as ChevronLeftIcon, ChevronRightOutlined as ChevronRightIcon } from '@material-ui/icons';
 
 import { VIEWS } from '../containers/Dashboard/constants';
 
-const ChartHeader = ({ start, end, increment, decrement, stations, stationId, onStationChange, view, onViewChange }) => (
+const styles = () => ({
+  input: {
+    backgroundColor: 'white',
+  },
+});
+
+const ChartHeader = ({
+  classes,
+  start,
+  end,
+  increment,
+  decrement,
+  stations,
+  stationId,
+  onStationChange,
+  view,
+  onViewChange,
+}) => (
   <Grid container spacing={24} alignItems="center">
     <Grid item xs={2}>
-      <TextField select value={stationId} onChange={onStationChange} fullWidth margin="normal" variant="outlined">
-        {stations && stations.map(station => (
-          <MenuItem key={station.stationId} value={station.stationId}>
-            {station.name}
-          </MenuItem>
-        ))}
+      <TextField
+        select
+        InputProps={{
+          className: classes.input,
+        }}
+        value={stationId}
+        onChange={onStationChange}
+        fullWidth
+        margin="normal"
+        variant="outlined">
+        {stations &&
+          stations.map(station => (
+            <MenuItem key={station.stationId} value={station.stationId}>
+              {station.name}
+            </MenuItem>
+          ))}
       </TextField>
     </Grid>
     <Grid item xs>
@@ -52,7 +79,16 @@ const ChartHeader = ({ start, end, increment, decrement, stations, stationId, on
       </Grid>
     </Grid>
     <Grid item xs={2}>
-      <TextField select value={view} onChange={onViewChange} fullWidth margin="normal" variant="outlined">
+      <TextField
+        select
+        InputProps={{
+          className: classes.input,
+        }}
+        value={view}
+        onChange={onViewChange}
+        fullWidth
+        margin="normal"
+        variant="outlined">
         {VIEWS.map(view => (
           <MenuItem key={view.key} value={view.key}>
             {view.label}
@@ -64,6 +100,7 @@ const ChartHeader = ({ start, end, increment, decrement, stations, stationId, on
 );
 
 ChartHeader.propTypes = {
+  classes: PropTypes.object.isRequired,
   start: PropTypes.string.isRequired,
   end: PropTypes.string.isRequired,
   increment: PropTypes.func.isRequired,
@@ -75,4 +112,4 @@ ChartHeader.propTypes = {
   onViewChange: PropTypes.func.isRequired,
 };
 
-export default ChartHeader;
+export default withStyles(styles)(ChartHeader);

@@ -20,7 +20,7 @@ import GoogleMapReact from 'google-map-react';
 import { StationPin } from '../components';
 
 const styles = () => ({
-  chartArea: {
+  mapArea: {
     height: 500,
   },
 });
@@ -59,7 +59,7 @@ class MapContainer extends React.PureComponent {
               </Grid>
             </ExpansionPanelSummary>
             <Divider />
-            <ExpansionPanelDetails className={classes.chartArea}>
+            <ExpansionPanelDetails className={classes.mapArea}>
               <GoogleMapReact
                 bootstrapURLKeys={{
                   key: 'AIzaSyBBzPnmM8AuGNrNyLwL-mwXqUXQf0R4Mc8',

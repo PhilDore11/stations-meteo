@@ -105,7 +105,7 @@ class idfContainer extends React.PureComponent {
             type="line"
             title="IDF"
             icon={<IdfIcon />}
-            hasData={!isEmpty(idfStationData)}
+            hasData={!isEmpty(idfStationData) && !isEmpty(idfStationData)}
             data={idfChartData}
             options={idfChartOptions}
             error={error}
