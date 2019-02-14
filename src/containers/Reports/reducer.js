@@ -57,7 +57,8 @@ export default (state = initialState, action) => {
           .month(state.month)
           .startOf('month')
           .toISOString(),
-        end: moment(action.year)
+        end: moment()
+          .year(action.year)
           .month(state.month)
           .endOf('month')
           .toISOString(),

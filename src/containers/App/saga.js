@@ -83,7 +83,7 @@ const getMaxStationData = (data, interval) => {
     }
   });
 
-  return maxValue;
+  return (maxValue / 0.1) * 0.10068;
 };
 
 function* fetchIdfStationData(action) {
@@ -102,6 +102,7 @@ function* fetchIdfStationData(action) {
 
     const stationData = response.body;
     let idfStationData = [];
+    console.log('stationData', stationData);
     if (!isEmpty(stationData)) {
       idfStationData = [
         { increment: 5, intensity: getMaxStationData(stationData, 5) },
