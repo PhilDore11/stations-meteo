@@ -9,7 +9,7 @@ import { Grid } from '@material-ui/core';
 
 import { setStation, setYear, setMonth } from '../actions';
 import { ReportHeader, Loading } from '../../components';
-import { StationContainer, IdfContainer } from '..';
+import { StationDataContainer, IdfContainer } from '..';
 
 class ReportsContainer extends React.PureComponent {
   constructor(props) {
@@ -59,7 +59,7 @@ class ReportsContainer extends React.PureComponent {
               <IdfContainer stationId={stationId} start={start} end={end} />
             </Grid>
             <Grid item xs={12}>
-              <StationContainer stationId={stationId} start={start} end={end} />
+              <StationDataContainer stationId={stationId} start={start} end={end} />
             </Grid>
           </React.Fragment>
         ) : (

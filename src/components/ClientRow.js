@@ -56,13 +56,9 @@ class ClientRow extends React.PureComponent {
         </ExpansionPanelSummary>
         <Divider />
         <ExpansionPanelDetails>
-          <Grid container spacing={24}>
-            {client.stations.map(station => (
-              <Grid key={station.id} item xs={6} md={4} lg={3}>
-                <StationCard station={station} />
-              </Grid>
-            ))}
-          </Grid>
+          {client.stations.map(station => (
+            <StationCard station={station} />
+          ))}
         </ExpansionPanelDetails>
       </ExpansionPanel>
     );

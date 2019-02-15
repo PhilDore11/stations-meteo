@@ -12,7 +12,6 @@ import { CssBaseline } from '@material-ui/core';
 import {
   LoginContainer,
   HeaderContainer,
-  HomeContainer,
   DashboardContainer,
   MapContainer,
   ClientsContainer,
@@ -98,7 +97,7 @@ class App extends React.PureComponent {
                   }
                 />{' '}
                 />
-                <Route path="/home" render={this.privateRouteRender(loggedInUser, <HomeContainer />)} />
+                <Route path="/home" render={this.privateRouteRender(loggedInUser, <ClientsContainer />)} />
                 <Route path="/dashboard" render={this.privateRouteRender(loggedInUser, <DashboardContainer />)} />
                 <Route path="/report" render={this.privateRouteRender(loggedInUser, <ReportsContainer />)} />
                 <Route path="/map" render={this.privateRouteRender(loggedInUser, <MapContainer />)} />

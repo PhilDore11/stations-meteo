@@ -83,7 +83,7 @@ const getMaxStationData = (data, interval) => {
     }
   });
 
-  return (maxValue / 0.1) * 0.10068;
+  return maxValue;
 };
 
 function* fetchIdfStationData(action) {
@@ -102,19 +102,11 @@ function* fetchIdfStationData(action) {
 
     const stationData = response.body;
     let idfStationData = [];
-    console.log('stationData', stationData);
     if (!isEmpty(stationData)) {
-      idfStationData = [
-        { increment: 5, intensity: getMaxStationData(stationData, 5) },
-        { increment: 10, intensity: getMaxStationData(stationData, 10) },
-        { increment: 15, intensity: getMaxStationData(stationData, 15) },
-        { increment: 30, intensity: getMaxStationData(stationData, 30) },
-        { increment: 60, intensity: getMaxStationData(stationData, 60) },
-        { increment: 120, intensity: getMaxStationData(stationData, 120) },
-        { increment: 360, intensity: getMaxStationData(stationData, 360) },
-        { increment: 720, intensity: getMaxStationData(stationData, 720) },
-        { increment: 1440, intensity: getMaxStationData(stationData, 1440) },
-      ];
+      idfStationData = [5, 10, 15, 30, 60, 120, 360, 720, 1440].map(increment => ({
+        increment,
+        intensity: getMaxStationData(stationData, increment),
+      }));
     }
     yield requestHandler({ status: 200, body: idfStationData }, { action: fetchIdfStationDataSuccess }, errorObject);
   } catch (e) {

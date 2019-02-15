@@ -13,7 +13,7 @@ import { blue } from '@material-ui/core/colors';
 import { fetchStationData } from '../actions';
 import { ChartCard } from '../../components';
 
-class StationContainer extends React.PureComponent {
+class StationDataContainer extends React.PureComponent {
   componentDidMount() {
     this.fetchStationData();
   }
@@ -98,7 +98,7 @@ class StationContainer extends React.PureComponent {
   }
 }
 
-StationContainer.propTypes = {
+StationDataContainer.propTypes = {
   fetchStationData: PropTypes.func.isRequired,
   stationData: PropTypes.array,
   stationId: PropTypes.string.isRequired,
@@ -109,7 +109,7 @@ StationContainer.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  ...state.station,
+  ...state.stationData,
 });
 
 const mapDispatchToProps = {
@@ -119,4 +119,4 @@ const mapDispatchToProps = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(StationContainer);
+)(StationDataContainer);

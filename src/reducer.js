@@ -6,7 +6,7 @@ import {
   clientsReducer,
   dashboardReducer,
   reportsReducer,
-  stationReducer,
+  stationDataReducer,
   idfReducer,
 } from './containers/reducers';
 
@@ -16,6 +16,6 @@ export default combineReducers({
   clients: clientsReducer,
   dashboard: dashboardReducer,
   reports: reportsReducer,
-  station: stationReducer,
+  stationData: stationDataReducer,
   idf: idfReducer,
 });

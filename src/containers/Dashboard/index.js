@@ -7,7 +7,7 @@ import { Grid } from '@material-ui/core';
 
 import { increment, decrement, setStation, setView } from '../actions';
 import { DashboardHeader, Loading } from '../../components';
-import { StationContainer } from '..';
+import { StationDataContainer } from '..';
 
 class DashboardContainer extends React.PureComponent {
   constructor(props) {
@@ -46,7 +46,7 @@ class DashboardContainer extends React.PureComponent {
               />
             </Grid>
             <Grid item xs={12}>
-              <StationContainer stationId={stationId} start={start} end={end} view={view} />
+              <StationDataContainer stationId={stationId} start={start} end={end} view={view} />
             </Grid>
           </React.Fragment>
         ) : (
