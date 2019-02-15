@@ -48,7 +48,7 @@ const StationCard = ({ classes, station }) => (
       <Grid item xs>
         <div className={classes.batterySection}>
           <BatteryIcon fontSize="large" />
-          <Typography variant="title">{`${parseFloat(Math.random() * 100).toFixed(0)}`}</Typography>
+          <Typography variant="title">{`${parseFloat(Math.random() * 100).toFixed(0)}%`}</Typography>
         </div>
       </Grid>
     </Grid>

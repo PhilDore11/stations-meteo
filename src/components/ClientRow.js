@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import {
+  withStyles,
   Grid,
   ExpansionPanel,
   ExpansionPanelSummary,
@@ -14,6 +15,12 @@ import {
 import { ExpandMoreOutlined as ExpandMoreIcon, RouterOutlined as DeviceIcon } from '@material-ui/icons';
 
 import { ClientMenu, StationCard } from './';
+
+const styles = theme => ({
+  stationCard: {
+    margin: theme.spacing.unit * 1,
+  },
+});
 
 class ClientRow extends React.PureComponent {
   constructor(props) {
@@ -31,7 +38,7 @@ class ClientRow extends React.PureComponent {
   }
 
   render() {
-    const { showActions, client, onClientEdit, onClientDelete } = this.props;
+    const { classes, showActions, client, onClientEdit, onClientDelete } = this.props;
     const { expanded } = this.state;
     return (
       <ExpansionPanel expanded={expanded} key={client.id} onChange={this.handleExpand}>
@@ -57,7 +64,9 @@ class ClientRow extends React.PureComponent {
         <Divider />
         <ExpansionPanelDetails>
           {client.stations.map(station => (
-            <StationCard station={station} />
+            <div className={classes.stationCard}>
+              <StationCard station={station} />
+            </div>
           ))}
         </ExpansionPanelDetails>
       </ExpansionPanel>
@@ -66,6 +75,7 @@ class ClientRow extends React.PureComponent {
 }
 
 ClientRow.propTypes = {
+  classes: PropTypes.object.isRequired,
   client: PropTypes.object.isRequired,
   stations: PropTypes.array,
   showActions: PropTypes.bool,
@@ -74,4 +84,4 @@ ClientRow.propTypes = {
   onClientDelete: PropTypes.func.isRequired,
 };
 
-export default React.memo(ClientRow);
+export default React.memo(withStyles(styles)(ClientRow));
