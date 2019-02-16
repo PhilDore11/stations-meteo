@@ -15,6 +15,10 @@ import {
 import { green, red, grey } from '@material-ui/core/colors';
 
 const styles = theme => ({
+  stationCard: {
+    width: 400,
+    height: 230,
+  },
   successIcon: {
     color: green[600],
   },
@@ -22,33 +26,31 @@ const styles = theme => ({
     color: red[600],
   },
   readingSection: {
-    width: 200,
     textAlign: 'center',
     padding: theme.spacing.unit * 2,
     borderRight: `1px solid ${grey[300]}`,
   },
   batterySection: {
-    width: 200,
     textAlign: 'center',
     padding: theme.spacing.unit * 2,
-  }
+  },
 });
 
 const StationCard = ({ classes, station }) => (
-  <Card>
-    <CardHeader title={station.name} titleTypographyProps={{variant: "subtitle1"}} />
+  <Card className={classes.stationCard}>
+    <CardHeader title={station.name} titleTypographyProps={{ variant: 'subtitle1' }} />
     <Divider />
     <Grid container spacing={0} direction="row">
       <Grid item xs>
         <div className={classes.readingSection}>
-          <ReadingIcon fontSize="large" />
-          <Typography variant="title">{`${parseFloat(Math.random() * 2).toFixed(2)}`}</Typography>
+          <ReadingIcon fontSize="large" color="action" />
+          <Typography variant="h5">{`${parseFloat(Math.random() * 2).toFixed(2)}`}</Typography>
         </div>
       </Grid>
       <Grid item xs>
         <div className={classes.batterySection}>
-          <BatteryIcon fontSize="large" />
-          <Typography variant="title">{`${parseFloat(Math.random() * 100).toFixed(0)}%`}</Typography>
+          <BatteryIcon fontSize="large" color="action" />
+          <Typography variant="h5">{`${parseFloat(Math.random() * 100).toFixed(0)}%`}</Typography>
         </div>
       </Grid>
     </Grid>
@@ -57,22 +59,22 @@ const StationCard = ({ classes, station }) => (
       <Grid container spacing={24} justify="center" alignItems="center">
         {station.hasRain ? (
           <Grid item>
-            <RainIcon />
+            <RainIcon color="action" />
           </Grid>
         ) : null}
         {station.hasSnow ? (
           <Grid item>
-            <SnowIcon />
+            <SnowIcon color="action" />
           </Grid>
         ) : null}
         {station.hasWind ? (
           <Grid item>
-            <WindIcon />
+            <WindIcon color="action" />
           </Grid>
         ) : null}
         {station.hasHydro ? (
           <Grid item>
-            <HydroIcon />
+            <HydroIcon color="action" />
           </Grid>
         ) : null}
       </Grid>
