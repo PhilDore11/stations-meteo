@@ -7,6 +7,7 @@ import {
   FETCH_CLIENT_STATIONS_ERROR,
   SET_YEAR,
   SET_MONTH,
+  SET_STATION,
 } from '../constants';
 
 const initialState = {
@@ -77,6 +78,11 @@ export default (state = initialState, action) => {
           .month(action.month)
           .endOf('month')
           .toISOString(),
+      };
+    case SET_STATION:
+      return {
+        ...state,
+        stationId: action.stationId,
       };
     default:
       return state;

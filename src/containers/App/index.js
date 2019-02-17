@@ -98,8 +98,13 @@ class App extends React.PureComponent {
                 />{' '}
                 />
                 <Route path="/home" render={this.privateRouteRender(loggedInUser, <ClientsContainer />)} />
-                <Route path="/dashboard" render={this.privateRouteRender(loggedInUser, <DashboardContainer />)} />
-                <Route path="/report" render={this.privateRouteRender(loggedInUser, <ReportsContainer />)} />
+                <Route path="/dashboard" exact render={this.privateRouteRender(loggedInUser, <DashboardContainer />)} />
+                <Route
+                  path="/dashboard/:stationId"
+                  render={this.privateRouteRender(loggedInUser, <DashboardContainer />)}
+                />
+                <Route path="/report" exact render={this.privateRouteRender(loggedInUser, <ReportsContainer />)} />
+                <Route path="/report/:stationId" render={this.privateRouteRender(loggedInUser, <ReportsContainer />)} />
                 <Route path="/map" render={this.privateRouteRender(loggedInUser, <MapContainer />)} />
                 <Route path="/clients" render={this.privateRouteRender(loggedInUser, <ClientsContainer />)} />
               </Switch>

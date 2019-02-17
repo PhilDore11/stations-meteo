@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 
 import { connect } from 'react-redux';
 
+import { withRouter } from 'react-router-dom';
+
 import moment from 'moment';
 
 import { Grid } from '@material-ui/core';
@@ -18,6 +20,22 @@ class ReportsContainer extends React.PureComponent {
     this.handleStationChange = this.handleStationChange.bind(this);
     this.handleYearChange = this.handleYearChange.bind(this);
     this.handleMonthChange = this.handleMonthChange.bind(this);
+  }
+
+  componentDidMount() {
+    this.setStationIdFromUrl();
+  }
+
+  componentDidUpdate() {
+    this.setStationIdFromUrl();
+  }
+
+  setStationIdFromUrl() {
+    const { match } = this.props;
+    if (match && match.params && match.params.stationId) {
+      console.log('SET STATION', match.params.stationId);
+      this.props.setStation(match.params.stationId);
+    }
   }
 
   handleStationChange(event) {
@@ -71,6 +89,7 @@ class ReportsContainer extends React.PureComponent {
 }
 
 ReportsContainer.propTypes = {
+  match: PropTypes.object.isRequired,
   clientStations: PropTypes.array,
   setStation: PropTypes.func.isRequired,
   stationId: PropTypes.string,
@@ -95,4 +114,4 @@ const mapDispatchToProps = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(ReportsContainer);
+)(withRouter(ReportsContainer));

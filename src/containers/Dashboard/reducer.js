@@ -8,6 +8,7 @@ import {
   INCREMENT,
   DECREMENT,
   SET_VIEW,
+  SET_STATION,
 } from '../constants';
 
 const initialDay = moment()
@@ -82,6 +83,11 @@ export default (state = initialState, action) => {
         end: moment(state.start)
           .endOf(action.view)
           .toISOString(),
+      };
+    case SET_STATION:
+      return {
+        ...state,
+        stationId: action.stationId,
       };
     default:
       return state;

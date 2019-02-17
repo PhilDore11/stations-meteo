@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 
 import { connect } from 'react-redux';
 
+import { withRouter } from 'react-router-dom';
+
 import { Grid } from '@material-ui/core';
 
 import { increment, decrement, setStation, setView } from '../actions';
@@ -15,6 +17,22 @@ class DashboardContainer extends React.PureComponent {
 
     this.handleStationChange = this.handleStationChange.bind(this);
     this.handleViewChange = this.handleViewChange.bind(this);
+  }
+
+  componentDidMount() {
+    this.setStationIdFromUrl();
+  }
+
+  componentDidUpdate() {
+    this.setStationIdFromUrl();
+  }
+
+  setStationIdFromUrl() {
+    const { match } = this.props;
+    if (match && match.params && match.params.stationId) {
+      console.log('SET STATION', match.params.stationId);
+      this.props.setStation(match.params.stationId);
+    }
   }
 
   handleStationChange(event) {
@@ -58,6 +76,7 @@ class DashboardContainer extends React.PureComponent {
 }
 
 DashboardContainer.propTypes = {
+  match: PropTypes.object.isRequired,
   clientStations: PropTypes.array,
   stationId: PropTypes.string,
   increment: PropTypes.func.isRequired,
@@ -84,4 +103,4 @@ const mapDispatchToProps = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(DashboardContainer);
+)(withRouter(DashboardContainer));

@@ -5,7 +5,17 @@ import { Link } from 'react-router-dom';
 
 import { isNumber } from 'lodash';
 
-import { withStyles, Card, CardHeader, Divider, CardContent, Grid, Typography, IconButton } from '@material-ui/core';
+import {
+  withStyles,
+  Card,
+  CardHeader,
+  Divider,
+  CardContent,
+  Grid,
+  Typography,
+  IconButton,
+  Tooltip,
+} from '@material-ui/core';
 
 import {
   TrackChangesOutlined as ReadingIcon,
@@ -15,13 +25,14 @@ import {
   WavesOutlined as WindIcon,
   FlashOnOutlined as HydroIcon,
   DashboardOutlined as DashboardIcon,
+  AssessmentOutlined as ReportIcon,
 } from '@material-ui/icons';
 
 import { green, red, grey } from '@material-ui/core/colors';
 
 const styles = theme => ({
   stationCard: {
-    width: 300,
+    width: 350,
     height: 230,
   },
   successIcon: {
@@ -47,11 +58,22 @@ const StationCard = ({ classes, station }) => (
       title={station.name}
       titleTypographyProps={{ variant: 'subtitle1' }}
       action={
-        <Link to="/dashboard">
-          <IconButton>
-            <DashboardIcon />
-          </IconButton>
-        </Link>
+        <React.Fragment>
+          <Tooltip title="Analyse">
+            <Link to={`/dashboard/${station.stationId}`}>
+              <IconButton>
+                <DashboardIcon />
+              </IconButton>
+            </Link>
+          </Tooltip>
+          <Tooltip title="Rapport">
+            <Link to={`/report/${station.stationId}`}>
+              <IconButton>
+                <ReportIcon />
+              </IconButton>
+            </Link>
+          </Tooltip>
+        </React.Fragment>
       }
     />
     <Divider />

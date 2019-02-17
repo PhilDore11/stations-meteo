@@ -83,7 +83,7 @@ const Sidebar = ({ classes, isAdmin, sidebarItems = isAdmin ? adminSidebarItems 
     <List>
       {sidebarItems.map((item, index) => (
         <Link key={index} to={item.location} className={classes.menuLink}>
-          <ListItem button selected={item.location === location.pathname} classes={{selected: classes.selectedItem}}>
+          <ListItem button selected={location.pathname.startsWith(item.location)} classes={{selected: classes.selectedItem}}>
             <ListItemIcon>{item.icon}</ListItemIcon>
             <ListItemText primary={item.label} />
           </ListItem>
