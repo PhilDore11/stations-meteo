@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import moment from 'moment';
 
-import { withStyles, Grid, IconButton, Typography, TextField, MenuItem } from '@material-ui/core';
+import { withStyles, Grid, Typography, TextField, MenuItem, Fab } from '@material-ui/core';
 
 import { ChevronLeftOutlined as ChevronLeftIcon, ChevronRightOutlined as ChevronRightIcon } from '@material-ui/icons';
 
@@ -11,6 +11,9 @@ import { VIEWS } from '../containers/Dashboard/constants';
 
 const styles = () => ({
   input: {
+    backgroundColor: 'white',
+  },
+  fab: {
     backgroundColor: 'white',
   },
 });
@@ -50,9 +53,9 @@ const ChartHeader = ({
     <Grid item xs>
       <Grid container spacing={24} justify="center" alignItems="center">
         <Grid item>
-          <IconButton onClick={decrement}>
-            <ChevronLeftIcon />
-          </IconButton>
+          <Fab onClick={decrement} className={classes.fab} size="small">
+            <ChevronLeftIcon color="action" />
+          </Fab>
         </Grid>
         <Grid item>
           <Typography variant="h6">{moment(start).format('MMMM DD')}</Typography>
@@ -72,9 +75,9 @@ const ChartHeader = ({
           </React.Fragment>
         )}
         <Grid item>
-          <IconButton onClick={increment}>
-            <ChevronRightIcon />
-          </IconButton>
+          <Fab onClick={increment} className={classes.fab} size="small">
+            <ChevronRightIcon color="action" />
+          </Fab>
         </Grid>
       </Grid>
     </Grid>

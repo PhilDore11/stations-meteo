@@ -1,9 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { Link } from 'react-router-dom';
+
 import { isNumber } from 'lodash';
 
-import { withStyles, Card, CardHeader, Divider, CardContent, Grid, Typography } from '@material-ui/core';
+import { withStyles, Card, CardHeader, Divider, CardContent, Grid, Typography, IconButton } from '@material-ui/core';
 
 import {
   TrackChangesOutlined as ReadingIcon,
@@ -12,13 +14,14 @@ import {
   AcUnitOutlined as SnowIcon,
   WavesOutlined as WindIcon,
   FlashOnOutlined as HydroIcon,
+  DashboardOutlined as DashboardIcon,
 } from '@material-ui/icons';
 
 import { green, red, grey } from '@material-ui/core/colors';
 
 const styles = theme => ({
   stationCard: {
-    width: 400,
+    width: 300,
     height: 230,
   },
   successIcon: {
@@ -40,7 +43,17 @@ const styles = theme => ({
 
 const StationCard = ({ classes, station }) => (
   <Card className={classes.stationCard}>
-    <CardHeader title={station.name} titleTypographyProps={{ variant: 'subtitle1' }} />
+    <CardHeader
+      title={station.name}
+      titleTypographyProps={{ variant: 'subtitle1' }}
+      action={
+        <Link to="/dashboard">
+          <IconButton>
+            <DashboardIcon />
+          </IconButton>
+        </Link>
+      }
+    />
     <Divider />
     <Grid container spacing={0} direction="row">
       <Grid item xs>
