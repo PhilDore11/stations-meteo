@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { isNumber } from 'lodash';
+
 import { withStyles, Card, CardHeader, Divider, CardContent, Grid, Typography } from '@material-ui/core';
 
 import {
@@ -44,13 +46,19 @@ const StationCard = ({ classes, station }) => (
       <Grid item xs>
         <div className={classes.readingSection}>
           <ReadingIcon fontSize="large" color="action" />
-          <Typography variant="h5">{`${parseFloat(Math.random() * 2).toFixed(2)}`}</Typography>
+          <Typography variant="h5">
+            {isNumber(station.intensity) ? parseFloat(station.intensity).toFixed(2) : ' - '}
+            <small>mm</small>
+          </Typography>
         </div>
       </Grid>
       <Grid item xs>
         <div className={classes.batterySection}>
           <BatteryIcon fontSize="large" color="action" />
-          <Typography variant="h5">{`${parseFloat(Math.random() * 100).toFixed(0)}%`}</Typography>
+          <Typography variant="h5">
+            {isNumber(station.battery) ? parseFloat((station.battery / 12) * 100).toFixed(0) : ' - '}
+            <small>%</small>
+          </Typography>
         </div>
       </Grid>
     </Grid>

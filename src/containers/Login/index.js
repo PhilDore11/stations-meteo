@@ -59,7 +59,7 @@ class LoginContainer extends React.PureComponent {
               label="Nom d'utilisateur"
               type="text"
               value={username}
-              margin="normal"
+              margin="dense"
               variant="outlined"
               fullWidth
               onChange={this.handleUsernameChange}
@@ -71,7 +71,7 @@ class LoginContainer extends React.PureComponent {
               label="Mot de passe"
               type="password"
               value={password}
-              margin="normal"
+              margin="dense"
               variant="outlined"
               fullWidth
               onChange={this.handlePasswordChange}

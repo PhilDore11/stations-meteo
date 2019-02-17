@@ -22,7 +22,7 @@ const ClientForm = ({ classes, client, error, loading, onChange }) => (
       id="name"
       label="Nom"
       type="text"
-      margin="normal"
+      margin="dense"
       variant="outlined"
       value={client.name}
       onChange={(event) => onChange(event, client)}
@@ -34,7 +34,7 @@ const ClientForm = ({ classes, client, error, loading, onChange }) => (
       id="email"
       label="Addresse courriel"
       type="email"
-      margin="normal"
+      margin="dense"
       variant="outlined"
       value={client.email}
       onChange={(event) => onChange(event, client)}

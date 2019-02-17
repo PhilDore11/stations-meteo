@@ -37,7 +37,7 @@ const ChartHeader = ({
         value={stationId}
         onChange={onStationChange}
         fullWidth
-        margin="normal"
+        margin="dense"
         variant="outlined">
         {stations &&
           stations.map(station => (
@@ -87,7 +87,7 @@ const ChartHeader = ({
         value={view}
         onChange={onViewChange}
         fullWidth
-        margin="normal"
+        margin="dense"
         variant="outlined">
         {VIEWS.map(view => (
           <MenuItem key={view.key} value={view.key}>

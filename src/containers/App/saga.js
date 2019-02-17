@@ -114,6 +114,23 @@ function* fetchIdfStationData(action) {
   }
 }
 
+export function* fetchClientStationsRequest(clientId) {
+  const response = yield call(jsonFetch, `${process.env.REACT_APP_API_URL}/clients/${clientId}/stations`);
+
+  const clientStations = [];
+  for (let i = 0; i < response.body.length; i++) {
+    const clientStation = response.body[i];
+    const latestStationDataResponse = yield call(
+      jsonFetch,
+      `${process.env.REACT_APP_API_URL}/stationData/${clientStation.stationId}/latest`,
+    );
+
+    clientStations.push({ ...clientStation, ...latestStationDataResponse.body });
+  }
+
+  return clientStations;
+}
+
 function* fetchClientStations(action) {
   const errorObject = {
     action: fetchClientStationsError,
@@ -123,9 +140,9 @@ function* fetchClientStations(action) {
   try {
     const { clientId } = action;
 
-    const response = yield call(jsonFetch, `${process.env.REACT_APP_API_URL}/clients/${clientId}/stations`);
+    const response = yield call(fetchClientStationsRequest, clientId);
 
-    yield requestHandler(response, { action: fetchClientStationsSuccess }, errorObject);
+    yield requestHandler({ status: 200, body: response }, { action: fetchClientStationsSuccess }, errorObject);
   } catch (e) {
     yield errorHandler(errorObject);
   }

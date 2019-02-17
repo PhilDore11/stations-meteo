@@ -32,7 +32,7 @@ const ReportHeader = ({
         value={stationId}
         onChange={onStationChange}
         fullWidth
-        margin="normal"
+        margin="dense"
         variant="outlined">
         {stations &&
           stations.map(station => (
@@ -59,7 +59,7 @@ const ReportHeader = ({
         value={month}
         onChange={onMonthChange}
         fullWidth
-        margin="normal"
+        margin="dense"
         variant="outlined">
         {moment.months().map((month, index) => (
           <MenuItem key={index} value={index}>
@@ -77,7 +77,7 @@ const ReportHeader = ({
         value={year}
         onChange={onYearChange}
         fullWidth
-        margin="normal"
+        margin="dense"
         variant="outlined">
         {years.map(year => (
           <MenuItem key={year} value={year}>
