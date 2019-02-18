@@ -36,15 +36,10 @@ function* fetchClientsGenerator() {
     for (let i = 0; i < response.body.length; i++) {
       const client = response.body[i];
 
-      console.log('client', client);
-
       const clientStationsResponse = yield call(fetchClientStationsRequest, client.id);
 
-      console.log('clientStationsResponse', clientStationsResponse);
       clients.push({ ...client, stations: clientStationsResponse });
     }
-
-    console.log('clients', clients);
 
     yield requestHandler({ status: 200, body: clients }, { action: fetchClientsSuccess }, errorObject);
   } catch (e) {

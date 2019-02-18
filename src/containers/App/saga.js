@@ -1,9 +1,6 @@
-import { reduce, concat } from 'lodash';
 import { call, takeLatest } from 'redux-saga/effects';
 
 import jsonFetch from 'json-fetch';
-
-import { isEmpty } from 'lodash';
 
 import { requestHandler, errorHandler } from '../../utils/sagaHelpers';
 
@@ -57,35 +54,6 @@ function* fetchIdfData(action) {
   }
 }
 
-const getMaxStationData = (data, interval) => {
-  let maxValue = 0;
-  const arrayOfIndexes = Array.from({ length: interval / 5 }, (v, k) => k);
-
-  const dataLength = data.length;
-
-  data.forEach((dataItem, i) => {
-    const subStationData = reduce(
-      arrayOfIndexes,
-      (result, index) => {
-        if (i + index < dataLength) {
-          return concat(result, data[i + index]);
-        }
-
-        return result;
-      },
-      [],
-    );
-
-    const newSum = reduce(subStationData, (result, data) => result + data.intensity, 0);
-
-    if (newSum > maxValue) {
-      maxValue = newSum;
-    }
-  });
-
-  return maxValue;
-};
-
 function* fetchIdfStationData(action) {
   const errorObject = {
     action: fetchIdfStationDataError,
@@ -93,22 +61,14 @@ function* fetchIdfStationData(action) {
   };
 
   try {
-    const { stationId, start, end, view } = action;
+    const { stationId, start, end } = action;
 
     const response = yield call(
       jsonFetch,
-      `${process.env.REACT_APP_API_URL}/stationData/${stationId}/?start=${start}&end=${end}&view=${view}`,
+      `${process.env.REACT_APP_API_URL}/idfData/${stationId}/stationData?start=${start}&end=${end}`,
     );
 
-    const stationData = response.body;
-    let idfStationData = [];
-    if (!isEmpty(stationData)) {
-      idfStationData = [5, 10, 15, 30, 60, 120, 360, 720, 1440].map(increment => ({
-        increment,
-        intensity: getMaxStationData(stationData, increment),
-      }));
-    }
-    yield requestHandler({ status: 200, body: idfStationData }, { action: fetchIdfStationDataSuccess }, errorObject);
+    yield requestHandler(response, { action: fetchIdfStationDataSuccess }, errorObject);
   } catch (e) {
     yield errorHandler(errorObject);
   }

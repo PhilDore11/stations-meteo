@@ -53,17 +53,9 @@ class idfContainer extends React.PureComponent {
             borderDash: [10, 5],
             backgroundColor: chartColors[index],
             borderColor: chartColors[index],
-            data: [
-              parseFloat(data['5mins'] * 12).toFixed(2),
-              parseFloat(data['10mins'] * 6).toFixed(2),
-              parseFloat(data['15mins'] * 4).toFixed(2),
-              parseFloat(data['30mins'] * 2).toFixed(2),
-              parseFloat(data['1hr']).toFixed(2),
-              parseFloat(data['2hrs'] / 2).toFixed(2),
-              parseFloat(data['6hrs'] / 6).toFixed(2),
-              parseFloat(data['12hrs'] / 12).toFixed(2),
-              parseFloat(data['24hrs'] / 24).toFixed(2),
-            ],
+            data: [5, 10, 15, 30, 60, 120, 360, 720, 1440].map(increment =>
+              parseFloat(data[increment] * (60 / increment)).toFixed(2),
+            ),
           }))
           .unshift({
             label: 'Donnees mensuelles',

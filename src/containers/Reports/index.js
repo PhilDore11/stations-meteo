@@ -33,7 +33,6 @@ class ReportsContainer extends React.PureComponent {
   setStationIdFromUrl() {
     const { match } = this.props;
     if (match && match.params && match.params.stationId) {
-      console.log('SET STATION', match.params.stationId);
       this.props.setStation(match.params.stationId);
     }
   }
