@@ -11,10 +11,7 @@ import {
   SET_STATION,
 } from '../constants';
 
-const initialDay = moment()
-  .year(2018)
-  .month(3)
-  .date(19);
+const initialDay = moment();
 const initialState = {
   start: moment(initialDay)
     .startOf('day')
