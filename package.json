@@ -22,7 +22,7 @@
     "redux-saga": "0.16.2"
   },
   "scripts": {
-    "start": "serve -s build",
+    "start": "NODE_ENV=production serve -s build",
     "start:dev": "cross-env NODE_PATH=src react-scripts start",
     "test": "react-scripts test",
     "build": "cross-env NODE_PATH=src react-scripts build"

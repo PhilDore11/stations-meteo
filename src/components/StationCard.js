@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Link } from 'react-router-dom';
-
 import { isNumber } from 'lodash';
 
 import {
@@ -60,18 +58,14 @@ const StationCard = ({ classes, station }) => (
       action={
         <React.Fragment>
           <Tooltip title="Analyse">
-            <Link to={`/dashboard/${station.stationId}`}>
-              <IconButton>
-                <DashboardIcon />
-              </IconButton>
-            </Link>
+            <IconButton href={`/dashboard/${station.stationId}`}>
+              <DashboardIcon />
+            </IconButton>
           </Tooltip>
           <Tooltip title="Rapport">
-            <Link to={`/report/${station.stationId}`}>
-              <IconButton>
-                <ReportIcon />
-              </IconButton>
-            </Link>
+            <IconButton href={`/report/${station.stationId}`}>
+              <ReportIcon />
+            </IconButton>
           </Tooltip>
         </React.Fragment>
       }
