@@ -60,7 +60,7 @@ const ChartHeader = ({
         <Grid item xs>
           <Grid container spacing={16} justify="center" alignItems="center">
             <Grid item>
-              <Typography variant="h7">{moment(start).format('MMMM DD')}</Typography>
+              <Typography>{moment(start).format('MMMM DD')}</Typography>
               <Typography style={{ textAlign: 'center' }} variant="caption">
                 {moment(start).format('YYYY')}
               </Typography>
@@ -69,7 +69,7 @@ const ChartHeader = ({
               <React.Fragment>
                 <Grid item>{' - '}</Grid>
                 <Grid item>
-                  <Typography variant="h7">{moment(end).format('MMMM DD')}</Typography>
+                  <Typography>{moment(end).format('MMMM DD')}</Typography>
                   <Typography style={{ textAlign: 'center' }} variant="caption">
                     {moment(end).format('YYYY')}
                   </Typography>

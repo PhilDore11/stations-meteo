@@ -45,9 +45,6 @@ class DashboardContainer extends React.PureComponent {
   render() {
     const { error, loading, clientStations, stationId, start, end, view } = this.props;
 
-    console.log('clientStations', clientStations);
-    console.log('stationId', stationId);
-
     return (
       <Grid container spacing={24}>
         {!error && !loading ? (
@@ -94,14 +91,10 @@ DashboardContainer.propTypes = {
   setView: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = state => {
-  console.log('app', state.app);
-  console.log('dashboard', state.dashboard);
-  return {
-    ...state.app,
-    ...state.dashboard,
-  };
-};
+const mapStateToProps = state => ({
+  ...state.app,
+  ...state.dashboard,
+});
 
 const mapDispatchToProps = {
   increment,
