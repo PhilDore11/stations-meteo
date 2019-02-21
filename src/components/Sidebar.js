@@ -12,7 +12,6 @@ import {
   DashboardOutlined as DashboardIcon,
   MapOutlined as MapIcon,
   PeopleOutlined as PeopleIcon,
-  AssessmentOutlined as ReportIcon,
 } from '@material-ui/icons';
 import { blue, grey } from '@material-ui/core/colors';
 
@@ -42,18 +41,13 @@ const styles = theme => ({
 const clientSidebarItems = [
   {
     icon: <HomeIcon />,
-    label: 'Acceuil',
+    label: 'Tableau de bord',
     location: '/home',
   },
   {
     icon: <DashboardIcon />,
     label: 'Analyse',
     location: '/dashboard',
-  },
-  {
-    icon: <ReportIcon />,
-    label: 'Rapport',
-    location: '/report',
   },
   {
     icon: <MapIcon />,

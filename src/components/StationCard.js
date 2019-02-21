@@ -23,7 +23,6 @@ import {
   WavesOutlined as WindIcon,
   FlashOnOutlined as HydroIcon,
   DashboardOutlined as DashboardIcon,
-  AssessmentOutlined as ReportIcon,
 } from '@material-ui/icons';
 
 import { green, red, grey } from '@material-ui/core/colors';
@@ -60,11 +59,6 @@ const StationCard = ({ classes, station }) => (
           <Tooltip title="Analyse">
             <IconButton href={`/dashboard/${station.stationId}`}>
               <DashboardIcon />
-            </IconButton>
-          </Tooltip>
-          <Tooltip title="Rapport">
-            <IconButton href={`/report/${station.stationId}`}>
-              <ReportIcon />
             </IconButton>
           </Tooltip>
         </React.Fragment>

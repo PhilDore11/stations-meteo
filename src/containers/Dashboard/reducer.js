@@ -41,7 +41,6 @@ export default (state = initialState, action) => {
       return {
         ...state,
         dashboardLoading: false,
-        clientStations: action.res,
         stationId: action.res[0].stationId,
       };
     case FETCH_CLIENT_STATIONS_ERROR:

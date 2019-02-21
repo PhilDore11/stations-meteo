@@ -19,7 +19,7 @@ import { ExpandMoreOutlined as ExpandMoreIcon } from '@material-ui/icons';
 
 import { Loading, NoData } from '.';
 
-class ReportTableCard extends React.PureComponent {
+class IdfTableCard extends React.PureComponent {
   constructor(props) {
     super(props);
 
@@ -92,7 +92,7 @@ class ReportTableCard extends React.PureComponent {
   }
 }
 
-ReportTableCard.propTypes = {
+IdfTableCard.propTypes = {
   title: PropTypes.string,
   icon: PropTypes.element,
   hasdata: PropTypes.bool,
@@ -101,4 +101,4 @@ ReportTableCard.propTypes = {
   loading: PropTypes.bool,
 };
 
-export default ReportTableCard;
+export default IdfTableCard;

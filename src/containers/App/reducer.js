@@ -4,7 +4,9 @@ import {
   WARNING,
   SUCCESS,
   RESET_ALERTS,
-  SET_STATION,
+  FETCH_CLIENT_STATIONS,
+  FETCH_CLIENT_STATIONS_SUCCESS,
+  FETCH_CLIENT_STATIONS_ERROR,
 } from '../constants';
 
 const initialState = {
@@ -12,6 +14,8 @@ const initialState = {
   warning: false,
   error: false,
   message: '',
+  clientStations: [],
+  stationId: '',
 };
 
 export default (state = initialState, action) => {
@@ -42,10 +46,24 @@ export default (state = initialState, action) => {
       return {
         ...initialState,
       };
-    case SET_STATION:
+    case FETCH_CLIENT_STATIONS:
       return {
         ...state,
-        stationId: action.stationId,
+        loading: true,
+      };
+    case FETCH_CLIENT_STATIONS_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        error: false,
+        clientStations: action.res,
+        stationId: action.res[0].stationId,
+      };
+    case FETCH_CLIENT_STATIONS_ERROR:
+      return {
+        ...state,
+        loading: false,
+        error: true,
       };
     default:
       return state;

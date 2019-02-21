@@ -11,7 +11,7 @@ import { MultilineChartOutlined as IdfIcon, ListOutlined as TableIcon } from '@m
 import { blue, amber, green, indigo, red, pink } from '@material-ui/core/colors';
 
 import { fetchIdfData, fetchIdfStationData } from '../actions';
-import { ChartCard, ReportTableCard } from '../../components';
+import { ChartCard, IdfTableCard } from '../../components';
 
 const chartColors = [blue[200], pink[200], green[200], amber[200], indigo[200], red[200]];
 
@@ -105,7 +105,7 @@ class idfContainer extends React.PureComponent {
           />
         </Grid>
         <Grid item xs={12}>
-          <ReportTableCard
+          <IdfTableCard
             title="Tableau de donnees"
             icon={<TableIcon />}
             hasData={!isEmpty(idfStationData)}

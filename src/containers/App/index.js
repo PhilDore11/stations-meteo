@@ -15,7 +15,6 @@ import {
   DashboardContainer,
   MapContainer,
   ClientsContainer,
-  ReportsContainer,
 } from '../';
 
 import { Alert, Sidebar } from '../../components';
@@ -84,7 +83,7 @@ class App extends React.PureComponent {
                   path="/"
                   render={() =>
                     loggedInUser ? (
-                      <Redirect to={loggedInUser.admin ? '/clients' : '/home'} />
+                      <Redirect to={loggedInUser.admin ? '/clients' : '/map'} />
                     ) : (
                       <Redirect to="/login" />
                     )
@@ -93,7 +92,7 @@ class App extends React.PureComponent {
                 <Route
                   path="/login"
                   render={() =>
-                    loggedInUser ? <Redirect to={loggedInUser.admin ? '/clients' : '/home'} /> : <LoginContainer />
+                    loggedInUser ? <Redirect to={loggedInUser.admin ? '/clients' : '/map'} /> : <LoginContainer />
                   }
                 />{' '}
                 />
@@ -103,8 +102,6 @@ class App extends React.PureComponent {
                   path="/dashboard/:stationId"
                   render={this.privateRouteRender(loggedInUser, <DashboardContainer />)}
                 />
-                <Route path="/report" exact render={this.privateRouteRender(loggedInUser, <ReportsContainer />)} />
-                <Route path="/report/:stationId" render={this.privateRouteRender(loggedInUser, <ReportsContainer />)} />
                 <Route path="/map" render={this.privateRouteRender(loggedInUser, <MapContainer />)} />
                 <Route path="/clients" render={this.privateRouteRender(loggedInUser, <ClientsContainer />)} />
               </Switch>

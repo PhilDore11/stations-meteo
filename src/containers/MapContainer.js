@@ -87,7 +87,7 @@ MapContainer.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  ...state.reports,
+  ...state.app,
 });
 
 export default connect(mapStateToProps)(withStyles(styles)(MapContainer));
