@@ -20,7 +20,6 @@ const initialState = {
     .endOf('day')
     .toISOString(),
   view: 'day',
-  clientStations: [],
   stationId: '',
   error: false,
   loading: false,
@@ -35,18 +34,18 @@ export default (state = initialState, action) => {
     case FETCH_CLIENT_STATIONS:
       return {
         ...state,
-        dashboardLoading: true,
+        loading: true,
       };
     case FETCH_CLIENT_STATIONS_SUCCESS:
       return {
         ...state,
-        dashboardLoading: false,
+        loading: false,
         stationId: action.res[0].stationId,
       };
     case FETCH_CLIENT_STATIONS_ERROR:
       return {
         ...state,
-        dashboardLoading: false,
+        loading: false,
         dashboardError: true,
       };
     case INCREMENT:

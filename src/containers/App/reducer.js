@@ -15,7 +15,6 @@ const initialState = {
   error: false,
   message: '',
   clientStations: [],
-  stationId: '',
 };
 
 export default (state = initialState, action) => {
@@ -49,20 +48,16 @@ export default (state = initialState, action) => {
     case FETCH_CLIENT_STATIONS:
       return {
         ...state,
-        loading: true,
       };
     case FETCH_CLIENT_STATIONS_SUCCESS:
       return {
         ...state,
-        loading: false,
         error: false,
         clientStations: action.res,
-        stationId: action.res[0].stationId,
       };
     case FETCH_CLIENT_STATIONS_ERROR:
       return {
         ...state,
-        loading: false,
         error: true,
       };
     default:
