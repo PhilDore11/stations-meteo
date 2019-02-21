@@ -8,6 +8,8 @@ import {
   INCREMENT,
   DECREMENT,
   SET_VIEW,
+  SET_START,
+  SET_END,
   SET_STATION,
 } from '../constants';
 
@@ -83,6 +85,16 @@ export default (state = initialState, action) => {
       return {
         ...state,
         stationId: action.stationId,
+      };
+    case SET_START:
+      return {
+        ...state,
+        start: moment(action.start).toISOString(),
+      };
+    case SET_END:
+      return {
+        ...state,
+        end: moment(action.end).toISOString(),
       };
     default:
       return state;

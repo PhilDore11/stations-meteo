@@ -1,13 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import moment from 'moment';
-
-import { withStyles, Grid, Typography, TextField, MenuItem, Fab } from '@material-ui/core';
-
-import { ChevronLeftOutlined as ChevronLeftIcon, ChevronRightOutlined as ChevronRightIcon } from '@material-ui/icons';
+import { withStyles, Grid, TextField, MenuItem } from '@material-ui/core';
 
 import { VIEWS } from '../containers/Dashboard/constants';
+import { DateIncrementDecrement, DateRange } from '.';
 
 const styles = () => ({
   input: {
@@ -18,12 +15,14 @@ const styles = () => ({
   },
 });
 
-const ChartHeader = ({
+const DashboardHeader = ({
   classes,
   start,
   end,
   increment,
   decrement,
+  onStartChange,
+  onEndChange,
   stations,
   stationId,
   onStationChange,
@@ -51,39 +50,11 @@ const ChartHeader = ({
       </TextField>
     </Grid>
     <Grid item xs={4}>
-      <Grid container spacing={24} justify="space-between" alignItems="center">
-        <Grid item>
-          <Fab onClick={decrement} className={classes.fab} size="small">
-            <ChevronLeftIcon color="action" />
-          </Fab>
-        </Grid>
-        <Grid item xs>
-          <Grid container spacing={16} justify="center" alignItems="center">
-            <Grid item>
-              <Typography>{moment(start).format('MMMM DD')}</Typography>
-              <Typography style={{ textAlign: 'center' }} variant="caption">
-                {moment(start).format('YYYY')}
-              </Typography>
-            </Grid>
-            {view !== 'day' && (
-              <React.Fragment>
-                <Grid item>{' - '}</Grid>
-                <Grid item>
-                  <Typography>{moment(end).format('MMMM DD')}</Typography>
-                  <Typography style={{ textAlign: 'center' }} variant="caption">
-                    {moment(end).format('YYYY')}
-                  </Typography>
-                </Grid>
-              </React.Fragment>
-            )}
-          </Grid>
-        </Grid>
-        <Grid item>
-          <Fab onClick={increment} className={classes.fab} size="small">
-            <ChevronRightIcon color="action" />
-          </Fab>
-        </Grid>
-      </Grid>
+      {view === 'custom' ? (
+        <DateRange start={start} end={end} onStartChange={onStartChange} onEndChange={onEndChange} />
+      ) : (
+        <DateIncrementDecrement start={start} end={end} view={view} increment={increment} decrement={decrement} />
+      )}
     </Grid>
     <Grid item xs={2}>
       <TextField
@@ -106,10 +77,12 @@ const ChartHeader = ({
   </Grid>
 );
 
-ChartHeader.propTypes = {
+DashboardHeader.propTypes = {
   classes: PropTypes.object.isRequired,
   start: PropTypes.string.isRequired,
   end: PropTypes.string.isRequired,
+  onStartChange: PropTypes.func.isRequired,
+  onEndChange: PropTypes.func.isRequired,
   increment: PropTypes.func.isRequired,
   decrement: PropTypes.func.isRequired,
   stations: PropTypes.array.isRequired,
@@ -119,4 +92,4 @@ ChartHeader.propTypes = {
   onViewChange: PropTypes.func.isRequired,
 };
 
-export default withStyles(styles)(ChartHeader);
+export default withStyles(styles)(DashboardHeader);

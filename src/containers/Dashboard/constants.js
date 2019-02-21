@@ -3,6 +3,8 @@ export const DECREMENT = "Dashboard/DECREMENT";
 
 export const SET_STATION = "Dashboard/SET_STATION";
 export const SET_VIEW = "Dashboard/SET_VIEW";
+export const SET_START = "Dashboard/SET_START";
+export const SET_END = "Dashboard/SET_END";
 
 export const VIEWS = [{
   key: 'day',
@@ -16,4 +18,7 @@ export const VIEWS = [{
 }, {
   key: 'year',
   label: 'Année'
+}, {
+  key: 'custom',
+  label: 'Custom'
 }]

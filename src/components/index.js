@@ -16,3 +16,6 @@ export { default as ChartCard } from './ChartCard';
 export { default as DashboardHeader } from './DashboardHeader';
 
 export { default as IdfTableCard } from './IdfTableCard';
+
+export { default as DateRange } from './DateRange';
+export { default as DateIncrementDecrement } from './DateIncrementDecrement';

@@ -7,7 +7,7 @@ import { withRouter } from 'react-router-dom';
 
 import { Grid } from '@material-ui/core';
 
-import { increment, decrement, setStation, setView } from '../actions';
+import { increment, decrement, setStart, setEnd, setStation, setView } from '../actions';
 import { DashboardHeader, Loading } from '../../components';
 import { StationDataContainer, IdfContainer } from '..';
 
@@ -16,6 +16,8 @@ class DashboardContainer extends React.PureComponent {
     super(props);
 
     this.handleStationChange = this.handleStationChange.bind(this);
+    this.handleStartChange = this.handleStartChange.bind(this);
+    this.handleEndChange = this.handleEndChange.bind(this);
     this.handleViewChange = this.handleViewChange.bind(this);
   }
 
@@ -42,6 +44,14 @@ class DashboardContainer extends React.PureComponent {
     this.props.setView(event.target.value);
   }
 
+  handleStartChange(start) {
+    this.props.setStart(start);
+  }
+
+  handleEndChange(end) {
+    this.props.setEnd(end);
+  }
+
   render() {
     const { error, loading, clientStations, stationId, start, end, view } = this.props;
 
@@ -59,6 +69,8 @@ class DashboardContainer extends React.PureComponent {
                 view={view}
                 increment={this.props.increment}
                 decrement={this.props.decrement}
+                onStartChange={this.handleStartChange}
+                onEndChange={this.handleEndChange}
                 onViewChange={this.handleViewChange}
               />
             </Grid>
@@ -99,6 +111,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
   increment,
   decrement,
+  setStart,
+  setEnd,
   setStation,
   setView,
 };
