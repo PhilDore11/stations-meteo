@@ -30,7 +30,7 @@ const ChartHeader = ({
   view,
   onViewChange,
 }) => (
-  <Grid container spacing={24} alignItems="center">
+  <Grid container spacing={24} justify="space-between" alignItems="center">
     <Grid item xs={2}>
       <TextField
         select
@@ -50,30 +50,34 @@ const ChartHeader = ({
           ))}
       </TextField>
     </Grid>
-    <Grid item xs>
-      <Grid container spacing={24} justify="center" alignItems="center">
+    <Grid item xs={4}>
+      <Grid container spacing={24} justify="space-between" alignItems="center">
         <Grid item>
           <Fab onClick={decrement} className={classes.fab} size="small">
             <ChevronLeftIcon color="action" />
           </Fab>
         </Grid>
-        <Grid item>
-          <Typography variant="h6">{moment(start).format('MMMM DD')}</Typography>
-          <Typography style={{ textAlign: 'center' }} variant="caption">
-            {moment(start).format('YYYY')}
-          </Typography>
-        </Grid>
-        {view !== 'day' && (
-          <React.Fragment>
-            <Grid item>{' - '}</Grid>
+        <Grid item xs>
+          <Grid container spacing={16} justify="center" alignItems="center">
             <Grid item>
-              <Typography variant="h6">{moment(end).format('MMMM DD')}</Typography>
+              <Typography variant="h7">{moment(start).format('MMMM DD')}</Typography>
               <Typography style={{ textAlign: 'center' }} variant="caption">
-                {moment(end).format('YYYY')}
+                {moment(start).format('YYYY')}
               </Typography>
             </Grid>
-          </React.Fragment>
-        )}
+            {view !== 'day' && (
+              <React.Fragment>
+                <Grid item>{' - '}</Grid>
+                <Grid item>
+                  <Typography variant="h7">{moment(end).format('MMMM DD')}</Typography>
+                  <Typography style={{ textAlign: 'center' }} variant="caption">
+                    {moment(end).format('YYYY')}
+                  </Typography>
+                </Grid>
+              </React.Fragment>
+            )}
+          </Grid>
+        </Grid>
         <Grid item>
           <Fab onClick={increment} className={classes.fab} size="small">
             <ChevronRightIcon color="action" />
