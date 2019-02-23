@@ -19,7 +19,7 @@ class StationPin extends React.PureComponent {
     this.handleClose = this.handleClose.bind(this);
   }
 
-  handleClick(event) {
+  handleClick() {
     this.setState({ isOpen: !this.state.isOpen });
   }
 
@@ -32,10 +32,7 @@ class StationPin extends React.PureComponent {
     const { isOpen } = this.state;
     return (
       <React.Fragment>
-        <IconButton
-          color="secondary"
-          onClick={this.handleClick}
-          buttonRef={node => (this.anchorEl = node)}>
+        <IconButton color="secondary" onClick={this.handleClick} buttonRef={node => (this.anchorEl = node)}>
           <PinIcon fontSize="large" />
         </IconButton>
         <Popover

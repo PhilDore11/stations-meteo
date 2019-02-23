@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import moment from 'moment';
+
 import { connect } from 'react-redux';
 
 import { isEmpty, chain } from 'lodash';
@@ -41,8 +43,9 @@ class idfContainer extends React.PureComponent {
   render() {
     const { idfData, idfStationData, error, loading } = this.props;
 
+    const increments = [5, 10, 15, 30, 60, 120, 360, 720, 1440];
+
     const idfChartData = {
-      labels: ['5 mins', '10 mins', '15 mins', '30 mins', '1 hr', '2 hrs', '6 hrs', '12 hrs', '24hrs'],
       datasets:
         idfData &&
         chain(idfData)
@@ -53,19 +56,22 @@ class idfContainer extends React.PureComponent {
             borderDash: [10, 5],
             backgroundColor: chartColors[index],
             borderColor: chartColors[index],
-            data: [5, 10, 15, 30, 60, 120, 360, 720, 1440].map(increment =>
-              parseFloat(data[increment] * (60 / increment)).toFixed(2),
-            ),
+            data: increments.map(increment => ({
+              x: increment,
+              y: parseFloat(data[increment] * (60 / increment)).toFixed(2),
+            })),
           }))
           .unshift({
             label: 'Donnees mensuelles',
             fill: false,
             lineTension: 0,
+            showLine: true,
             backgroundColor: blue[800],
             borderColor: blue[800],
-            data: idfStationData.map(stationData =>
-              parseFloat(stationData.intensity * (60 / stationData.increment)).toFixed(2),
-            ),
+            data: idfStationData.map((stationData, index) => ({
+              x: increments[index],
+              y: parseFloat(stationData.intensity * (60 / stationData.increment)).toFixed(2),
+            })),
           })
           .value(),
     };
@@ -73,6 +79,31 @@ class idfContainer extends React.PureComponent {
     const idfChartOptions = {
       maintainAspectRatio: false,
       scales: {
+        xAxes: [
+          {
+            type: 'logarithmic',
+            gridLines: {
+              drawTicks: false,
+            },
+            ticks: {
+              min: 0,
+              max: 1440,
+              callback: (value, index) => {
+                const increment = increments[index];
+                if (increment < 60) {
+                  return moment.duration(value, 'minutes').asMinutes() + " mins";
+                } else if (increment > 60) {
+                  return moment.duration(value, 'minutes').asHours() + " hrs";
+                } else {
+                  return moment.duration(value, 'minutes').asHours() + " hr";
+                }
+              },
+            },
+            afterBuildTicks: function(chart) {
+              chart.ticks = [...increments];
+            },
+          },
+        ],
         yAxes: [
           {
             scaleLabel: {
@@ -94,7 +125,7 @@ class idfContainer extends React.PureComponent {
       <Grid container spacing={24}>
         <Grid item xs={12}>
           <ChartCard
-            type="line"
+            type="scatter"
             title="IDF"
             icon={<IdfIcon />}
             hasData={!isEmpty(idfStationData) && !isEmpty(idfStationData)}

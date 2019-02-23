@@ -13,7 +13,7 @@ import {
 
 import { ExpandMoreOutlined as ExpandMoreIcon } from '@material-ui/icons';
 
-import { Line, Bar } from 'react-chartjs-2';
+import { Line, Bar, Scatter } from 'react-chartjs-2';
 
 import { Loading, NoData } from './';
 
@@ -44,6 +44,8 @@ class ChartCard extends React.PureComponent {
         return Line;
       case 'bar':
         return Bar;
+      case 'scatter':
+        return Scatter;
       default:
         return Line;
     }
@@ -76,7 +78,7 @@ class ChartCard extends React.PureComponent {
 
 ChartCard.propTypes = {
   classes: PropTypes.object.isRequired,
-  type: PropTypes.oneOf(['line', 'bar']),
+  type: PropTypes.oneOf(['line', 'bar', 'scatter']),
   title: PropTypes.string,
   icon: PropTypes.element,
   hasdata: PropTypes.bool,
