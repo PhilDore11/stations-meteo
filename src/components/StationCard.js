@@ -16,15 +16,19 @@ import {
   Tooltip,
 } from '@material-ui/core';
 
+import { DashboardOutlined as DashboardIcon } from '@material-ui/icons';
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-  OpacityOutlined as ReadingIcon,
-  BatteryAlertOutlined as BatteryIcon,
-  CloudOutlined as RainIcon,
-  AcUnitOutlined as SnowIcon,
-  WavesOutlined as WindIcon,
-  FlashOnOutlined as HydroIcon,
-  DashboardOutlined as DashboardIcon,
-} from '@material-ui/icons';
+  faTint,
+  faBatteryFull,
+  faBatteryHalf,
+  faBatteryQuarter,
+  faCloudRain,
+  faSnowflake,
+  faWind,
+  faBolt,
+} from '@fortawesome/free-solid-svg-icons';
 
 import { green, red, grey, orange } from '@material-ui/core/colors';
 
@@ -42,6 +46,10 @@ const styles = theme => ({
   error: {
     color: red[600],
   },
+  icon: {
+    height: 40,
+    width: 40,
+  },
   readingSection: {
     textAlign: 'center',
     padding: theme.spacing.unit * 2,
@@ -54,15 +62,23 @@ const styles = theme => ({
 });
 
 const StationCard = ({ classes, station }) => {
-  const getBatteryClass = battery => {
-    if (battery > 11.5) {
-      return classes.success;
-    } else if (battery < 11.5 && battery > 10.5) {
-      return classes.warning;
-    } else {
-      return classes.error;
+  let batteryObj = {};
+  if (station && station.battery > 11.5) {
+    batteryObj = {
+      className: classes.success,
+      icon: faBatteryFull,
+    };
+  } else if (station && station.battery < 11.5 && station.battery > 10.5) {
+    batteryObj = {
+      className: classes.warning,
+      icon: faBatteryHalf,
     }
-  };
+  } else {
+    batteryObj = {
+      className: classes.error,
+      icon: faBatteryQuarter,
+    };
+  }
   return (
     <Card className={classes.stationCard}>
       <CardHeader
@@ -82,7 +98,7 @@ const StationCard = ({ classes, station }) => {
       <Grid container spacing={0} direction="row">
         <Grid item xs>
           <div className={classes.readingSection}>
-            <ReadingIcon fontSize="large" color="action" />
+            <FontAwesomeIcon className={classes.icon} icon={faTint} fixedWidth size="2x" color="grey" />
             <Typography variant="h5">
               {isNumber(station.intensity) ? parseFloat(station.intensity).toFixed(2) : ' - '}
               <small>mm</small>
@@ -90,8 +106,8 @@ const StationCard = ({ classes, station }) => {
           </div>
         </Grid>
         <Grid item xs>
-          <div className={[classes.batterySection, getBatteryClass(station.battery)].join(' ')}>
-            <BatteryIcon fontSize="large" color="inherit" />
+          <div className={[classes.batterySection, batteryObj.className].join(' ')}>
+            <FontAwesomeIcon className={classes.icon} icon={batteryObj.icon} fixedWidth size="2x" />
             <Typography variant="h5" color="inherit">
               {isNumber(station.battery) ? parseFloat(station.battery).toFixed(2) : ' - '}
               <small>V</small>
@@ -110,22 +126,22 @@ const StationCard = ({ classes, station }) => {
         <Grid container spacing={24} justify="center" alignItems="center">
           {station.hasRain ? (
             <Grid item>
-              <RainIcon color="action" />
+              <FontAwesomeIcon icon={faCloudRain} color="grey" fixedWidth size="lg" />
             </Grid>
           ) : null}
           {station.hasSnow ? (
             <Grid item>
-              <SnowIcon color="action" />
+              <FontAwesomeIcon icon={faSnowflake} color="grey" fixedWidth size="lg" />
             </Grid>
           ) : null}
           {station.hasWind ? (
             <Grid item>
-              <WindIcon color="action" />
+              <FontAwesomeIcon icon={faWind} color="grey" fixedWidth size="lg" />
             </Grid>
           ) : null}
           {station.hasHydro ? (
             <Grid item>
-              <HydroIcon color="action" />
+              <FontAwesomeIcon icon={faBolt} color="grey" fixedWidth size="lg" />
             </Grid>
           ) : null}
         </Grid>
