@@ -53,13 +53,33 @@ function* addClientGenerator(action) {
     message: 'Error Adding Client',
   };
 
+  const { name, username, password } = action.clientData;
+
   try {
-    const response = yield call(jsonFetch, `${process.env.REACT_APP_API_URL}/clients`, {
-      body: action.clientData,
+    const clientResponse = yield call(jsonFetch, `${process.env.REACT_APP_API_URL}/clients`, {
+      body: { name },
       method: 'POST',
     });
-    yield requestHandler(response, { action: addClientSuccess }, errorObject);
-    yield put(fetchClients());
+
+    const userResponse = yield call(jsonFetch, `${process.env.REACT_APP_API_URL}/users`, {
+      body: { username, password },
+      method: 'POST',
+    });
+
+    if (clientResponse && userResponse) {
+      const userClientResponse = yield call(jsonFetch, `${process.env.REACT_APP_API_URL}/userClients`, {
+        body: {
+          userId: userResponse.body.insertId,
+          clientId: clientResponse.body.insertId,
+        },
+        method: 'POST',
+      });
+
+      yield requestHandler(userClientResponse, { action: addClientSuccess }, errorObject);
+      yield put(fetchClients());
+    } else {
+      yield errorHandler('Error creating new client');
+    }
   } catch (e) {
     yield errorHandler(errorObject);
   }
@@ -72,9 +92,13 @@ function* editClientGenerator(action) {
   };
 
   try {
-    const { id, ...rest } = action.clientData;
+    const { id, userId, name, username, password } = action.clientData;
     const response = yield call(jsonFetch, `${process.env.REACT_APP_API_URL}/clients/${id}`, {
-      body: rest,
+      body: { name },
+      method: 'PUT',
+    });
+    yield call(jsonFetch, `${process.env.REACT_APP_API_URL}/users/${userId}`, {
+      body: { username, password },
       method: 'PUT',
     });
 
@@ -92,8 +116,9 @@ function* deleteClientGenerator(action) {
   };
 
   try {
-    const { id } = action.clientData;
+    const { id, userId } = action.clientData;
     const response = yield call(jsonFetch, `${process.env.REACT_APP_API_URL}/clients/${id}`, { method: 'DELETE' });
+    yield call(jsonFetch, `${process.env.REACT_APP_API_URL}/users/${userId}`, { method: 'DELETE' });
 
     yield requestHandler(response, { action: deleteClientSuccess }, errorObject);
     yield put(fetchClients());

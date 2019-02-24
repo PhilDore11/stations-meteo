@@ -1,33 +1,22 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React from 'react';
+import PropTypes from 'prop-types';
 
-import { connect } from "react-redux";
+import { connect } from 'react-redux';
 
-import {
-  withStyles,
-  Grid,
-  Fab,
-} from "@material-ui/core";
+import { withStyles, Grid, Fab } from '@material-ui/core';
 
-import { AddOutlined as AddIcon } from "@material-ui/icons";
+import { AddOutlined as AddIcon } from '@material-ui/icons';
 
-import { ClientRow, ClientModal, ClientForm } from "../../components";
+import { ClientRow, ClientModal, ClientForm, Loading, NoData } from '../../components';
 
-import { 
-  fetchClients, 
-  addClient, 
-  editClient, 
-  deleteClient, 
-  toggleClientModal,
-  setClientData, 
-} from "./actions";
+import { fetchClients, addClient, editClient, deleteClient, toggleClientModal, setClientData } from './actions';
 
-const styles = theme => ({
+const styles = () => ({
   add: {
-    position: "fixed",
-    bottom: "20px",
-    right: "20px"
-  }
+    position: 'fixed',
+    bottom: '20px',
+    right: '20px',
+  },
 });
 
 class ClientsContainer extends React.PureComponent {
@@ -43,21 +32,34 @@ class ClientsContainer extends React.PureComponent {
   }
 
   onClientChange = (event, clientData) => {
-    const {id, value} = event.target;
-    const newClientData = {...clientData, [id]: value};
+    const { id, value } = event.target;
+    const newClientData = { ...clientData, [id]: value };
     this.props.setClientData(newClientData);
-  }
+  };
 
   onClientEdit = clientData => {
-    this.props.setClientData(clientData);
+    this.props.setClientData({ ...clientData, password: '' });
     this.props.toggleClientModal(false);
-  }
+  };
+
+  onClientAdd = () => {
+    this.props.setClientData({
+      name: '',
+      username: '',
+      password: '',
+    });
+    this.props.toggleClientModal(true);
+  };
 
   onClientSave = () => {
-    this.props.isAdd
-      ? this.props.addClient(this.props.clientData)
-      : this.props.editClient(this.props.clientData);
-  }
+    this.props.isAdd ? this.props.addClient(this.props.clientData) : this.props.editClient(this.props.clientData);
+  };
+
+  onClientDelete = clientData => {
+    if (window.confirm('Le client sera supprimer de facon permanente. Voulez-vous poursuivre?')) {
+      this.props.deleteClient(clientData);
+    }
+  };
 
   render() {
     const {
@@ -66,7 +68,6 @@ class ClientsContainer extends React.PureComponent {
       clients,
       clientModalOpen,
       clientData,
-      toggleClientModal,
       isAdd,
       clientsError,
       clientsLoading,
@@ -76,37 +77,48 @@ class ClientsContainer extends React.PureComponent {
 
     return (
       <Grid container spacing={24}>
-        <Grid item xs={12}>
-          {clients && clients.map(client => (
-            <ClientRow
-              key={client.id}
-              client={client}
-              showActions={isAdmin}
-              expanded={!isAdmin}
-              onClientEdit={this.onClientEdit}
-              onClientDelete={this.props.deleteClient}
-            />
-          ))}
-          {isAdmin ? (
-            <React.Fragment>
-              <Fab
-                color="primary"
-                aria-label="Add"
-                className={classes.add}
-                onClick={this.onClientAdd}
-              >
-                <AddIcon />
-              </Fab>
-              <ClientModal
-                isOpen={clientModalOpen}
-                isAdd={isAdd}
-                onToggle={toggleClientModal}
-                onSave={this.onClientSave}
-                body={<ClientForm client={clientData} error={clientsError} loading={clientsLoading} onChange={this.onClientChange} />}
-              />
-            </React.Fragment>
-          ) : ""}
-        </Grid>
+        {!clientsLoading && !clientsError ? (
+          <Grid item xs={12}>
+            {clients &&
+              clients.map(client => (
+                <ClientRow
+                  key={client.id}
+                  client={client}
+                  showActions={isAdmin}
+                  expanded={!isAdmin}
+                  onClientEdit={this.onClientEdit}
+                  onClientDelete={this.onClientDelete}
+                />
+              ))}
+            {isAdmin ? (
+              <React.Fragment>
+                <Fab color="primary" aria-label="Add" className={classes.add} onClick={this.onClientAdd}>
+                  <AddIcon />
+                </Fab>
+                <ClientModal
+                  isOpen={clientModalOpen}
+                  isAdd={isAdd}
+                  onToggle={() => this.props.toggleClientModal(isAdd)}
+                  onSave={this.onClientSave}
+                  body={
+                    <ClientForm
+                      client={clientData}
+                      error={clientsError}
+                      loading={clientsLoading}
+                      onChange={this.onClientChange}
+                    />
+                  }
+                />
+              </React.Fragment>
+            ) : (
+              ''
+            )}
+          </Grid>
+        ) : clientsLoading ? (
+          <Loading />
+        ) : (
+          <NoData />
+        )}
       </Grid>
     );
   }
@@ -132,10 +144,10 @@ const mapDispatchToProps = {
   editClient,
   deleteClient,
   toggleClientModal,
-  setClientData
+  setClientData,
 };
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 )(withStyles(styles)(ClientsContainer));

@@ -10,7 +10,7 @@ import {
   Divider,
 } from '@material-ui/core';
 
-import { ExpandMoreOutlined as ExpandMoreIcon, RouterOutlined as DeviceIcon } from '@material-ui/icons';
+import { ExpandMoreOutlined as ExpandMoreIcon } from '@material-ui/icons';
 
 import { ClientMenu, StationCard } from './';
 
@@ -51,9 +51,6 @@ class ClientRow extends React.PureComponent {
         <ExpansionPanel expanded={expanded} key={client.id} onChange={this.handleExpand}>
           <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
             <Grid container spacing={24} alignItems="center">
-              <Grid item>
-                <DeviceIcon color="action" />
-              </Grid>
               <Grid item xs>
                 <Typography variant="subtitle1">{client.name}</Typography>
               </Grid>

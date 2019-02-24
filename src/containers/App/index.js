@@ -47,7 +47,7 @@ class App extends React.PureComponent {
 
   fetchClientStations() {
     const { loggedInUser } = this.props;
-    if (loggedInUser) {
+    if (loggedInUser && !loggedInUser.admin) {
       const clientId = loggedInUser.clients[0].id;
       this.props.fetchClientStations(clientId);
     }

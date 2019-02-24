@@ -13,7 +13,7 @@ import {
   DELETE_CLIENT_ERROR,
   TOGGLE_CLIENT_MODAL,
   SET_CLIENT_DATA,
-} from "./constants";
+} from './constants';
 
 export const fetchClients = () => ({
   type: FETCH_CLIENTS,
@@ -21,65 +21,65 @@ export const fetchClients = () => ({
 
 export const fetchClientsSuccess = res => ({
   type: FETCH_CLIENTS_SUCCESS,
-  res
+  res,
 });
 
 export const fetchClientsError = error => ({
   type: FETCH_CLIENTS_ERROR,
-  error
+  error,
 });
 
 export const addClient = clientData => ({
   type: ADD_CLIENT,
-  clientData
+  clientData,
 });
 
 export const addClientSuccess = res => ({
   type: ADD_CLIENT_SUCCESS,
-  res
+  res,
 });
 
 export const addClientError = error => ({
   type: ADD_CLIENT_ERROR,
-  error
+  error,
 });
 
 export const editClient = clientData => ({
   type: EDIT_CLIENT,
-  clientData
+  clientData,
 });
 
 export const editClientSuccess = res => ({
   type: EDIT_CLIENT_SUCCESS,
-  res
+  res,
 });
 
 export const editClientError = error => ({
   type: EDIT_CLIENT_ERROR,
-  error
+  error,
 });
 
 export const deleteClient = clientData => ({
   type: DELETE_CLIENT,
-  clientData
+  clientData,
 });
 
 export const deleteClientSuccess = res => ({
   type: DELETE_CLIENT_SUCCESS,
-  res
+  res,
 });
 
 export const deleteClientError = error => ({
   type: DELETE_CLIENT_ERROR,
-  error
+  error,
 });
 
-export const toggleClientModal = isAdd => ({
+export const toggleClientModal = (isAdd = false) => ({
   type: TOGGLE_CLIENT_MODAL,
-  isAdd
+  isAdd,
 });
 
 export const setClientData = clientData => ({
   type: SET_CLIENT_DATA,
-  clientData
+  clientData,
 });

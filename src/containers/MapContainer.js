@@ -17,7 +17,7 @@ import { ExpandMoreOutlined as ExpandMoreIcon, MapOutlined as MapIcon } from '@m
 
 import GoogleMapReact from 'google-map-react';
 
-import { StationPin, Loading } from '../components';
+import { StationPin, Loading, NoData } from '../components';
 
 const styles = () => ({
   mapArea: {
@@ -43,9 +43,6 @@ class MapContainer extends React.PureComponent {
   render() {
     const { classes, loading, error, clientStations } = this.props;
     const { expanded } = this.state;
-
-    console.log("loading", loading);
-    console.log("error", error);
 
     return (
       <Grid container spacing={24}>
@@ -78,8 +75,10 @@ class MapContainer extends React.PureComponent {
                       <StationPin key={station.id} lat={station.latitude} lng={station.longitude} station={station} />
                     ))}
                 </GoogleMapReact>
-              ) : (
+              ) : loading ? (
                 <Loading />
+              ) : (
+                <NoData />
               )}
             </ExpansionPanelDetails>
           </ExpansionPanel>

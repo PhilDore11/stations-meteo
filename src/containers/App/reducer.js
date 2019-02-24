@@ -47,8 +47,8 @@ export default (state = initialState, action) => {
       };
     case FETCH_CLIENT_STATIONS:
       return {
-        loading: true,
         ...state,
+        loading: true,
       };
     case FETCH_CLIENT_STATIONS_SUCCESS:
       return {
@@ -59,9 +59,9 @@ export default (state = initialState, action) => {
       };
     case FETCH_CLIENT_STATIONS_ERROR:
       return {
+        ...state,
         loading: false,
         error: true,
-        ...state,
       };
     default:
       return state;
