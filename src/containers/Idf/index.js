@@ -53,7 +53,6 @@ class idfContainer extends React.PureComponent {
             label: `${data.interval} ans`,
             fill: false,
             lineTension: 0,
-            borderDash: [10, 5],
             backgroundColor: chartColors[index],
             borderColor: chartColors[index],
             data: increments.map(increment => ({
