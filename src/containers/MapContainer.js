@@ -17,7 +17,7 @@ import { ExpandMoreOutlined as ExpandMoreIcon, MapOutlined as MapIcon } from '@m
 
 import GoogleMapReact from 'google-map-react';
 
-import { StationPin } from '../components';
+import { StationPin, Loading } from '../components';
 
 const styles = () => ({
   mapArea: {
@@ -41,8 +41,11 @@ class MapContainer extends React.PureComponent {
   }
 
   render() {
-    const { classes, clientStations } = this.props;
+    const { classes, loading, error, clientStations } = this.props;
     const { expanded } = this.state;
+
+    console.log("loading", loading);
+    console.log("error", error);
 
     return (
       <Grid container spacing={24}>
@@ -60,20 +63,24 @@ class MapContainer extends React.PureComponent {
             </ExpansionPanelSummary>
             <Divider />
             <ExpansionPanelDetails className={classes.mapArea}>
-              <GoogleMapReact
-                bootstrapURLKeys={{
-                  key: 'AIzaSyBBzPnmM8AuGNrNyLwL-mwXqUXQf0R4Mc8',
-                }}
-                center={{
-                  lat: clientStations && clientStations[0] && clientStations[0].latitude,
-                  lng: clientStations && clientStations[0] && clientStations[0].longitude,
-                }}
-                zoom={12}>
-                {clientStations &&
-                  clientStations.map(station => (
-                    <StationPin key={station.id} lat={station.latitude} lng={station.longitude} station={station} />
-                  ))}
-              </GoogleMapReact>
+              {!loading && !error ? (
+                <GoogleMapReact
+                  bootstrapURLKeys={{
+                    key: 'AIzaSyBBzPnmM8AuGNrNyLwL-mwXqUXQf0R4Mc8',
+                  }}
+                  center={{
+                    lat: clientStations && clientStations[0] && clientStations[0].latitude,
+                    lng: clientStations && clientStations[0] && clientStations[0].longitude,
+                  }}
+                  zoom={12}>
+                  {clientStations &&
+                    clientStations.map(station => (
+                      <StationPin key={station.id} lat={station.latitude} lng={station.longitude} station={station} />
+                    ))}
+                </GoogleMapReact>
+              ) : (
+                <Loading />
+              )}
             </ExpansionPanelDetails>
           </ExpansionPanel>
         </Grid>

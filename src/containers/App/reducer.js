@@ -47,18 +47,21 @@ export default (state = initialState, action) => {
       };
     case FETCH_CLIENT_STATIONS:
       return {
+        loading: true,
         ...state,
       };
     case FETCH_CLIENT_STATIONS_SUCCESS:
       return {
         ...state,
+        loading: false,
         error: false,
         clientStations: action.res,
       };
     case FETCH_CLIENT_STATIONS_ERROR:
       return {
-        ...state,
+        loading: false,
         error: true,
+        ...state,
       };
     default:
       return state;
