@@ -36,9 +36,10 @@ function* fetchClientsGenerator() {
     for (let i = 0; i < response.body.length; i++) {
       const client = response.body[i];
 
-      const clientStationsResponse = yield call(fetchClientStationsRequest, client.id);
+      const clientStations = yield call(fetchClientStationsRequest, client.id);
+      const clientAlerts = yield call(jsonFetch, `${process.env.REACT_APP_API_URL}/alerts/${client.id}`);
 
-      clients.push({ ...client, stations: clientStationsResponse });
+      clients.push({ ...client, stations: clientStations, alerts: clientAlerts.body });
     }
 
     yield requestHandler({ status: 200, body: clients }, { action: fetchClientsSuccess }, errorObject);
@@ -53,7 +54,11 @@ function* addClientGenerator(action) {
     message: 'Error Adding Client',
   };
 
-  const { name, username, password } = action.clientData;
+  const { name, username, password, alerts } = action.clientData;
+
+  if (!name || !username || !password) {
+    return yield errorHandler('Error creating new client');
+  }
 
   try {
     const clientResponse = yield call(jsonFetch, `${process.env.REACT_APP_API_URL}/clients`, {
@@ -75,6 +80,11 @@ function* addClientGenerator(action) {
         method: 'POST',
       });
 
+      yield call(jsonFetch, `${process.env.REACT_APP_API_URL}/alerts/${clientResponse.body.insertId}`, {
+        body: { alerts },
+        method: 'POST',
+      });
+
       yield requestHandler(userClientResponse, { action: addClientSuccess }, errorObject);
       yield put(fetchClients());
     } else {
@@ -92,7 +102,12 @@ function* editClientGenerator(action) {
   };
 
   try {
-    const { id, userId, name, username, password } = action.clientData;
+    const { id, userId, name, username, password, alerts } = action.clientData;
+
+    if (!name || !username || !password) {
+      return yield errorHandler('Error Editing Client');
+    }
+
     const response = yield call(jsonFetch, `${process.env.REACT_APP_API_URL}/clients/${id}`, {
       body: { name },
       method: 'PUT',
@@ -100,6 +115,11 @@ function* editClientGenerator(action) {
     yield call(jsonFetch, `${process.env.REACT_APP_API_URL}/users/${userId}`, {
       body: { username, password },
       method: 'PUT',
+    });
+
+    yield call(jsonFetch, `${process.env.REACT_APP_API_URL}/alerts/${id}`, {
+      body: { alerts },
+      method: 'POST',
     });
 
     yield requestHandler(response, { action: editClientSuccess }, errorObject);

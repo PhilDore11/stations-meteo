@@ -10,6 +10,7 @@ import {
   DELETE_CLIENT_SUCCESS,
   DELETE_CLIENT_ERROR,
   TOGGLE_CLIENT_MODAL,
+  TOGGLE_USER_MODAL,
   SET_CLIENT_DATA,
   SET_CLIENT_ALERTS,
 } from '../constants';
@@ -18,6 +19,7 @@ const initialState = {
   clients: [],
   clientData: {},
   clientModalOpen: false,
+  userModalOpen: false,
   isAdd: true,
   clientsLoading: true,
   clientsError: false,
@@ -35,6 +37,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         clientModalOpen: false,
+        userModalOpen: false,
         clientsLoading: false,
         clientsError: false,
       };
@@ -66,14 +69,18 @@ export default (state = initialState, action) => {
         isAdd: action.isAdd,
         clientsError: false,
       };
+    case TOGGLE_USER_MODAL:
+      return {
+        ...state,
+        userModalOpen: !state.userModalOpen,
+        clientsError: false,
+      };
     case SET_CLIENT_DATA:
-      console.log('SET_CLIENT_DATA', action);
       return {
         ...state,
         clientData: { ...action.clientData },
       };
     case SET_CLIENT_ALERTS:
-      console.log('SET_CLIENT_ALERTS', action);
       return {
         ...state,
         clientData: {

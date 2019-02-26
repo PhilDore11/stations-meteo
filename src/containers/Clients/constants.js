@@ -15,6 +15,7 @@ export const DELETE_CLIENT_SUCCESS = "Clients/DELETE_CLIENT_SUCCESS";
 export const DELETE_CLIENT_ERROR = "Clients/DELETE_CLIENT_ERROR";
 
 export const TOGGLE_CLIENT_MODAL = "Clients/TOGGLE_CLIENT_MODAL";
+export const TOGGLE_USER_MODAL = "Clients/TOGGLE_USER_MODAL";
 
 export const SET_CLIENT_DATA = "Clients/SET_CLIENT_DATA";
 export const SET_CLIENT_ALERTS = "Clients/SET_CLIENT_ALERTS";

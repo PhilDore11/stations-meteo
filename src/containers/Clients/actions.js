@@ -12,6 +12,7 @@ import {
   DELETE_CLIENT_SUCCESS,
   DELETE_CLIENT_ERROR,
   TOGGLE_CLIENT_MODAL,
+  TOGGLE_USER_MODAL,
   SET_CLIENT_DATA,
   SET_CLIENT_ALERTS,
 } from './constants';
@@ -78,6 +79,10 @@ export const deleteClientError = error => ({
 export const toggleClientModal = (isAdd = false) => ({
   type: TOGGLE_CLIENT_MODAL,
   isAdd,
+});
+
+export const toggleUserModal = () => ({
+  type: TOGGLE_USER_MODAL,
 });
 
 export const setClientData = clientData => ({

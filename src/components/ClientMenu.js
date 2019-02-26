@@ -6,12 +6,14 @@ import {
   MenuItem, 
   ListItemIcon, 
   ListItemText, 
-  IconButton 
+  IconButton, 
+  Divider
 } from "@material-ui/core";
 
 import { 
   MoreVertOutlined as MoreVertIcon, 
-  EditOutlined as EditIcon,
+  PersonOutlined as EditClientIcon,
+  LockOutlined as EditUserIcon,
   DeleteOutlined as DeleteIcon
 } from "@material-ui/icons";
 
@@ -41,7 +43,7 @@ class ClientMenu extends React.PureComponent {
   }
 
   render() {
-    const { onEdit, onDelete } = this.props;
+    const { onClientEdit, onUserEdit, onDelete } = this.props;
     const { isOpen } = this.state;
 
     return (
@@ -57,12 +59,19 @@ class ClientMenu extends React.PureComponent {
           open={isOpen}
           onClose={this.handleClose}
         >
-          <MenuItem onClick={(event) => this.onItemClick(event, onEdit)}>
+          <MenuItem onClick={(event) => this.onItemClick(event, onClientEdit)}>
             <ListItemIcon>
-              <EditIcon />
+              <EditClientIcon />
             </ListItemIcon>
-            <ListItemText inset primary="Modifier" />
+            <ListItemText inset primary="Modifier Client" />
           </MenuItem>
+          <MenuItem onClick={(event) => this.onItemClick(event, onUserEdit)}>
+            <ListItemIcon>
+              <EditUserIcon />
+            </ListItemIcon>
+            <ListItemText inset primary="Modifier Usager" />
+          </MenuItem>
+          <Divider />
           <MenuItem onClick={(event) => this.onItemClick(event, onDelete)}>
             <ListItemIcon>
               <DeleteIcon />
@@ -76,7 +85,8 @@ class ClientMenu extends React.PureComponent {
 }
 
 ClientMenu.propTypes = {
-  onEdit: PropTypes.func.isRequired,
+  onClientEdit: PropTypes.func.isRequired,
+  onUserEdit: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired
 };
 

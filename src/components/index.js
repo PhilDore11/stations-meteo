@@ -4,6 +4,7 @@ export { default as Loading } from './Loading';
 export { default as Sidebar } from './Sidebar';
 
 export { default as ClientForm } from './ClientForm';
+export { default as UserForm } from './UserForm';
 export { default as ClientMenu } from './ClientMenu';
 export { default as ClientModal } from './ClientModal';
 export { default as ClientRow } from './ClientRow';
@@ -21,3 +22,4 @@ export { default as DateRange } from './DateRange';
 export { default as DateIncrementDecrement } from './DateIncrementDecrement';
 
 export { default as AlertTable } from './AlertTable';
+export { default as AlertTableRow } from './AlertTableRow';

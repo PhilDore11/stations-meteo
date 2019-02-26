@@ -41,7 +41,7 @@ class ClientRow extends React.PureComponent {
   }
 
   render() {
-    const { isAdmin, client, onClientEdit, onClientDelete } = this.props;
+    const { isAdmin, client, onClientEdit, onUserEdit, onClientDelete } = this.props;
     const { expanded } = this.state;
 
     if (!isAdmin) {
@@ -56,7 +56,11 @@ class ClientRow extends React.PureComponent {
               </Grid>
               {isAdmin ? (
                 <Grid item>
-                  <ClientMenu onEdit={() => onClientEdit(client)} onDelete={() => onClientDelete(client)} />
+                  <ClientMenu
+                    onClientEdit={() => onClientEdit(client)}
+                    onUserEdit={() => onUserEdit(client)}
+                    onDelete={() => onClientDelete(client)}
+                  />
                 </Grid>
               ) : (
                 ''
@@ -79,6 +83,7 @@ ClientRow.propTypes = {
   showActions: PropTypes.bool,
   expanded: PropTypes.bool,
   onClientEdit: PropTypes.func.isRequired,
+  onUserEdit: PropTypes.func.isRequired,
   onClientDelete: PropTypes.func.isRequired,
 };
 

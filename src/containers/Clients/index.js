@@ -7,7 +7,7 @@ import { withStyles, Grid, Fab } from '@material-ui/core';
 
 import { AddOutlined as AddIcon } from '@material-ui/icons';
 
-import { ClientRow, ClientModal, ClientForm, Loading, NoData } from '../../components';
+import { ClientRow, ClientModal, ClientForm, Loading, NoData, UserForm } from '../../components';
 
 import {
   fetchClients,
@@ -15,6 +15,7 @@ import {
   editClient,
   deleteClient,
   toggleClientModal,
+  toggleUserModal,
   setClientData,
   setClientAlerts,
 } from './actions';
@@ -60,8 +61,13 @@ class ClientsContainer extends React.PureComponent {
   };
 
   onClientEdit = clientData => {
-    this.props.setClientData({ ...clientData, password: '' });
+    this.props.setClientData({ ...clientData });
     this.props.toggleClientModal(false);
+  };
+
+  onUserEdit = clientData => {
+    this.props.setClientData({ ...clientData, password: '' });
+    this.props.toggleUserModal(false);
   };
 
   onClientAdd = () => {
@@ -77,6 +83,10 @@ class ClientsContainer extends React.PureComponent {
     this.props.isAdd ? this.props.addClient(this.props.clientData) : this.props.editClient(this.props.clientData);
   };
 
+  onUserSave = () => {
+    this.props.editClient(this.props.clientData);
+  };
+
   onClientDelete = clientData => {
     if (window.confirm('Le client sera supprimer de facon permanente. Voulez-vous poursuivre?')) {
       this.props.deleteClient(clientData);
@@ -89,6 +99,7 @@ class ClientsContainer extends React.PureComponent {
       loggedInUser,
       clients,
       clientModalOpen,
+      userModalOpen,
       clientData,
       isAdd,
       clientsError,
@@ -109,6 +120,7 @@ class ClientsContainer extends React.PureComponent {
                   isAdmin={isAdmin}
                   expanded={!isAdmin}
                   onClientEdit={this.onClientEdit}
+                  onUserEdit={this.onUserEdit}
                   onClientDelete={this.onClientDelete}
                 />
               ))}
@@ -118,18 +130,35 @@ class ClientsContainer extends React.PureComponent {
                   <AddIcon />
                 </Fab>
                 <ClientModal
+                  title={isAdd ? 'Nouveau Client' : 'Modifier Client'}
                   isOpen={clientModalOpen}
-                  isAdd={isAdd}
                   onToggle={() => this.props.toggleClientModal(isAdd)}
+                  saveLabel={isAdd ? 'Créer' : 'Modifier'}
                   onSave={this.onClientSave}
                   body={
                     <ClientForm
+                      isAdd={isAdd}
                       client={clientData}
                       error={clientsError}
                       loading={clientsLoading}
                       onClientChange={this.onClientChange}
                       onAlertChange={this.onAlertChange}
                       onAddAlert={this.onAddAlert}
+                    />
+                  }
+                />
+                <ClientModal
+                  title={'Modifier Usager'}
+                  isOpen={userModalOpen}
+                  onToggle={this.props.toggleUserModal}
+                  saveLabel={'Modifier'}
+                  onSave={this.onUserSave}
+                  body={
+                    <UserForm
+                      client={clientData}
+                      error={clientsError}
+                      loading={clientsLoading}
+                      onClientChange={this.onClientChange}
                     />
                   }
                 />
@@ -168,6 +197,7 @@ const mapDispatchToProps = {
   editClient,
   deleteClient,
   toggleClientModal,
+  toggleUserModal,
   setClientData,
   setClientAlerts,
 };

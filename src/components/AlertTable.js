@@ -4,7 +4,7 @@ import { Table, TableHead, TableRow, TableCell, TableBody, Button, TableFooter }
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCloudRain, faSnowflake, faWind, faBolt } from '@fortawesome/free-solid-svg-icons';
-import AlertTableRow from './AlertTableRow';
+import { AlertTableRow } from '.';
 
 const alertTypes = [
   {
@@ -29,43 +29,41 @@ const alertTypes = [
   },
 ];
 
-const AlertTable = ({ alerts, onChange, onAddRow }) => {
-  console.log('alerts', alerts);
-  return (
-    <Table>
-      <TableHead>
-        <TableRow>
-          <TableCell>Addresse email</TableCell>
-          {alertTypes.map(type => (
-            <TableCell key={type.id} align="center">
-              <FontAwesomeIcon icon={type.icon} fixedWidth size="lg" color="grey" />
-            </TableCell>
-          ))}
-        </TableRow>
-      </TableHead>
-      <TableBody>
-        {alerts &&
-          alerts.map((alert, index) => (
-            <AlertTableRow
-              key={index}
-              alertTypes={alertTypes}
-              alert={alert}
-              onChange={event => onChange(event, index, alerts)}
-            />
-          ))}
-      </TableBody>
-      <TableFooter>
-        <TableRow>
-          <TableCell colSpan={alertTypes.length + 1}>
-            <Button fullWidth variant="outlined" onClick={() => onAddRow(alerts)}>
-              Add
-            </Button>
+const AlertTable = ({ alerts, onChange, onAddRow }) => (
+  <Table>
+    <TableHead>
+      <TableRow>
+        <TableCell>Addresse email</TableCell>
+        {alertTypes.map(type => (
+          <TableCell key={type.id} align="center">
+            <FontAwesomeIcon icon={type.icon} fixedWidth size="lg" color="grey" />
           </TableCell>
-        </TableRow>
-      </TableFooter>
-    </Table>
-  );
-};
+        ))}
+      </TableRow>
+    </TableHead>
+    <TableBody>
+      {alerts &&
+        alerts.map((alert, index) => (
+          <AlertTableRow
+            key={index}
+            alertTypes={alertTypes}
+            alertIndex={index}
+            alert={alert}
+            onChange={event => onChange(event, index, alerts)}
+          />
+        ))}
+    </TableBody>
+    <TableFooter>
+      <TableRow>
+        <TableCell colSpan={alertTypes.length + 1}>
+          <Button fullWidth variant="outlined" onClick={() => onAddRow(alerts)}>
+            Add
+          </Button>
+        </TableCell>
+      </TableRow>
+    </TableFooter>
+  </Table>
+);
 
 AlertTable.propTypes = {
   alerts: PropTypes.array,
