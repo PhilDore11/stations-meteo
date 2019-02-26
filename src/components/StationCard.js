@@ -61,7 +61,7 @@ const styles = theme => ({
   },
 });
 
-const StationCard = ({ classes, station }) => {
+const StationCard = ({ classes, station, hideActions }) => {
   let batteryObj = {};
   if (station && station.battery > 11.5) {
     batteryObj = {
@@ -72,7 +72,7 @@ const StationCard = ({ classes, station }) => {
     batteryObj = {
       className: classes.warning,
       icon: faBatteryHalf,
-    }
+    };
   } else {
     batteryObj = {
       className: classes.error,
@@ -85,13 +85,15 @@ const StationCard = ({ classes, station }) => {
         title={station.name}
         titleTypographyProps={{ variant: 'subtitle1' }}
         action={
-          <React.Fragment>
-            <Tooltip title="Analyse">
-              <IconButton href={`/dashboard/${station.stationId}`}>
-                <DashboardIcon />
-              </IconButton>
-            </Tooltip>
-          </React.Fragment>
+          !hideActions && (
+            <React.Fragment>
+              <Tooltip title="Analyse">
+                <IconButton href={`/dashboard/${station.stationId}`}>
+                  <DashboardIcon />
+                </IconButton>
+              </Tooltip>
+            </React.Fragment>
+          )
         }
       />
       <Divider />

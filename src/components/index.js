@@ -19,3 +19,5 @@ export { default as IdfTableCard } from './IdfTableCard';
 
 export { default as DateRange } from './DateRange';
 export { default as DateIncrementDecrement } from './DateIncrementDecrement';
+
+export { default as AlertTable } from './AlertTable';

@@ -10,7 +10,7 @@ import {
 } from "@material-ui/core";
 
 const ClientModal = ({ body, isAdd, loading, isOpen, onToggle, onSave }) => (
-  <Dialog open={isOpen} onClose={onToggle}>
+  <Dialog fullWidth maxWidth="md" open={isOpen} onClose={onToggle}>
     <DialogTitle>{isAdd ? "Nouveau Client" : "Modifier Client"}</DialogTitle>
     <Divider />
     <DialogContent>

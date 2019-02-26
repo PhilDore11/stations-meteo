@@ -13,6 +13,7 @@ import {
   DELETE_CLIENT_ERROR,
   TOGGLE_CLIENT_MODAL,
   SET_CLIENT_DATA,
+  SET_CLIENT_ALERTS,
 } from './constants';
 
 export const fetchClients = () => ({
@@ -82,4 +83,9 @@ export const toggleClientModal = (isAdd = false) => ({
 export const setClientData = clientData => ({
   type: SET_CLIENT_DATA,
   clientData,
+});
+
+export const setClientAlerts = alerts => ({
+  type: SET_CLIENT_ALERTS,
+  alerts,
 });

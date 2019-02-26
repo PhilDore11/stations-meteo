@@ -14,12 +14,12 @@ import { ExpandMoreOutlined as ExpandMoreIcon } from '@material-ui/icons';
 
 import { ClientMenu, StationCard } from './';
 
-const ClientStations = ({ client }) => (
+const ClientStations = ({ client, hideActions }) => (
   <Grid container spacing={24}>
     {client.stations &&
       client.stations.map(station => (
         <Grid item key={station.id}>
-          <StationCard station={station} />
+          <StationCard station={station} hideActions={hideActions} />
         </Grid>
       ))}
   </Grid>
@@ -41,10 +41,10 @@ class ClientRow extends React.PureComponent {
   }
 
   render() {
-    const { showActions, client, onClientEdit, onClientDelete } = this.props;
+    const { isAdmin, client, onClientEdit, onClientDelete } = this.props;
     const { expanded } = this.state;
 
-    if (!showActions) {
+    if (!isAdmin) {
       return <ClientStations client={client} />;
     } else {
       return (
@@ -54,7 +54,7 @@ class ClientRow extends React.PureComponent {
               <Grid item xs>
                 <Typography variant="subtitle1">{client.name}</Typography>
               </Grid>
-              {showActions ? (
+              {isAdmin ? (
                 <Grid item>
                   <ClientMenu onEdit={() => onClientEdit(client)} onDelete={() => onClientDelete(client)} />
                 </Grid>
@@ -65,7 +65,7 @@ class ClientRow extends React.PureComponent {
           </ExpansionPanelSummary>
           <Divider />
           <ExpansionPanelDetails>
-            <ClientStations client={client} />
+            <ClientStations client={client} hideActions />
           </ExpansionPanelDetails>
         </ExpansionPanel>
       );

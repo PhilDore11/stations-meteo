@@ -11,6 +11,7 @@ import {
   DELETE_CLIENT_ERROR,
   TOGGLE_CLIENT_MODAL,
   SET_CLIENT_DATA,
+  SET_CLIENT_ALERTS,
 } from '../constants';
 
 const initialState = {
@@ -66,9 +67,19 @@ export default (state = initialState, action) => {
         clientsError: false,
       };
     case SET_CLIENT_DATA:
+      console.log('SET_CLIENT_DATA', action);
       return {
         ...state,
         clientData: { ...action.clientData },
+      };
+    case SET_CLIENT_ALERTS:
+      console.log('SET_CLIENT_ALERTS', action);
+      return {
+        ...state,
+        clientData: {
+          ...state.clientData,
+          alerts: [...action.alerts],
+        },
       };
     default:
       return state;

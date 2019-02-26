@@ -9,7 +9,15 @@ import { AddOutlined as AddIcon } from '@material-ui/icons';
 
 import { ClientRow, ClientModal, ClientForm, Loading, NoData } from '../../components';
 
-import { fetchClients, addClient, editClient, deleteClient, toggleClientModal, setClientData } from './actions';
+import {
+  fetchClients,
+  addClient,
+  editClient,
+  deleteClient,
+  toggleClientModal,
+  setClientData,
+  setClientAlerts,
+} from './actions';
 
 const styles = () => ({
   add: {
@@ -35,6 +43,20 @@ class ClientsContainer extends React.PureComponent {
     const { id, value } = event.target;
     const newClientData = { ...clientData, [id]: value };
     this.props.setClientData(newClientData);
+  };
+
+  onAlertChange = (event, alertIndex, alerts) => {
+    const { id, value, checked, type } = event.target;
+
+    const newAlerts = alerts.map((alert, index) =>
+      index === alertIndex ? { ...alert, [id]: type === 'checkbox' ? checked : value } : alert,
+    );
+    this.props.setClientAlerts(newAlerts);
+  };
+
+  onAddAlert = alerts => {
+    const newAlert = { email: '', hasRain: false, hasSnow: false, hasWind: false, hasHydro: false };
+    this.props.setClientAlerts(alerts ? [...alerts, newAlert] : [newAlert]);
   };
 
   onClientEdit = clientData => {
@@ -84,7 +106,7 @@ class ClientsContainer extends React.PureComponent {
                 <ClientRow
                   key={client.id}
                   client={client}
-                  showActions={isAdmin}
+                  isAdmin={isAdmin}
                   expanded={!isAdmin}
                   onClientEdit={this.onClientEdit}
                   onClientDelete={this.onClientDelete}
@@ -105,7 +127,9 @@ class ClientsContainer extends React.PureComponent {
                       client={clientData}
                       error={clientsError}
                       loading={clientsLoading}
-                      onChange={this.onClientChange}
+                      onClientChange={this.onClientChange}
+                      onAlertChange={this.onAlertChange}
+                      onAddAlert={this.onAddAlert}
                     />
                   }
                 />
@@ -145,6 +169,7 @@ const mapDispatchToProps = {
   deleteClient,
   toggleClientModal,
   setClientData,
+  setClientAlerts,
 };
 
 export default connect(
