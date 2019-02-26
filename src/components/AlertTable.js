@@ -29,7 +29,7 @@ const alertTypes = [
   },
 ];
 
-const AlertTable = ({ alerts, onChange, onAddRow }) => (
+const AlertTable = ({ alerts, onChange, onAddRow, onDeleteRow }) => (
   <Table>
     <TableHead>
       <TableRow>
@@ -39,6 +39,7 @@ const AlertTable = ({ alerts, onChange, onAddRow }) => (
             <FontAwesomeIcon icon={type.icon} fixedWidth size="lg" color="grey" />
           </TableCell>
         ))}
+        <TableCell />
       </TableRow>
     </TableHead>
     <TableBody>
@@ -50,14 +51,15 @@ const AlertTable = ({ alerts, onChange, onAddRow }) => (
             alertIndex={index}
             alert={alert}
             onChange={event => onChange(event, index, alerts)}
+            onDeleteRow={() => onDeleteRow(index, alerts)}
           />
         ))}
     </TableBody>
     <TableFooter>
       <TableRow>
-        <TableCell colSpan={alertTypes.length + 1}>
+        <TableCell colSpan={alertTypes.length + 2}>
           <Button fullWidth variant="outlined" onClick={() => onAddRow(alerts)}>
-            Add
+            Ajouter
           </Button>
         </TableCell>
       </TableRow>
@@ -69,6 +71,7 @@ AlertTable.propTypes = {
   alerts: PropTypes.array,
   onChange: PropTypes.func.isRequired,
   onAddRow: PropTypes.func.isRequired,
+  onDeleteRow: PropTypes.func.isRequired,
 };
 
 export default React.memo(AlertTable);

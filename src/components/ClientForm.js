@@ -4,7 +4,7 @@ import { TextField, Grid } from '@material-ui/core';
 
 import { AlertTable } from './';
 
-const ClientForm = ({ isAdd, client, error, loading, onClientChange, onAlertChange, onAddAlert }) => (
+const ClientForm = ({ isAdd, client, error, loading, onClientChange, onAlertChange, onAddAlert, onDeleteAlert }) => (
   <form noValidate autoComplete="off">
     <Grid container spacing={24}>
       <Grid item xs={12}>
@@ -55,7 +55,7 @@ const ClientForm = ({ isAdd, client, error, loading, onClientChange, onAlertChan
         </React.Fragment>
       )}
       <Grid item xs={12}>
-        <AlertTable alerts={client.alerts} onChange={onAlertChange} onAddRow={onAddAlert} />
+        <AlertTable alerts={client.alerts} onChange={onAlertChange} onAddRow={onAddAlert} onDeleteRow={onDeleteAlert} />
       </Grid>
     </Grid>
   </form>
@@ -69,6 +69,7 @@ ClientForm.propTypes = {
   onClientChange: PropTypes.func.isRequired,
   onAlertChange: PropTypes.func.isRequired,
   onAddAlert: PropTypes.func.isRequired,
+  onDeleteAlert: PropTypes.func.isRequired,
 };
 
 export default React.memo(ClientForm);

@@ -60,6 +60,11 @@ class ClientsContainer extends React.PureComponent {
     this.props.setClientAlerts(alerts ? [...alerts, newAlert] : [newAlert]);
   };
 
+  onDeleteAlert = (index, alerts) => {
+    const newAlert = [...alerts.slice(0, index), ...alerts.slice(index+1)]
+    this.props.setClientAlerts(newAlert);
+  };
+
   onClientEdit = clientData => {
     this.props.setClientData({ ...clientData });
     this.props.toggleClientModal(false);
@@ -148,6 +153,7 @@ class ClientsContainer extends React.PureComponent {
                       onClientChange={this.onClientChange}
                       onAlertChange={this.onAlertChange}
                       onAddAlert={this.onAddAlert}
+                      onDeleteAlert={this.onDeleteAlert}
                     />
                   }
                 />
