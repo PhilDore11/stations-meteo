@@ -66,8 +66,12 @@ class ClientsContainer extends React.PureComponent {
   };
 
   onUserEdit = clientData => {
-    this.props.setClientData({ ...clientData, password: '' });
-    this.props.toggleUserModal(false);
+    const userData = { ...clientData, password: '' };
+    if (!userData.username) {
+      userData.username = '';
+    }
+    this.props.setClientData(userData);
+    this.props.toggleUserModal();
   };
 
   onClientAdd = () => {
