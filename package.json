@@ -32,7 +32,7 @@
     "start": "NODE_ENV=production serve -s build",
     "start:dev": "cross-env NODE_PATH=src react-scripts start",
     "test": "react-scripts test",
-    "build": "cross-env NODE_PATH=src react-scripts build"
+    "build": "cross-env NODE_PATH=src react-scripts --max_old_space_size=8192 build"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -42,5 +42,8 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "devDependencies": {
+    "prettier": "^2.1.2"
+  }
 }
