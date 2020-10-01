@@ -14,12 +14,12 @@ import { ExpandMoreOutlined as ExpandMoreIcon } from '@material-ui/icons';
 
 import { ClientMenu, StationCard } from './';
 
-const ClientStations = ({ client, hideActions }) => (
+const ClientStations = ({ client, hideActions, onEdit }) => (
   <Grid container spacing={24}>
     {client.stations &&
       client.stations.map(station => (
         <Grid item key={station.id}>
-          <StationCard station={station} hideActions={hideActions} />
+          <StationCard station={station} hideActions={hideActions} onEdit={onEdit} />
         </Grid>
       ))}
   </Grid>
@@ -41,7 +41,7 @@ class ClientRow extends React.PureComponent {
   }
 
   render() {
-    const { isAdmin, client, onClientEdit, onUserEdit, onClientDelete } = this.props;
+    const { isAdmin, client, onClientEdit, onUserEdit, onClientDelete, onStationEdit } = this.props;
     const { expanded } = this.state;
 
     if (!isAdmin) {
@@ -69,7 +69,7 @@ class ClientRow extends React.PureComponent {
           </ExpansionPanelSummary>
           <Divider />
           <ExpansionPanelDetails>
-            <ClientStations client={client} hideActions />
+            <ClientStations client={client} hideActions={true} onEdit={onStationEdit} />
           </ExpansionPanelDetails>
         </ExpansionPanel>
       );
@@ -85,6 +85,7 @@ ClientRow.propTypes = {
   onClientEdit: PropTypes.func.isRequired,
   onUserEdit: PropTypes.func.isRequired,
   onClientDelete: PropTypes.func.isRequired,
+  onStationEdit: PropTypes.func.isRequired,
 };
 
 export default ClientRow;

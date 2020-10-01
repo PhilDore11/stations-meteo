@@ -20,7 +20,7 @@ import {
 function* fetchStationData(action) {
   const errorObject = {
     action: fetchStationDataError,
-    message: 'Error Fetching Client Stations Data',
+    message: 'Error Fetching Client Station Data',
   };
 
   try {
@@ -40,7 +40,7 @@ function* fetchStationData(action) {
 function* fetchIdfData(action) {
   const errorObject = {
     action: fetchIdfDataError,
-    message: 'Error Fetching Client Stations Data',
+    message: 'Error Fetching Client Station Data',
   };
 
   try {
@@ -57,7 +57,7 @@ function* fetchIdfData(action) {
 function* fetchIdfStationData(action) {
   const errorObject = {
     action: fetchIdfStationDataError,
-    message: 'Error Fetching Client IDF Stations Data',
+    message: 'Error Fetching Client IDF Station Data',
   };
 
   try {
@@ -94,11 +94,13 @@ export function* fetchClientStationsRequest(clientId) {
 function* fetchClientStations(action) {
   const errorObject = {
     action: fetchClientStationsError,
-    message: 'Error Fetching Client Stations Data',
+    message: 'Error Fetching Client Station Data',
   };
 
   try {
     const { clientId } = action;
+
+    console.log("fetchClientStations", clientId)
 
     const response = yield call(fetchClientStationsRequest, clientId);
 

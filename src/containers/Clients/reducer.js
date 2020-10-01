@@ -12,7 +12,7 @@ import {
   TOGGLE_CLIENT_MODAL,
   TOGGLE_USER_MODAL,
   SET_CLIENT_DATA,
-  SET_CLIENT_ALERTS,
+  SET_CLIENT_ALERTS, SET_STATION_DATA, TOGGLE_STATION_MODAL, EDIT_STATION_SUCCESS, EDIT_STATION_ERROR,
 } from '../constants';
 
 const initialState = {
@@ -23,6 +23,8 @@ const initialState = {
   isAdd: true,
   clientsLoading: true,
   clientsError: false,
+  stationData: {},
+  stationModalOpen: false,
 };
 
 export default (state = initialState, action) => {
@@ -34,10 +36,12 @@ export default (state = initialState, action) => {
     case ADD_CLIENT_SUCCESS:
     case EDIT_CLIENT_SUCCESS:
     case DELETE_CLIENT_SUCCESS:
+    case EDIT_STATION_SUCCESS:
       return {
         ...state,
         clientModalOpen: false,
         userModalOpen: false,
+        stationModalOpen: false,
         clientsLoading: false,
         clientsError: false,
       };
@@ -45,6 +49,7 @@ export default (state = initialState, action) => {
     case ADD_CLIENT_ERROR:
     case EDIT_CLIENT_ERROR:
     case DELETE_CLIENT_ERROR:
+    case EDIT_STATION_ERROR:
       return {
         ...state,
         clientsLoading: false,
@@ -87,6 +92,17 @@ export default (state = initialState, action) => {
           ...state.clientData,
           alerts: [...action.alerts],
         },
+      };
+    case TOGGLE_STATION_MODAL:
+      return {
+        ...state,
+        stationModalOpen: !state.stationModalOpen,
+        isAdd: action.isAdd,
+      };
+    case SET_STATION_DATA:
+      return {
+        ...state,
+        stationData: { ...action.stationData },
       };
     default:
       return state;

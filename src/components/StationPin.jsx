@@ -1,11 +1,11 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 
-import { IconButton, Popover } from '@material-ui/core';
+import { IconButton, Popover } from "@material-ui/core";
 
-import { RoomOutlined as PinIcon } from '@material-ui/icons';
+import { RoomOutlined as PinIcon } from "@material-ui/icons";
 
-import { StationCard } from './';
+import { StationCard } from "./";
 
 class StationPin extends React.PureComponent {
   constructor(props) {
@@ -32,7 +32,11 @@ class StationPin extends React.PureComponent {
     const { isOpen } = this.state;
     return (
       <React.Fragment>
-        <IconButton color="secondary" onClick={this.handleClick} buttonRef={node => (this.anchorEl = node)}>
+        <IconButton
+          color="secondary"
+          onClick={this.handleClick}
+          buttonRef={(node) => (this.anchorEl = node)}
+        >
           <PinIcon fontSize="large" />
         </IconButton>
         <Popover
@@ -41,13 +45,14 @@ class StationPin extends React.PureComponent {
           anchorEl={this.anchorEl}
           onClose={this.handleClose}
           anchorOrigin={{
-            vertical: 'bottom',
-            horizontal: 'right',
+            vertical: "bottom",
+            horizontal: "right",
           }}
           transformOrigin={{
-            vertical: 'top',
-            horizontal: 'left',
-          }}>
+            vertical: "top",
+            horizontal: "left",
+          }}
+        >
           <StationCard station={station} />
         </Popover>
       </React.Fragment>

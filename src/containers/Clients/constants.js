@@ -19,3 +19,11 @@ export const TOGGLE_USER_MODAL = "Clients/TOGGLE_USER_MODAL";
 
 export const SET_CLIENT_DATA = "Clients/SET_CLIENT_DATA";
 export const SET_CLIENT_ALERTS = "Clients/SET_CLIENT_ALERTS";
+
+export const EDIT_STATION = "Clients/EDIT_STATION";
+export const EDIT_STATION_SUCCESS = "Clients/EDIT_STATION_SUCCESS";
+export const EDIT_STATION_ERROR = "Clients/EDIT_STATION_ERROR";
+
+export const TOGGLE_STATION_MODAL = "Clients/TOGGLE_STATION_MODAL";
+
+export const SET_STATION_DATA = "Clients/SET_STATION_DATA";

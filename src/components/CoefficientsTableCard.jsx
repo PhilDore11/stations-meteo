@@ -1,5 +1,5 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 
 import {
   Grid,
@@ -13,13 +13,14 @@ import {
   TableRow,
   TableCell,
   TableBody,
-} from '@material-ui/core';
+} from "@material-ui/core";
 
-import { ExpandMoreOutlined as ExpandMoreIcon } from '@material-ui/icons';
+import { ExpandMoreOutlined as ExpandMoreIcon } from "@material-ui/icons";
 
-import { Loading, NoData } from '.';
+import { Loading, NoData } from ".";
+import moment from "moment";
 
-class IdfTableCard extends React.PureComponent {
+class CoefficientsTableCard extends React.PureComponent {
   constructor(props) {
     super(props);
 
@@ -55,29 +56,20 @@ class IdfTableCard extends React.PureComponent {
               <Table>
                 <TableHead>
                   <TableRow>
-                    <TableCell>Durees</TableCell>
-                    <TableCell>5 mins</TableCell>
-                    <TableCell>10 mins</TableCell>
-                    <TableCell>15 mins</TableCell>
-                    <TableCell>30 mins</TableCell>
-                    <TableCell>1 hr</TableCell>
-                    <TableCell>2 hrs</TableCell>
-                    <TableCell>6 hrs</TableCell>
-                    <TableCell>12 hrs</TableCell>
-                    <TableCell>24 hrs</TableCell>
+                    <TableCell>Date</TableCell>
+                    <TableCell>Coefficient</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  <TableRow>
-                    <TableCell component="th" scope="row">
-                      Intensite (mm/h)
-                    </TableCell>
-                    {data.map(stationData => (
-                      <TableCell key={stationData.increment}>
-                        {parseFloat(stationData.intensity * (60 / stationData.increment)).toFixed(2)}
+                  {data.map((coefficientData, index) => (
+                    <TableRow key={index}>
+                      <TableCell>
+                        {moment(coefficientData.date).format("LLL")}
                       </TableCell>
-                    ))}
-                  </TableRow>
+
+                      <TableCell>{coefficientData.coefficient}</TableCell>
+                    </TableRow>
+                  ))}
                 </TableBody>
               </Table>
             ) : (
@@ -92,13 +84,13 @@ class IdfTableCard extends React.PureComponent {
   }
 }
 
-IdfTableCard.propTypes = {
+CoefficientsTableCard.propTypes = {
   title: PropTypes.string,
   icon: PropTypes.element,
-  hasdata: PropTypes.bool,
+  hasData: PropTypes.bool,
   data: PropTypes.array,
   error: PropTypes.bool,
   loading: PropTypes.bool,
 };
 
-export default IdfTableCard;
+export default CoefficientsTableCard;

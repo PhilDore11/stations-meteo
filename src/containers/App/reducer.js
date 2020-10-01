@@ -7,14 +7,15 @@ import {
   FETCH_CLIENT_STATIONS,
   FETCH_CLIENT_STATIONS_SUCCESS,
   FETCH_CLIENT_STATIONS_ERROR,
-} from '../constants';
+} from "../constants";
 
 const initialState = {
   success: false,
   warning: false,
   error: false,
-  message: '',
+  message: "",
   clientStations: [],
+  stationId: "",
 };
 
 export default (state = initialState, action) => {
@@ -31,19 +32,19 @@ export default (state = initialState, action) => {
       };
     case WARNING:
       return {
-        ...initialState,
+        ...state,
         warning: true,
         message: action.message,
       };
     case ERROR:
       return {
-        ...initialState,
+        ...state,
         error: true,
         message: action.message,
       };
     case RESET_ALERTS:
       return {
-        ...initialState,
+        ...state,
       };
     case FETCH_CLIENT_STATIONS:
       return {
@@ -56,6 +57,7 @@ export default (state = initialState, action) => {
         loading: false,
         error: false,
         clientStations: action.res,
+        stationId: action.res[0].stationId,
       };
     case FETCH_CLIENT_STATIONS_ERROR:
       return {

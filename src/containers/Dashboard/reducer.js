@@ -1,4 +1,4 @@
-import moment from 'moment';
+import moment from "moment";
 
 import {
   LOGOUT,
@@ -11,18 +11,14 @@ import {
   SET_START,
   SET_END,
   SET_STATION,
-} from '../constants';
+} from "../constants";
 
 const initialDay = moment();
 const initialState = {
-  start: moment(initialDay)
-    .startOf('day')
-    .toISOString(),
-  end: moment(initialDay)
-    .endOf('day')
-    .toISOString(),
-  view: 'day',
-  stationId: '',
+  start: moment(initialDay).startOf("day").toISOString(),
+  end: moment(initialDay).endOf("day").toISOString(),
+  view: "day",
+  stationId: "",
   error: false,
   loading: false,
 };
@@ -39,6 +35,7 @@ export default (state = initialState, action) => {
         loading: true,
       };
     case FETCH_CLIENT_STATIONS_SUCCESS:
+      console.log("DASHBOARD REDUCER", action.res);
       return {
         ...state,
         loading: false,
@@ -53,33 +50,21 @@ export default (state = initialState, action) => {
     case INCREMENT:
       return {
         ...state,
-        start: moment(state.start)
-          .add(1, state.view)
-          .toISOString(),
-        end: moment(state.end)
-          .add(1, state.view)
-          .toISOString(),
+        start: moment(state.start).add(1, state.view).toISOString(),
+        end: moment(state.end).add(1, state.view).toISOString(),
       };
     case DECREMENT:
       return {
         ...state,
-        start: moment(state.start)
-          .subtract(1, state.view)
-          .toISOString(),
-        end: moment(state.end)
-          .subtract(1, state.view)
-          .toISOString(),
+        start: moment(state.start).subtract(1, state.view).toISOString(),
+        end: moment(state.end).subtract(1, state.view).toISOString(),
       };
     case SET_VIEW:
       return {
         ...state,
         view: action.view,
-        start: moment(state.start)
-          .startOf(action.view)
-          .toISOString(),
-        end: moment(state.start)
-          .endOf(action.view)
-          .toISOString(),
+        start: moment(state.start).startOf(action.view).toISOString(),
+        end: moment(state.start).endOf(action.view).toISOString(),
       };
     case SET_STATION:
       return {

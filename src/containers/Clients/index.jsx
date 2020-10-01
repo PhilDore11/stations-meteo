@@ -1,13 +1,20 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 
-import { connect } from 'react-redux';
+import { connect } from "react-redux";
 
-import { withStyles, Grid, Fab } from '@material-ui/core';
+import { withStyles, Grid, Fab } from "@material-ui/core";
 
-import { AddOutlined as AddIcon } from '@material-ui/icons';
+import { AddOutlined as AddIcon } from "@material-ui/icons";
 
-import { ClientRow, ClientModal, ClientForm, Loading, NoData, UserForm } from '../../components';
+import {
+  ClientRow,
+  ClientModal,
+  ClientForm,
+  Loading,
+  NoData,
+  UserForm, StationModal, StationForm,
+} from "../../components";
 
 import {
   fetchClients,
@@ -18,13 +25,15 @@ import {
   toggleUserModal,
   setClientData,
   setClientAlerts,
-} from './actions';
+  setStationData,
+  toggleStationModal,
+} from "./actions";
 
 const styles = () => ({
   add: {
-    position: 'fixed',
-    bottom: '20px',
-    right: '20px',
+    position: "fixed",
+    bottom: "20px",
+    right: "20px",
   },
 });
 
@@ -35,7 +44,10 @@ class ClientsContainer extends React.PureComponent {
     }
   }
   componentDidUpdate(prevProps) {
-    if (this.props.loggedInUser && this.props.loggedInUser !== prevProps.loggedInUser) {
+    if (
+      this.props.loggedInUser &&
+      this.props.loggedInUser !== prevProps.loggedInUser
+    ) {
       this.props.fetchClients();
     }
   }
@@ -50,54 +62,86 @@ class ClientsContainer extends React.PureComponent {
     const { id, value, checked, type } = event.target;
 
     const newAlerts = alerts.map((alert, index) =>
-      index === alertIndex ? { ...alert, [id]: type === 'checkbox' ? checked : value } : alert,
+      index === alertIndex
+        ? { ...alert, [id]: type === "checkbox" ? checked : value }
+        : alert
     );
     this.props.setClientAlerts(newAlerts);
   };
 
-  onAddAlert = alerts => {
-    const newAlert = { email: '', hasRain: false, hasSnow: false, hasWind: false, hasHydro: false };
+  onStationChange = (event, stationData) => {
+    const { id, value } = event.target;
+    const newStationData = { ...stationData, [id]: value };
+    this.props.setStationData(newStationData);
+  };
+
+  onAddAlert = (alerts) => {
+    const newAlert = {
+      email: "",
+      hasRain: false,
+      hasSnow: false,
+      hasWind: false,
+      hasHydro: false,
+    };
     this.props.setClientAlerts(alerts ? [...alerts, newAlert] : [newAlert]);
   };
 
   onDeleteAlert = (index, alerts) => {
-    const newAlert = [...alerts.slice(0, index), ...alerts.slice(index+1)]
+    const newAlert = [...alerts.slice(0, index), ...alerts.slice(index + 1)];
     this.props.setClientAlerts(newAlert);
   };
 
-  onClientEdit = clientData => {
+  onClientEdit = (clientData) => {
     this.props.setClientData({ ...clientData });
     this.props.toggleClientModal(false);
   };
 
-  onUserEdit = clientData => {
-    const userData = { ...clientData, password: '' };
+  onUserEdit = (clientData) => {
+    const userData = { ...clientData, password: "" };
     if (!userData.username) {
-      userData.username = '';
+      userData.username = "";
     }
     this.props.setClientData(userData);
     this.props.toggleUserModal();
   };
 
+  onStationEdit = (stationData) => {
+    this.props.setStationData({ ...stationData });
+    this.props.toggleStationModal(false);
+  };
+
   onClientAdd = () => {
     this.props.setClientData({
-      name: '',
-      username: '',
-      password: '',
+      name: "",
+      username: "",
+      password: "",
     });
     this.props.toggleClientModal(true);
   };
 
   onClientSave = () => {
-    this.props.isAdd ? this.props.addClient(this.props.clientData) : this.props.editClient(this.props.clientData);
+    this.props.isAdd
+      ? this.props.addClient(this.props.clientData)
+      : this.props.editClient(this.props.clientData);
   };
 
   onUserSave = () => {
     this.props.editClient(this.props.clientData);
   };
 
-  onClientDelete = clientData => {
-    if (window.confirm('Le client sera supprimer de facon permanente. Voulez-vous poursuivre?')) {
+
+  onStationSave = () => {
+    this.props.isAdd
+        ? this.props.addStation(this.props.stationData)
+        : this.props.editStation(this.props.stationData);
+  };
+
+  onClientDelete = (clientData) => {
+    if (
+      window.confirm(
+        "Le client sera supprimer de facon permanente. Voulez-vous poursuivre?"
+      )
+    ) {
       this.props.deleteClient(clientData);
     }
   };
@@ -109,7 +153,9 @@ class ClientsContainer extends React.PureComponent {
       clients,
       clientModalOpen,
       userModalOpen,
+      stationModalOpen,
       clientData,
+      stationData,
       isAdd,
       clientsError,
       clientsLoading,
@@ -122,7 +168,7 @@ class ClientsContainer extends React.PureComponent {
         {!clientsLoading && !clientsError ? (
           <Grid item xs={12}>
             {clients &&
-              clients.map(client => (
+              clients.map((client) => (
                 <ClientRow
                   key={client.id}
                   client={client}
@@ -131,18 +177,24 @@ class ClientsContainer extends React.PureComponent {
                   onClientEdit={this.onClientEdit}
                   onUserEdit={this.onUserEdit}
                   onClientDelete={this.onClientDelete}
+                  onStationEdit={this.onStationEdit}
                 />
               ))}
             {isAdmin ? (
               <React.Fragment>
-                <Fab color="primary" aria-label="Add" className={classes.add} onClick={this.onClientAdd}>
+                <Fab
+                  color="primary"
+                  aria-label="Add"
+                  className={classes.add}
+                  onClick={this.onClientAdd}
+                >
                   <AddIcon />
                 </Fab>
                 <ClientModal
-                  title={isAdd ? 'Nouveau Client' : 'Modifier Client'}
+                  title={isAdd ? "Nouveau Client" : "Modifier Client"}
                   isOpen={clientModalOpen}
                   onToggle={() => this.props.toggleClientModal(isAdd)}
-                  saveLabel={isAdd ? 'Créer' : 'Modifier'}
+                  saveLabel={isAdd ? "Créer" : "Modifier"}
                   onSave={this.onClientSave}
                   body={
                     <ClientForm
@@ -158,10 +210,10 @@ class ClientsContainer extends React.PureComponent {
                   }
                 />
                 <ClientModal
-                  title={'Modifier Usager'}
+                  title={"Modifier Usager"}
                   isOpen={userModalOpen}
                   onToggle={this.props.toggleUserModal}
-                  saveLabel={'Modifier'}
+                  saveLabel={"Modifier"}
                   onSave={this.onUserSave}
                   body={
                     <UserForm
@@ -172,9 +224,25 @@ class ClientsContainer extends React.PureComponent {
                     />
                   }
                 />
+                <StationModal
+                    title={isAdd ? "Nouvelle Station" : "Modifier Station"}
+                    isOpen={stationModalOpen}
+                    onToggle={() => this.props.toggleStationModal(isAdd)}
+                    saveLabel={isAdd ? "Créer" : "Modifier"}
+                    onSave={this.onStationSave}
+                    body={
+                      <StationForm
+                          isAdd={isAdd}
+                          station={stationData}
+                          error={clientsError}
+                          loading={clientsLoading}
+                          onStationChange={this.onStationChange}
+                      />
+                    }
+                />
               </React.Fragment>
             ) : (
-              ''
+              ""
             )}
           </Grid>
         ) : clientsLoading ? (
@@ -196,7 +264,7 @@ ClientsContainer.propTypes = {
   loggedInUser: PropTypes.object,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   ...state.clients,
   loggedInUser: state.login.loggedInUser,
 });
@@ -210,9 +278,11 @@ const mapDispatchToProps = {
   toggleUserModal,
   setClientData,
   setClientAlerts,
+  setStationData,
+  toggleStationModal,
 };
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 )(withStyles(styles)(ClientsContainer));

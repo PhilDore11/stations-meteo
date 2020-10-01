@@ -1,15 +1,23 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 
-import { connect } from 'react-redux';
+import { connect } from "react-redux";
 
-import { withRouter } from 'react-router-dom';
+import { withRouter } from "react-router-dom";
 
-import { Grid } from '@material-ui/core';
+import { Grid } from "@material-ui/core";
 
-import { increment, decrement, setStart, setEnd, setStation, setView } from '../actions';
-import { DashboardHeader, Loading } from '../../components';
-import { StationDataContainer, IdfContainer } from '..';
+import {
+  increment,
+  decrement,
+  setStart,
+  setEnd,
+  setStation,
+  setView,
+} from "../actions";
+import { DashboardHeader, Loading } from "../../components";
+import { StationDataContainer, IdfContainer } from "..";
+import CoefficientsContainer from "../Coefficients";
 
 class DashboardContainer extends React.PureComponent {
   constructor(props) {
@@ -53,7 +61,15 @@ class DashboardContainer extends React.PureComponent {
   }
 
   render() {
-    const { error, loading, clientStations, stationId, start, end, view } = this.props;
+    const {
+      error,
+      loading,
+      clientStations,
+      stationId,
+      start,
+      end,
+      view,
+    } = this.props;
 
     return (
       <Grid container spacing={24}>
@@ -78,7 +94,18 @@ class DashboardContainer extends React.PureComponent {
               <IdfContainer stationId={stationId} start={start} end={end} />
             </Grid>
             <Grid item xs={12}>
-              <StationDataContainer stationId={stationId} start={start} end={end} />
+              <CoefficientsContainer
+                stationId={stationId}
+                start={start}
+                end={end}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <StationDataContainer
+                stationId={stationId}
+                start={start}
+                end={end}
+              />
             </Grid>
           </React.Fragment>
         ) : (
@@ -103,10 +130,13 @@ DashboardContainer.propTypes = {
   setView: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = state => ({
-  ...state.app,
-  ...state.dashboard,
-});
+const mapStateToProps = (state) => {
+  console.log("STATE", state);
+  return {
+    ...state.app,
+    ...state.dashboard,
+  };
+};
 
 const mapDispatchToProps = {
   increment,
@@ -119,5 +149,5 @@ const mapDispatchToProps = {
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 )(withRouter(DashboardContainer));

@@ -1,49 +1,51 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 
-import { DatePicker } from 'material-ui-pickers';
+import { DatePicker } from "material-ui-pickers";
 
-import { withStyles, Grid } from '@material-ui/core';
+import { withStyles, Grid } from "@material-ui/core";
 
 const styles = () => ({
   input: {
-    backgroundColor: 'white',
+    backgroundColor: "white",
   },
 });
 
-const IncrementDecrement = ({ classes, start, end, onStartChange, onEndChange }) => (
+const DateRange = ({ classes, start, end, onStartChange, onEndChange }) => (
   <Grid container spacing={24} justify="space-between" alignItems="center">
     <Grid item xs>
       <DatePicker
+        fullWidth={true}
         InputProps={{
           className: classes.input,
         }}
         margin="dense"
         variant="outlined"
-        label="Start"
+        label="Début"
         value={start}
         onChange={onStartChange}
-        format={'MMMM DD'}
+        format={"MMMM DD"}
       />
     </Grid>
-    <Grid item>{' - '}</Grid>
+    <Grid item>{" - "}</Grid>
     <Grid item xs>
       <DatePicker
+        fullWidth={true}
         InputProps={{
           className: classes.input,
         }}
         margin="dense"
         variant="outlined"
-        label="End"
+        label="Fin"
         value={end}
         onChange={onEndChange}
-        format={'MMMM DD'}
+        format={"MMMM DD"}
       />
     </Grid>
   </Grid>
 );
 
-IncrementDecrement.propTypes = {
+DateRange.propTypes = {
   classes: PropTypes.object.isRequired,
   start: PropTypes.string.isRequired,
   end: PropTypes.string.isRequired,
@@ -51,4 +53,4 @@ IncrementDecrement.propTypes = {
   onEndChange: PropTypes.func.isRequired,
 };
 
-export default withStyles(styles)(IncrementDecrement);
+export default withStyles(styles)(DateRange);

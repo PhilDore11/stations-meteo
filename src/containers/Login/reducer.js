@@ -24,7 +24,7 @@ export default (state = initialState, action) => {
       };
     case LOGIN_SUCCESS:
       return {
-        ...initialState,
+        ...state,
         loggedInUser: action.res
       };
     case LOGIN_ERROR:

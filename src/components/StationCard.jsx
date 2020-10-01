@@ -1,8 +1,8 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 
-import moment from 'moment';
-import { isNumber } from 'lodash';
+import moment from "moment";
+import { isNumber } from "lodash";
 
 import {
   withStyles,
@@ -14,11 +14,13 @@ import {
   Typography,
   IconButton,
   Tooltip,
-} from '@material-ui/core';
+} from "@material-ui/core";
 
-import { DashboardOutlined as DashboardIcon } from '@material-ui/icons';
+import {
+  DashboardOutlined as DashboardIcon,
+} from "@material-ui/icons";
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faTint,
   faBatteryFull,
@@ -28,11 +30,12 @@ import {
   faSnowflake,
   faWind,
   faBolt,
-} from '@fortawesome/free-solid-svg-icons';
+} from "@fortawesome/free-solid-svg-icons";
 
-import { green, red, grey, orange } from '@material-ui/core/colors';
+import { green, red, grey, orange } from "@material-ui/core/colors";
+import StationMenu from "./StationMenu";
 
-const styles = theme => ({
+const styles = (theme) => ({
   stationCard: {
     width: 400,
     height: 262,
@@ -51,17 +54,17 @@ const styles = theme => ({
     width: 40,
   },
   readingSection: {
-    textAlign: 'center',
+    textAlign: "center",
     padding: theme.spacing.unit * 2,
     borderRight: `1px solid ${grey[300]}`,
   },
   batterySection: {
-    textAlign: 'center',
+    textAlign: "center",
     padding: theme.spacing.unit * 2,
   },
 });
 
-const StationCard = ({ classes, station, hideActions }) => {
+const StationCard = ({ classes, station, onEdit, hideActions }) => {
   let batteryObj = {};
   if (station && station.battery > 11.5) {
     batteryObj = {
@@ -83,16 +86,16 @@ const StationCard = ({ classes, station, hideActions }) => {
     <Card className={classes.stationCard}>
       <CardHeader
         title={station.name}
-        titleTypographyProps={{ variant: 'subtitle1' }}
+        titleTypographyProps={{ variant: "subtitle1" }}
         action={
-          !hideActions && (
-            <React.Fragment>
-              <Tooltip title="Analyse">
-                <IconButton href={`/dashboard/${station.stationId}`}>
-                  <DashboardIcon />
-                </IconButton>
-              </Tooltip>
-            </React.Fragment>
+          !hideActions ? (
+            <Tooltip title="Analyse">
+              <IconButton href={`/dashboard/${station.stationId}`}>
+                <DashboardIcon />
+              </IconButton>
+            </Tooltip>
+          ) : (
+            <StationMenu onStationEdit={() => onEdit(station)} onDelete={() => console.log("DELETE")} />
           )
         }
       />
@@ -100,18 +103,35 @@ const StationCard = ({ classes, station, hideActions }) => {
       <Grid container spacing={0} direction="row">
         <Grid item xs>
           <div className={classes.readingSection}>
-            <FontAwesomeIcon className={classes.icon} icon={faTint} fixedWidth size="2x" color="grey" />
+            <FontAwesomeIcon
+              className={classes.icon}
+              icon={faTint}
+              fixedWidth
+              size="2x"
+              color="grey"
+            />
             <Typography variant="h5">
-              {isNumber(station.intensity) ? parseFloat(station.intensity).toFixed(2) : ' - '}
+              {isNumber(station.intensity)
+                ? parseFloat(station.intensity).toFixed(2)
+                : " - "}
               <small>mm</small>
             </Typography>
           </div>
         </Grid>
         <Grid item xs>
-          <div className={[classes.batterySection, batteryObj.className].join(' ')}>
-            <FontAwesomeIcon className={classes.icon} icon={batteryObj.icon} fixedWidth size="2x" />
+          <div
+            className={[classes.batterySection, batteryObj.className].join(" ")}
+          >
+            <FontAwesomeIcon
+              className={classes.icon}
+              icon={batteryObj.icon}
+              fixedWidth
+              size="2x"
+            />
             <Typography variant="h5" color="inherit">
-              {isNumber(station.battery) ? parseFloat(station.battery).toFixed(2) : ' - '}
+              {isNumber(station.battery)
+                ? parseFloat(station.battery).toFixed(2)
+                : " - "}
               <small>V</small>
             </Typography>
           </div>
@@ -120,7 +140,9 @@ const StationCard = ({ classes, station, hideActions }) => {
       <Divider />
       <Grid container spacing={24} justify="center" alignItems="center">
         <Grid item>
-          <Typography variant="caption">{moment(station.date).fromNow()}</Typography>
+          <Typography variant="caption">
+            {moment(station.date).fromNow()}
+          </Typography>
         </Grid>
       </Grid>
       <Divider />
@@ -128,22 +150,42 @@ const StationCard = ({ classes, station, hideActions }) => {
         <Grid container spacing={24} justify="center" alignItems="center">
           {station.hasRain ? (
             <Grid item>
-              <FontAwesomeIcon icon={faCloudRain} color="grey" fixedWidth size="lg" />
+              <FontAwesomeIcon
+                icon={faCloudRain}
+                color="grey"
+                fixedWidth
+                size="lg"
+              />
             </Grid>
           ) : null}
           {station.hasSnow ? (
             <Grid item>
-              <FontAwesomeIcon icon={faSnowflake} color="grey" fixedWidth size="lg" />
+              <FontAwesomeIcon
+                icon={faSnowflake}
+                color="grey"
+                fixedWidth
+                size="lg"
+              />
             </Grid>
           ) : null}
           {station.hasWind ? (
             <Grid item>
-              <FontAwesomeIcon icon={faWind} color="grey" fixedWidth size="lg" />
+              <FontAwesomeIcon
+                icon={faWind}
+                color="grey"
+                fixedWidth
+                size="lg"
+              />
             </Grid>
           ) : null}
           {station.hasHydro ? (
             <Grid item>
-              <FontAwesomeIcon icon={faBolt} color="grey" fixedWidth size="lg" />
+              <FontAwesomeIcon
+                icon={faBolt}
+                color="grey"
+                fixedWidth
+                size="lg"
+              />
             </Grid>
           ) : null}
         </Grid>
@@ -155,6 +197,7 @@ const StationCard = ({ classes, station, hideActions }) => {
 StationCard.propTypes = {
   classes: PropTypes.object.isRequired,
   station: PropTypes.object.isRequired,
+  onEdit: PropTypes.func,
 };
 
 export default React.memo(withStyles(styles)(StationCard));

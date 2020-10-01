@@ -50,7 +50,7 @@ class HeaderContainer extends React.PureComponent {
             <Grid xs item container alignItems="center">
               <Grid xs item>
                 <Typography variant="h6" noWrap>
-                  Stations Météo{loggedInUser && !loggedInUser.admin && loggedInUser.clients.length === 1 && ` > ${loggedInUser.clients[0].name}`}
+                  Portail Pluviométrique{loggedInUser && !loggedInUser.admin && loggedInUser.clients.length === 1 && ` > ${loggedInUser.clients[0].name}`}
                 </Typography>
               </Grid>
             </Grid>
