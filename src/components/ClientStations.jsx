@@ -16,7 +16,15 @@ const styles = () => ({
   },
 });
 
-const ClientStations = ({ classes, client, hideActions, onEdit, onDelete, onAdd }) => (
+const ClientStations = ({
+  classes,
+  client,
+  hideActions,
+  onEdit,
+  onDelete,
+  onAdd,
+  isAdmin,
+}) => (
   <Grid container spacing={24}>
     {client.stations &&
       client.stations.map((station) => (
@@ -29,27 +37,34 @@ const ClientStations = ({ classes, client, hideActions, onEdit, onDelete, onAdd 
           />
         </Grid>
       ))}
-    <Grid item>
-      <Card className={classes.addStationCard}>
-        <Grid
-          className={classes.addStationBody}
-          container
-          justify={"center"}
-          alignItems={"center"}
-        >
-          <Grid item>
-            <Fab color="primary" aria-label="Add" onClick={() => onAdd(client)}>
-              <AddIcon />
-            </Fab>
+    {isAdmin && (
+      <Grid item>
+        <Card className={classes.addStationCard}>
+          <Grid
+            className={classes.addStationBody}
+            container
+            justify={"center"}
+            alignItems={"center"}
+          >
+            <Grid item>
+              <Fab
+                color="primary"
+                aria-label="Add"
+                onClick={() => onAdd(client)}
+              >
+                <AddIcon />
+              </Fab>
+            </Grid>
           </Grid>
-        </Grid>
-      </Card>
-    </Grid>
+        </Card>
+      </Grid>
+    )}
   </Grid>
 );
 
 ClientStations.propTypes = {
   classes: PropTypes.object.isRequired,
+  isAdmin: PropTypes.bool.isRequired,
   client: PropTypes.object.isRequired,
   hideActions: PropTypes.bool.isRequired,
   onAdd: PropTypes.func.isRequired,

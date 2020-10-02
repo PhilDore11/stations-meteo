@@ -78,7 +78,6 @@ class ClientsContainer extends React.PureComponent {
   };
 
   onStationChange = (event, stationData) => {
-    console.log("onStationChange", event);
 
     const { name, value, checked, type } = event.target;
     const newStationData = {

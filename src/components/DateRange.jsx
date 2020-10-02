@@ -24,7 +24,7 @@ const DateRange = ({ classes, start, end, onStartChange, onEndChange }) => (
         label="Début"
         value={start}
         onChange={onStartChange}
-        format={"MMMM DD"}
+        format={"LL"}
       />
     </Grid>
     <Grid item>{" - "}</Grid>
@@ -39,7 +39,7 @@ const DateRange = ({ classes, start, end, onStartChange, onEndChange }) => (
         label="Fin"
         value={end}
         onChange={onEndChange}
-        format={"MMMM DD"}
+        format={"LL"}
       />
     </Grid>
   </Grid>

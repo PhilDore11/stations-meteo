@@ -1,4 +1,5 @@
 import React from "react";
+import moment from "moment";
 import PropTypes from "prop-types";
 
 import { connect } from "react-redux";
@@ -54,10 +55,18 @@ class DashboardContainer extends React.PureComponent {
 
   handleStartChange(start) {
     this.props.setStart(start);
+    if (this.props.view !== "custom") {
+      const newEnd = moment(start).add(1, this.props.view);
+      this.props.setEnd(newEnd);
+    }
   }
 
   handleEndChange(end) {
     this.props.setEnd(end);
+    if (this.props.view !== "custom") {
+      const newStart = moment(end).subtract(1, this.props.view);
+      this.props.setStart(newStart);
+    }
   }
 
   render() {
@@ -122,12 +131,15 @@ DashboardContainer.propTypes = {
   stationId: PropTypes.string,
   increment: PropTypes.func.isRequired,
   decrement: PropTypes.func.isRequired,
+  view: PropTypes.string,
   start: PropTypes.string,
   end: PropTypes.string,
   error: PropTypes.bool,
   loading: PropTypes.bool,
   setStation: PropTypes.func.isRequired,
   setView: PropTypes.func.isRequired,
+  setStart: PropTypes.func.isRequired,
+  setEnd: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => {

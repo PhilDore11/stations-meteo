@@ -340,8 +340,6 @@ function* addStationGenerator(action) {
     postalCode,
   } = action.stationData;
 
-  console.log("addStationGenerator", action.stationData);
-
   if (!clientId || !stationId || !name || !referenceStationId || !coefficient) {
     return yield errorHandler("Error Adding Station");
   }
@@ -369,7 +367,7 @@ function* addStationGenerator(action) {
           address,
           city,
           province,
-          postalCode
+          postalCode,
         },
         method: "POST",
       }
@@ -396,8 +394,6 @@ function* editStationGenerator(action) {
       hasWind,
       hasHydro,
     } = action.stationData;
-
-    console.log("editStationGenerator", action.stationData);
 
     if (!id || !name) {
       return yield errorHandler("Error Editing Station");

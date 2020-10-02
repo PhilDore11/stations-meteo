@@ -72,6 +72,7 @@ class ClientRow extends React.PureComponent {
           <Divider />
           <ExpansionPanelDetails>
             <ClientStations
+              isAdmin={isAdmin}
               client={client}
               hideActions={true}
               onAdd={onStationAdd}
