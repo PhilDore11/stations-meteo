@@ -216,11 +216,17 @@ function* deleteClientGenerator(action) {
 
   try {
     const { id, userId } = action.clientData;
+
+    yield call(jsonFetch, `${process.env.REACT_APP_API_URL}/alerts/${id}`, {
+      method: "DELETE",
+    });
+
     const response = yield call(
       jsonFetch,
       `${process.env.REACT_APP_API_URL}/clients/${id}`,
       { method: "DELETE" }
     );
+
     yield call(jsonFetch, `${process.env.REACT_APP_API_URL}/users/${userId}`, {
       method: "DELETE",
     });
@@ -389,13 +395,14 @@ function* editStationGenerator(action) {
     const {
       id,
       name,
+      coefficient,
       hasRain,
       hasSnow,
       hasWind,
       hasHydro,
     } = action.stationData;
 
-    if (!id || !name) {
+    if (!id || !name || !coefficient) {
       return yield errorHandler("Error Editing Station");
     }
 
@@ -405,6 +412,7 @@ function* editStationGenerator(action) {
       {
         body: {
           name,
+          coefficient,
           hasRain: hasRain ? 1 : 0,
           hasSnow: hasSnow ? 1 : 0,
           hasWind: hasWind ? 1 : 0,

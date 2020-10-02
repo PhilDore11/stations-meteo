@@ -252,22 +252,22 @@ const StationForm = ({
               onChange={(event) => onStationChange(event, station)}
             />
           </Grid>
-          <Grid item xs={12}>
-            <TextField
-              error={error}
-              disabled={loading}
-              fullWidth
-              name="coefficient"
-              label="Coefficient"
-              type="number"
-              margin="dense"
-              variant="outlined"
-              value={station.coefficient}
-              onChange={(event) => onStationChange(event, station)}
-            />
-          </Grid>
         </React.Fragment>
       )}
+      <Grid item xs={12}>
+        <TextField
+          error={error}
+          disabled={loading}
+          fullWidth
+          name="coefficient"
+          label="Coefficient"
+          type="number"
+          margin="dense"
+          variant="outlined"
+          value={station.coefficient}
+          onChange={(event) => onStationChange(event, station)}
+        />
+      </Grid>
     </Grid>
   </form>
 );
