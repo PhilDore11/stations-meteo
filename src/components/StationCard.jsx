@@ -16,9 +16,7 @@ import {
   Tooltip,
 } from "@material-ui/core";
 
-import {
-  DashboardOutlined as DashboardIcon,
-} from "@material-ui/icons";
+import { DashboardOutlined as DashboardIcon } from "@material-ui/icons";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -64,7 +62,7 @@ const styles = (theme) => ({
   },
 });
 
-const StationCard = ({ classes, station, onEdit, hideActions }) => {
+const StationCard = ({ classes, station, onEdit, onDelete, hideActions }) => {
   let batteryObj = {};
   if (station && station.battery > 11.5) {
     batteryObj = {
@@ -95,7 +93,10 @@ const StationCard = ({ classes, station, onEdit, hideActions }) => {
               </IconButton>
             </Tooltip>
           ) : (
-            <StationMenu onStationEdit={() => onEdit(station)} onDelete={() => console.log("DELETE")} />
+            <StationMenu
+              onStationEdit={() => onEdit(station)}
+              onDelete={() => onDelete(station)}
+            />
           )
         }
       />
@@ -197,7 +198,9 @@ const StationCard = ({ classes, station, onEdit, hideActions }) => {
 StationCard.propTypes = {
   classes: PropTypes.object.isRequired,
   station: PropTypes.object.isRequired,
-  onEdit: PropTypes.func,
+  hideActions: PropTypes.bool.isRequired,
+  onEdit: PropTypes.func.isRequired,
+  onDelete: PropTypes.func.isRequired,
 };
 
 export default React.memo(withStyles(styles)(StationCard));

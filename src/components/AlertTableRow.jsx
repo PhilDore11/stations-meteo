@@ -1,9 +1,16 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { TableRow, TableCell, TextField, Checkbox, Fab } from '@material-ui/core';
-import { DeleteOutlined as RemoveIcon } from '@material-ui/icons';
+import React from "react";
+import PropTypes from "prop-types";
+import {
+  TableRow,
+  TableCell,
+  TextField,
+  Checkbox,
+  Fab,
+} from "@material-ui/core";
+import { DeleteOutlined as RemoveIcon } from "@material-ui/icons";
+import { EAlertTypes } from "../utils/EAlertTypes";
 
-const AlertTableRow = ({ alertTypes, alert, onChange, onDeleteRow }) => (
+const AlertTableRow = ({ alert, onChange, onDeleteRow }) => (
   <TableRow>
     <TableCell align="center">
       <TextField
@@ -18,9 +25,15 @@ const AlertTableRow = ({ alertTypes, alert, onChange, onDeleteRow }) => (
         required
       />
     </TableCell>
-    {alertTypes.map(type => (
+    {EAlertTypes.map((type) => (
       <TableCell key={type.id} align="center">
-        <Checkbox id={type.prop} color="primary" checked={alert[type.prop]} onChange={onChange} value={type.prop} />
+        <Checkbox
+          id={type.prop}
+          color="primary"
+          checked={alert[type.prop]}
+          onChange={onChange}
+          value={type.prop}
+        />
       </TableCell>
     ))}
     <TableCell align="center">
@@ -32,7 +45,6 @@ const AlertTableRow = ({ alertTypes, alert, onChange, onDeleteRow }) => (
 );
 
 AlertTableRow.propTypes = {
-  alerts: PropTypes.array,
   alert: PropTypes.object.isRequired,
   onChange: PropTypes.func.isRequired,
 };

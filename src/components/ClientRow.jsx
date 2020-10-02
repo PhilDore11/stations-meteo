@@ -1,5 +1,5 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 
 import {
   Grid,
@@ -8,22 +8,11 @@ import {
   ExpansionPanelDetails,
   Typography,
   Divider,
-} from '@material-ui/core';
+} from "@material-ui/core";
 
-import { ExpandMoreOutlined as ExpandMoreIcon } from '@material-ui/icons';
+import { ExpandMoreOutlined as ExpandMoreIcon } from "@material-ui/icons";
 
-import { ClientMenu, StationCard } from './';
-
-const ClientStations = ({ client, hideActions, onEdit }) => (
-  <Grid container spacing={24}>
-    {client.stations &&
-      client.stations.map(station => (
-        <Grid item key={station.id}>
-          <StationCard station={station} hideActions={hideActions} onEdit={onEdit} />
-        </Grid>
-      ))}
-  </Grid>
-);
+import { ClientMenu, ClientStations } from "./";
 
 class ClientRow extends React.PureComponent {
   constructor(props) {
@@ -41,14 +30,27 @@ class ClientRow extends React.PureComponent {
   }
 
   render() {
-    const { isAdmin, client, onClientEdit, onUserEdit, onClientDelete, onStationEdit } = this.props;
+    const {
+      isAdmin,
+      client,
+      onClientEdit,
+      onUserEdit,
+      onClientDelete,
+      onStationAdd,
+      onStationEdit,
+      onStationDelete,
+    } = this.props;
     const { expanded } = this.state;
 
     if (!isAdmin) {
       return <ClientStations client={client} />;
     } else {
       return (
-        <ExpansionPanel expanded={expanded} key={client.id} onChange={this.handleExpand}>
+        <ExpansionPanel
+          expanded={expanded}
+          key={client.id}
+          onChange={this.handleExpand}
+        >
           <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
             <Grid container spacing={24} alignItems="center">
               <Grid item xs>
@@ -63,13 +65,19 @@ class ClientRow extends React.PureComponent {
                   />
                 </Grid>
               ) : (
-                ''
+                ""
               )}
             </Grid>
           </ExpansionPanelSummary>
           <Divider />
           <ExpansionPanelDetails>
-            <ClientStations client={client} hideActions={true} onEdit={onStationEdit} />
+            <ClientStations
+              client={client}
+              hideActions={true}
+              onAdd={onStationAdd}
+              onEdit={onStationEdit}
+              onDelete={onStationDelete}
+            />
           </ExpansionPanelDetails>
         </ExpansionPanel>
       );
@@ -85,7 +93,9 @@ ClientRow.propTypes = {
   onClientEdit: PropTypes.func.isRequired,
   onUserEdit: PropTypes.func.isRequired,
   onClientDelete: PropTypes.func.isRequired,
+  onStationAdd: PropTypes.func.isRequired,
   onStationEdit: PropTypes.func.isRequired,
+  onStationDelete: PropTypes.func.isRequired,
 };
 
 export default ClientRow;

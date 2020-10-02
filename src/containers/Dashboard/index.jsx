@@ -131,7 +131,6 @@ DashboardContainer.propTypes = {
 };
 
 const mapStateToProps = (state) => {
-  console.log("STATE", state);
   return {
     ...state.app,
     ...state.dashboard,

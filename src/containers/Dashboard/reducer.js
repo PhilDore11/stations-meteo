@@ -35,7 +35,6 @@ export default (state = initialState, action) => {
         loading: true,
       };
     case FETCH_CLIENT_STATIONS_SUCCESS:
-      console.log("DASHBOARD REDUCER", action.res);
       return {
         ...state,
         loading: false,

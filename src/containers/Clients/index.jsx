@@ -13,27 +13,34 @@ import {
   ClientForm,
   Loading,
   NoData,
-  UserForm, StationModal, StationForm,
+  UserForm,
+  StationModal,
+  StationForm,
 } from "../../components";
 
 import {
   fetchClients,
+  fetchReferenceStations,
   addClient,
   editClient,
   deleteClient,
+  editUser,
   toggleClientModal,
   toggleUserModal,
   setClientData,
   setClientAlerts,
   setStationData,
   toggleStationModal,
+  addStation,
+  editStation,
+  deleteStation,
 } from "./actions";
 
 const styles = () => ({
   add: {
     position: "fixed",
-    bottom: "20px",
-    right: "20px",
+    bottom: 20,
+    right: 20,
   },
 });
 
@@ -41,9 +48,10 @@ class ClientsContainer extends React.PureComponent {
   componentDidMount() {
     if (this.props.loggedInUser) {
       this.props.fetchClients();
+      this.props.fetchReferenceStations();
     }
   }
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps, prevState, snapshot) {
     if (
       this.props.loggedInUser &&
       this.props.loggedInUser !== prevProps.loggedInUser
@@ -70,18 +78,24 @@ class ClientsContainer extends React.PureComponent {
   };
 
   onStationChange = (event, stationData) => {
-    const { id, value } = event.target;
-    const newStationData = { ...stationData, [id]: value };
+    console.log("onStationChange", event);
+
+    const { name, value, checked, type } = event.target;
+    const newStationData = {
+      ...stationData,
+      [name]: type === "checkbox" ? checked : value,
+    };
+
     this.props.setStationData(newStationData);
   };
 
   onAddAlert = (alerts) => {
     const newAlert = {
       email: "",
-      hasRain: false,
-      hasSnow: false,
-      hasWind: false,
-      hasHydro: false,
+      hasRain: true,
+      hasSnow: true,
+      hasWind: true,
+      hasHydro: true,
     };
     this.props.setClientAlerts(alerts ? [...alerts, newAlert] : [newAlert]);
   };
@@ -92,7 +106,7 @@ class ClientsContainer extends React.PureComponent {
   };
 
   onClientEdit = (clientData) => {
-    this.props.setClientData({ ...clientData });
+    this.props.setClientData(clientData);
     this.props.toggleClientModal(false);
   };
 
@@ -110,11 +124,36 @@ class ClientsContainer extends React.PureComponent {
     this.props.toggleStationModal(false);
   };
 
+  onStationAdd = (client) => {
+    this.props.setStationData({
+      clientId: client.id,
+      stationId: "",
+      name: "",
+      referenceStationId: "",
+      coefficient: 0.1,
+      latitude: "",
+      longitude: "",
+      ipAddress: "",
+      deviceType: "",
+      hasRain: false,
+      hasSnow: false,
+      hasWind: false,
+      hasHydro: false,
+      localisation: "",
+      address: "",
+      city: "",
+      province: "",
+      postalCode: "",
+    });
+    this.props.toggleStationModal(true);
+  };
+
   onClientAdd = () => {
     this.props.setClientData({
       name: "",
       username: "",
       password: "",
+      alerts: [],
     });
     this.props.toggleClientModal(true);
   };
@@ -126,23 +165,32 @@ class ClientsContainer extends React.PureComponent {
   };
 
   onUserSave = () => {
-    this.props.editClient(this.props.clientData);
+    this.props.editUser(this.props.clientData);
   };
-
 
   onStationSave = () => {
     this.props.isAdd
-        ? this.props.addStation(this.props.stationData)
-        : this.props.editStation(this.props.stationData);
+      ? this.props.addStation(this.props.stationData)
+      : this.props.editStation(this.props.stationData);
   };
 
   onClientDelete = (clientData) => {
     if (
       window.confirm(
-        "Le client sera supprimer de facon permanente. Voulez-vous poursuivre?"
+        "Le client sera supprimé de facon permanente. Voulez-vous poursuivre?"
       )
     ) {
       this.props.deleteClient(clientData);
+    }
+  };
+
+  onStationDelete = (stationData) => {
+    if (
+      window.confirm(
+        "La station sera supprimée de facon permanente. Voulez-vous poursuivre?"
+      )
+    ) {
+      this.props.deleteStation(stationData);
     }
   };
 
@@ -161,7 +209,7 @@ class ClientsContainer extends React.PureComponent {
       clientsLoading,
     } = this.props;
 
-    const isAdmin = loggedInUser && loggedInUser.admin ? true : false;
+    const isAdmin = !!(loggedInUser && loggedInUser.admin);
 
     return (
       <Grid container spacing={24}>
@@ -177,7 +225,9 @@ class ClientsContainer extends React.PureComponent {
                   onClientEdit={this.onClientEdit}
                   onUserEdit={this.onUserEdit}
                   onClientDelete={this.onClientDelete}
+                  onStationAdd={this.onStationAdd}
                   onStationEdit={this.onStationEdit}
+                  onStationDelete={this.onStationDelete}
                 />
               ))}
             {isAdmin ? (
@@ -225,20 +275,21 @@ class ClientsContainer extends React.PureComponent {
                   }
                 />
                 <StationModal
-                    title={isAdd ? "Nouvelle Station" : "Modifier Station"}
-                    isOpen={stationModalOpen}
-                    onToggle={() => this.props.toggleStationModal(isAdd)}
-                    saveLabel={isAdd ? "Créer" : "Modifier"}
-                    onSave={this.onStationSave}
-                    body={
-                      <StationForm
-                          isAdd={isAdd}
-                          station={stationData}
-                          error={clientsError}
-                          loading={clientsLoading}
-                          onStationChange={this.onStationChange}
-                      />
-                    }
+                  title={isAdd ? "Nouvelle Station" : "Modifier Station"}
+                  isOpen={stationModalOpen}
+                  onToggle={() => this.props.toggleStationModal(isAdd)}
+                  saveLabel={isAdd ? "Créer" : "Modifier"}
+                  onSave={this.onStationSave}
+                  body={
+                    <StationForm
+                      isAdd={isAdd}
+                      station={stationData}
+                      error={clientsError}
+                      loading={clientsLoading}
+                      onStationChange={this.onStationChange}
+                      referenceStations={this.props.referenceStations}
+                    />
+                  }
                 />
               </React.Fragment>
             ) : (
@@ -260,8 +311,26 @@ ClientsContainer.propTypes = {
   clientsError: PropTypes.bool,
   clientsLoading: PropTypes.bool,
   fetchClients: PropTypes.func.isRequired,
+  fetchReferenceStations: PropTypes.func.isRequired,
   clients: PropTypes.array,
+  referenceStations: PropTypes.array,
   loggedInUser: PropTypes.object,
+  isAdd: PropTypes.bool.isRequired,
+  addClient: PropTypes.func.isRequired,
+  editClient: PropTypes.func.isRequired,
+  editUser: PropTypes.func.isRequired,
+  deleteClient: PropTypes.func.isRequired,
+  clientData: PropTypes.object.isRequired,
+  setClientData: PropTypes.func.isRequired,
+  toggleClientModal: PropTypes.func.isRequired,
+  setClientAlerts: PropTypes.func.isRequired,
+  setStationData: PropTypes.func.isRequired,
+  toggleUserModal: PropTypes.func.isRequired,
+  toggleStationModal: PropTypes.func.isRequired,
+  addStation: PropTypes.func.isRequired,
+  editStation: PropTypes.func.isRequired,
+  deleteStation: PropTypes.func.isRequired,
+  stationData: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -271,8 +340,10 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
   fetchClients,
+  fetchReferenceStations,
   addClient,
   editClient,
+  editUser,
   deleteClient,
   toggleClientModal,
   toggleUserModal,
@@ -280,6 +351,9 @@ const mapDispatchToProps = {
   setClientAlerts,
   setStationData,
   toggleStationModal,
+  addStation,
+  editStation,
+  deleteStation,
 };
 
 export default connect(

@@ -29,7 +29,6 @@ const DashboardHeader = ({
   view,
   onViewChange,
 }) => {
-  console.log("stations", stations);
   return (
     <Grid container spacing={24} justify="space-between" alignItems="center">
       <Grid item xs={2}>

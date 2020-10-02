@@ -8,6 +8,7 @@ export { default as UserForm } from './UserForm';
 export { default as ClientMenu } from './ClientMenu';
 export { default as ClientModal } from './ClientModal';
 export { default as ClientRow } from './ClientRow';
+export { default as ClientStations } from './ClientStations';
 
 export { default as StationForm } from './StationForm';
 export { default as StationModal } from './StationModal';
