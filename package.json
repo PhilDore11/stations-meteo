@@ -45,5 +45,8 @@
   ],
   "devDependencies": {
     "prettier": "^2.1.2"
+  },
+  "resolutions": {
+    "**/@babel/runtime": "7.5.0"
   }
 }
