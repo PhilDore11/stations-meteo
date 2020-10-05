@@ -53,7 +53,7 @@ class StationPin extends React.PureComponent {
             horizontal: "left",
           }}
         >
-          <StationCard station={station} />
+          <StationCard station={station}  />
         </Popover>
       </React.Fragment>
     );

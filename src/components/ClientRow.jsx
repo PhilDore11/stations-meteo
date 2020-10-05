@@ -43,7 +43,7 @@ class ClientRow extends React.PureComponent {
     const { expanded } = this.state;
 
     if (!isAdmin) {
-      return <ClientStations client={client} />;
+      return <ClientStations client={client} isAdmin={isAdmin} />;
     } else {
       return (
         <ExpansionPanel

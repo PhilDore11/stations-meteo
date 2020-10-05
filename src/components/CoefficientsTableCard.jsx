@@ -31,6 +31,7 @@ class CoefficientsTableCard extends React.PureComponent {
     this.handleExpand = this.handleExpand.bind(this);
   }
 
+
   handleExpand() {
     this.setState({ expanded: !this.state.expanded });
   }

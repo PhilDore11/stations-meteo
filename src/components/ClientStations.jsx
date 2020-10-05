@@ -66,10 +66,10 @@ ClientStations.propTypes = {
   classes: PropTypes.object.isRequired,
   isAdmin: PropTypes.bool.isRequired,
   client: PropTypes.object.isRequired,
-  hideActions: PropTypes.bool.isRequired,
-  onAdd: PropTypes.func.isRequired,
-  onEdit: PropTypes.func.isRequired,
-  onDelete: PropTypes.func.isRequired,
+  hideActions: PropTypes.bool,
+  onAdd: PropTypes.func,
+  onEdit: PropTypes.func,
+  onDelete: PropTypes.func,
 };
 
 export default React.memo(withStyles(styles)(ClientStations));

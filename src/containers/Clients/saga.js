@@ -351,7 +351,7 @@ function* addStationGenerator(action) {
   }
 
   try {
-    const response = yield call(
+    const stationResponse = yield call(
       jsonFetch,
       `${process.env.REACT_APP_API_URL}/stations`,
       {
@@ -360,7 +360,6 @@ function* addStationGenerator(action) {
           stationId,
           name,
           referenceStationId,
-          coefficient,
           latitude,
           longitude,
           ipAddress,
@@ -378,8 +377,26 @@ function* addStationGenerator(action) {
         method: "POST",
       }
     );
-    yield requestHandler(response, { action: addStationSuccess }, errorObject);
-    yield put(fetchClients());
+
+    if (stationResponse) {
+      const coefficientsResponse = yield call(
+        jsonFetch,
+        `${process.env.REACT_APP_API_URL}/coefficients`,
+        {
+          body: {
+            stationId: stationResponse.body.insertId,
+            coefficient,
+          },
+          method: "POST",
+        }
+      );
+      yield requestHandler(
+        coefficientsResponse,
+        { action: addStationSuccess },
+        errorObject
+      );
+      yield put(fetchClients());
+    }
   } catch (e) {
     yield errorHandler(errorObject);
   }
@@ -406,13 +423,12 @@ function* editStationGenerator(action) {
       return yield errorHandler("Error Editing Station");
     }
 
-    const response = yield call(
+    const stationResponse = yield call(
       jsonFetch,
       `${process.env.REACT_APP_API_URL}/stations/${id}`,
       {
         body: {
           name,
-          coefficient,
           hasRain: hasRain ? 1 : 0,
           hasSnow: hasSnow ? 1 : 0,
           hasWind: hasWind ? 1 : 0,
@@ -422,8 +438,25 @@ function* editStationGenerator(action) {
       }
     );
 
-    yield requestHandler(response, { action: editStationSuccess }, errorObject);
-    yield put(fetchClients());
+    if (stationResponse) {
+      const coefficientsResponse = yield call(
+        jsonFetch,
+        `${process.env.REACT_APP_API_URL}/coefficients`,
+        {
+          body: {
+            stationId: id,
+            coefficient,
+          },
+          method: "POST",
+        }
+      );
+      yield requestHandler(
+        coefficientsResponse,
+        { action: editStationSuccess },
+        errorObject
+      );
+      yield put(fetchClients());
+    }
   } catch (e) {
     yield errorHandler(errorObject);
   }

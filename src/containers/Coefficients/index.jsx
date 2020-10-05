@@ -6,11 +6,11 @@ import { connect } from "react-redux";
 import { TuneOutlined as CoefficientIcon } from "@material-ui/icons";
 import CoefficientsTableCard from "../../components/CoefficientsTableCard";
 
-// import { fetchCoefficientData } from "../actions";
+import { fetchCoefficients } from "../actions";
 
 class CoefficientsContainer extends React.PureComponent {
   componentDidMount() {
-    // this.fetchCoefficientData();
+    this.fetchCoefficientData();
   }
   componentDidUpdate(nextProps) {
     const { stationId, start, end } = this.props;
@@ -19,24 +19,26 @@ class CoefficientsContainer extends React.PureComponent {
       start !== nextProps.start ||
       end !== nextProps.end
     ) {
-      // this.fetchCoefficientData();
+      this.fetchCoefficientData();
     }
   }
 
   fetchCoefficientData() {
-    const { stationId, start, end, view } = this.props;
-    stationId && this.props.fetchCoefficientData(stationId, start, end, view);
+    const { stationId, start, end } = this.props;
+    stationId && this.props.fetchCoefficients(stationId, start, end);
   }
 
   render() {
-    const { /*coefficientData,*/ error, loading } = this.props;
+    const { data, error, loading } = this.props;
+
+    console.log("COEFFICIENTS", data);
 
     return (
       <CoefficientsTableCard
         title="Coefficients de calibration"
         icon={<CoefficientIcon />}
         hasData={true}
-        data={[{ coefficient: 1.2345, date: Date.now() }]}
+        data={data}
         error={error}
         loading={loading}
       />
@@ -45,8 +47,8 @@ class CoefficientsContainer extends React.PureComponent {
 }
 
 CoefficientsContainer.propTypes = {
-  // fetchCoefficientData: PropTypes.func.isRequired,
-  coefficientData: PropTypes.array,
+  fetchCoefficients: PropTypes.func.isRequired,
+  data: PropTypes.array,
   stationId: PropTypes.string.isRequired,
   start: PropTypes.string.isRequired,
   end: PropTypes.string.isRequired,
@@ -55,11 +57,11 @@ CoefficientsContainer.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  ...state.coefficientData,
+  ...state.coefficients,
 });
 
 const mapDispatchToProps = {
-  // fetchCoefficientData,
+  fetchCoefficients,
 };
 
 export default connect(

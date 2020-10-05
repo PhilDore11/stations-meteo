@@ -198,9 +198,9 @@ const StationCard = ({ classes, station, onEdit, onDelete, hideActions }) => {
 StationCard.propTypes = {
   classes: PropTypes.object.isRequired,
   station: PropTypes.object.isRequired,
-  hideActions: PropTypes.bool.isRequired,
-  onEdit: PropTypes.func.isRequired,
-  onDelete: PropTypes.func.isRequired,
+  hideActions: PropTypes.bool,
+  onEdit: PropTypes.func,
+  onDelete: PropTypes.func,
 };
 
 export default React.memo(withStyles(styles)(StationCard));
