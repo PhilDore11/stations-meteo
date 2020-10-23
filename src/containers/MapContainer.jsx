@@ -1,7 +1,7 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 
-import { connect } from 'react-redux';
+import { connect } from "react-redux";
 
 import {
   withStyles,
@@ -11,13 +11,16 @@ import {
   ExpansionPanelSummary,
   Typography,
   ExpansionPanelDetails,
-} from '@material-ui/core';
+} from "@material-ui/core";
 
-import { ExpandMoreOutlined as ExpandMoreIcon, MapOutlined as MapIcon } from '@material-ui/icons';
+import {
+  ExpandMoreOutlined as ExpandMoreIcon,
+  MapOutlined as MapIcon,
+} from "@material-ui/icons";
 
-import GoogleMapReact from 'google-map-react';
+import GoogleMapReact from "google-map-react";
 
-import { StationPin, Loading, NoData } from '../components';
+import { StationPin, Loading, NoData } from "../components";
 
 const styles = () => ({
   mapArea: {
@@ -63,16 +66,30 @@ class MapContainer extends React.PureComponent {
               {!loading && !error ? (
                 <GoogleMapReact
                   bootstrapURLKeys={{
-                    key: 'AIzaSyBBzPnmM8AuGNrNyLwL-mwXqUXQf0R4Mc8',
+                    key: "AIzaSyBBzPnmM8AuGNrNyLwL-mwXqUXQf0R4Mc8",
                   }}
                   center={{
-                    lat: clientStations && clientStations[0] && clientStations[0].latitude,
-                    lng: clientStations && clientStations[0] && clientStations[0].longitude,
+                    lat:
+                      (clientStations &&
+                        clientStations[0] &&
+                        clientStations[0].latitude) ||
+                      45.2714412,
+                    lng:
+                      (clientStations &&
+                        clientStations[0] &&
+                        clientStations[0].longitude) ||
+                      -75.921709,
                   }}
-                  zoom={12}>
+                  zoom={12}
+                >
                   {clientStations &&
-                    clientStations.map(station => (
-                      <StationPin key={station.id} lat={station.latitude} lng={station.longitude} station={station} />
+                    clientStations.map((station) => (
+                      <StationPin
+                        key={station.id}
+                        lat={station.latitude}
+                        lng={station.longitude}
+                        station={station}
+                      />
                     ))}
                 </GoogleMapReact>
               ) : loading ? (
@@ -92,7 +109,7 @@ MapContainer.propTypes = {
   clientStations: PropTypes.array,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   ...state.app,
 });
 

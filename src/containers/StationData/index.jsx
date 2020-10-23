@@ -1,17 +1,17 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 
-import { connect } from 'react-redux';
+import { connect } from "react-redux";
 
-import moment from 'moment';
-import { isEmpty } from 'lodash';
+import moment from "moment";
+import { isEmpty } from "lodash";
 
-import { CloudOutlined as PrecipitationIcon } from '@material-ui/icons';
+import { CloudOutlined as PrecipitationIcon } from "@material-ui/icons";
 
-import { blue } from '@material-ui/core/colors';
+import { blue } from "@material-ui/core/colors";
 
-import { fetchStationData } from '../actions';
-import { ChartCard } from '../../components';
+import { fetchStationData } from "../actions";
+import { ChartCard } from "../../components";
 
 class StationDataContainer extends React.PureComponent {
   componentDidMount() {
@@ -19,7 +19,11 @@ class StationDataContainer extends React.PureComponent {
   }
   componentDidUpdate(nextProps) {
     const { stationId, start, end } = this.props;
-    if (stationId !== nextProps.stationId || start !== nextProps.start || end !== nextProps.end) {
+    if (
+      stationId !== nextProps.stationId ||
+      start !== nextProps.start ||
+      end !== nextProps.end
+    ) {
       this.fetchStationData();
     }
   }
@@ -40,7 +44,7 @@ class StationDataContainer extends React.PureComponent {
           {
             scaleLabel: {
               display: true,
-              labelString: 'Precipitations (mm)',
+              labelString: "Precipitations (mm)",
             },
             ticks: {
               min: 0,
@@ -51,11 +55,14 @@ class StationDataContainer extends React.PureComponent {
           {
             scaleLabel: {
               display: true,
-              labelString: view === 'day' || view === 'week' ? 'Heure (sur une base 24 heures et non AM et PM)' : 'Date',
+              labelString:
+                view === "day" || view === "week"
+                  ? "Heure (sur une base 24 heures et non AM et PM)"
+                  : "Date",
             },
-            type: 'time',
+            type: "time",
             time: {
-              unit: view === 'day' ? 'hour' : 'day',
+              unit: view === "day" ? "hour" : "day",
               min: moment(start).valueOf(),
               max: moment(end).valueOf(),
             },
@@ -67,13 +74,13 @@ class StationDataContainer extends React.PureComponent {
     const precipitationChartData = {
       datasets: [
         {
-          label: 'Précipitation (mm)',
+          label: "Précipitation (mm)",
           fill: false,
           backgroundColor: blue[600],
           borderColor: blue[800],
           data:
             stationData &&
-            stationData.map(data => {
+            stationData.map((data) => {
               return {
                 t: moment(data.date),
                 y: parseFloat(data.intensity).toFixed(2),
@@ -108,7 +115,7 @@ StationDataContainer.propTypes = {
   loading: PropTypes.bool,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   ...state.stationData,
 });
 
@@ -118,5 +125,5 @@ const mapDispatchToProps = {
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 )(StationDataContainer);

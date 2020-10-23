@@ -31,8 +31,6 @@ class CoefficientsContainer extends React.PureComponent {
   render() {
     const { data, error, loading } = this.props;
 
-    console.log("COEFFICIENTS", data);
-
     return (
       <CoefficientsTableCard
         title="Coefficients de calibration"

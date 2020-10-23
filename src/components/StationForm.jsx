@@ -62,6 +62,7 @@ const StationForm = ({
         <React.Fragment>
           <Grid item xs={12}>
             <TextField
+              required={true}
               error={error}
               disabled={loading}
               autoFocus
@@ -79,6 +80,7 @@ const StationForm = ({
       )}
       <Grid item xs={12}>
         <TextField
+          required={true}
           error={error}
           disabled={loading}
           autoFocus
@@ -96,6 +98,7 @@ const StationForm = ({
         <React.Fragment>
           <Grid item xs={12}>
             <TextField
+              required={true}
               select
               error={error}
               disabled={loading}
@@ -118,6 +121,7 @@ const StationForm = ({
           </Grid>
           <Grid item xs={6}>
             <TextField
+              required={true}
               error={error}
               disabled={loading}
               fullWidth
@@ -132,6 +136,7 @@ const StationForm = ({
           </Grid>
           <Grid item xs={6}>
             <TextField
+              required={true}
               error={error}
               disabled={loading}
               fullWidth
@@ -256,6 +261,7 @@ const StationForm = ({
       )}
       <Grid item xs={12}>
         <TextField
+          required={true}
           error={error}
           disabled={loading}
           fullWidth

@@ -31,7 +31,7 @@ class StationPin extends React.PureComponent {
     const { station } = this.props;
     const { isOpen } = this.state;
     return (
-      <React.Fragment>
+      <div style={{ position: "absolute", transform: "translate(-50%, -50%)" }}>
         <IconButton
           color="secondary"
           onClick={this.handleClick}
@@ -53,9 +53,9 @@ class StationPin extends React.PureComponent {
             horizontal: "left",
           }}
         >
-          <StationCard station={station}  />
+          <StationCard station={station} />
         </Popover>
-      </React.Fragment>
+      </div>
     );
   }
 }

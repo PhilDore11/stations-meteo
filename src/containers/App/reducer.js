@@ -57,7 +57,8 @@ export default (state = initialState, action) => {
         loading: false,
         error: false,
         clientStations: action.res,
-        stationId: action.res[0].stationId,
+        stationId:
+          action.res && action.res.length > 0 && action.res[0].stationId,
       };
     case FETCH_CLIENT_STATIONS_ERROR:
       return {

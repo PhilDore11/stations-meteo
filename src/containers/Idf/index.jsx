@@ -1,21 +1,38 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 
-import moment from 'moment';
+import moment from "moment";
 
-import { connect } from 'react-redux';
+import { connect } from "react-redux";
 
-import { isEmpty, chain } from 'lodash';
+import { isEmpty, chain } from "lodash";
 
-import { Grid } from '@material-ui/core';
-import { MultilineChartOutlined as IdfIcon, ListOutlined as TableIcon } from '@material-ui/icons';
+import { Grid } from "@material-ui/core";
+import {
+  MultilineChartOutlined as IdfIcon,
+  ListOutlined as TableIcon,
+} from "@material-ui/icons";
 
-import { blue, amber, green, indigo, red, pink } from '@material-ui/core/colors';
+import {
+  blue,
+  amber,
+  green,
+  indigo,
+  red,
+  pink,
+} from "@material-ui/core/colors";
 
-import { fetchIdfData, fetchIdfStationData } from '../actions';
-import { ChartCard, IdfTableCard } from '../../components';
+import { fetchIdfData, fetchIdfStationData } from "../actions";
+import { ChartCard, IdfTableCard } from "../../components";
 
-const chartColors = [blue[200], pink[200], green[200], amber[200], indigo[200], red[200]];
+const chartColors = [
+  blue[200],
+  pink[200],
+  green[200],
+  amber[200],
+  indigo[200],
+  red[200],
+];
 
 class idfContainer extends React.PureComponent {
   componentDidMount() {
@@ -24,10 +41,22 @@ class idfContainer extends React.PureComponent {
   }
   componentDidUpdate(nextProps) {
     const { stationId, start, end } = this.props;
-    if (stationId !== nextProps.stationId || start !== nextProps.start || end !== nextProps.end) {
+    if (
+      stationId !== nextProps.stationId ||
+      start !== nextProps.start ||
+      end !== nextProps.end
+    ) {
       this.fetchIdfData();
       this.fetchIdfStationData();
     }
+  }
+
+  get referenceStationName() {
+    return (
+      this.props.idfData &&
+      this.props.idfData.length > 0 &&
+      this.props.idfData[0].name
+    );
   }
 
   fetchIdfData() {
@@ -52,16 +81,18 @@ class idfContainer extends React.PureComponent {
           .map((data, index) => ({
             label: `${data.interval} ans`,
             fill: false,
-            lineTension: 0,
+            showLine: true,
+            borderDash: [3],
+            lineTension: 0.5,
             backgroundColor: chartColors[index],
             borderColor: chartColors[index],
-            data: increments.map(increment => ({
+            data: increments.map((increment) => ({
               x: increment,
               y: parseFloat(data[increment] * (60 / increment)).toFixed(2),
             })),
           }))
           .unshift({
-            label: 'Donnees mensuelles',
+            label: "Donnees mensuelles",
             fill: false,
             lineTension: 0,
             showLine: true,
@@ -69,7 +100,9 @@ class idfContainer extends React.PureComponent {
             borderColor: blue[800],
             data: idfStationData.map((stationData, index) => ({
               x: increments[index],
-              y: parseFloat(stationData.intensity * (60 / stationData.increment)).toFixed(2),
+              y: parseFloat(
+                stationData.intensity * (60 / stationData.increment)
+              ).toFixed(2),
             })),
           })
           .value(),
@@ -77,10 +110,16 @@ class idfContainer extends React.PureComponent {
 
     const idfChartOptions = {
       maintainAspectRatio: false,
+
+      title: {
+        display: true,
+        text: `Station Référence: ${this.referenceStationName}`,
+      },
+
       scales: {
         xAxes: [
           {
-            type: 'logarithmic',
+            type: "logarithmic",
             gridLines: {
               drawTicks: false,
             },
@@ -90,15 +129,17 @@ class idfContainer extends React.PureComponent {
               callback: (value, index) => {
                 const increment = increments[index];
                 if (increment < 60) {
-                  return moment.duration(value, 'minutes').asMinutes() + " mins";
+                  return (
+                    moment.duration(value, "minutes").asMinutes() + " mins"
+                  );
                 } else if (increment > 60) {
-                  return moment.duration(value, 'minutes').asHours() + " hrs";
+                  return moment.duration(value, "minutes").asHours() + " hrs";
                 } else {
-                  return moment.duration(value, 'minutes').asHours() + " hr";
+                  return moment.duration(value, "minutes").asHours() + " hr";
                 }
               },
             },
-            afterBuildTicks: function(chart) {
+            afterBuildTicks: function (chart) {
               chart.ticks = [...increments];
             },
           },
@@ -107,13 +148,13 @@ class idfContainer extends React.PureComponent {
           {
             scaleLabel: {
               display: true,
-              labelString: 'Intensite de pluie (mm/h)',
+              labelString: "Intensite de pluie (mm/h)",
             },
-            type: 'logarithmic',
+            type: "logarithmic",
             ticks: {
               min: 0,
               max: 250,
-              callback: value => Number(value.toString()),
+              callback: (value) => Number(value.toString()),
             },
           },
         ],
@@ -161,7 +202,7 @@ idfContainer.propTypes = {
   loading: PropTypes.bool,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   ...state.idf,
 });
 
@@ -170,7 +211,4 @@ const mapDispatchToProps = {
   fetchIdfStationData,
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(idfContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(idfContainer);

@@ -142,7 +142,7 @@ const StationCard = ({ classes, station, onEdit, onDelete, hideActions }) => {
       <Grid container spacing={24} justify="center" alignItems="center">
         <Grid item>
           <Typography variant="caption">
-            {moment(station.date).fromNow()}
+            {station.date ? moment(station.date).fromNow() : "aucunes données"}
           </Typography>
         </Grid>
       </Grid>
