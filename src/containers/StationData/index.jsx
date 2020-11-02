@@ -61,7 +61,7 @@ class StationDataContainer extends React.PureComponent {
                   : "Date",
             },
             type: "time",
-            time: {
+            ticks: {
               unit: view === "day" ? "hour" : "day",
               min: moment(start).valueOf(),
               max: moment(end).valueOf(),
@@ -80,12 +80,10 @@ class StationDataContainer extends React.PureComponent {
           borderColor: blue[800],
           data:
             stationData &&
-            stationData.map((data) => {
-              return {
-                t: moment(data.date),
-                y: parseFloat(data.intensity).toFixed(2),
-              };
-            }),
+            stationData.map((data) => ({
+              t: moment(data.stationDate),
+              y: parseFloat(data.intensity).toFixed(2),
+            })),
         },
       ],
     };

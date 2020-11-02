@@ -19,7 +19,7 @@ import { Loading, NoData } from "./";
 
 const styles = () => ({
   chartArea: {
-    height: 500,
+    minHeight: 500,
   },
 });
 
@@ -56,6 +56,7 @@ class ChartCard extends React.PureComponent {
       classes,
       type,
       title,
+      height,
       icon,
       hasData,
       data,
@@ -81,7 +82,7 @@ class ChartCard extends React.PureComponent {
         <ExpansionPanelDetails className={classes.chartArea}>
           {!error && !loading ? (
             hasData ? (
-              <ChartType data={data} options={options} />
+              <ChartType data={data} options={options} height={height} />
             ) : (
               <NoData />
             )
@@ -98,6 +99,7 @@ ChartCard.propTypes = {
   classes: PropTypes.object.isRequired,
   type: PropTypes.oneOf(["line", "bar", "scatter"]),
   title: PropTypes.string,
+  height: PropTypes.number,
   icon: PropTypes.element,
   hasdata: PropTypes.bool,
   data: PropTypes.object,

@@ -94,7 +94,7 @@ class idfContainer extends React.PureComponent {
           .unshift({
             label: "Donnees mensuelles",
             fill: false,
-            lineTension: 0,
+            lineTension: 0.2,
             showLine: true,
             backgroundColor: blue[800],
             borderColor: blue[800],
@@ -120,9 +120,6 @@ class idfContainer extends React.PureComponent {
         xAxes: [
           {
             type: "logarithmic",
-            gridLines: {
-              drawTicks: false,
-            },
             ticks: {
               min: 0,
               max: 1440,
@@ -153,7 +150,7 @@ class idfContainer extends React.PureComponent {
             type: "logarithmic",
             ticks: {
               min: 0,
-              max: 250,
+              max: 500,
               callback: (value) => Number(value.toString()),
             },
           },
@@ -167,6 +164,7 @@ class idfContainer extends React.PureComponent {
           <ChartCard
             type="scatter"
             title="IDF"
+            height={700}
             icon={<IdfIcon />}
             hasData={!isEmpty(idfStationData) && !isEmpty(idfStationData)}
             data={idfChartData}
