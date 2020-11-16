@@ -5,7 +5,7 @@ import moment from "moment";
 
 import { connect } from "react-redux";
 
-import { isEmpty, chain } from "lodash";
+import { isEmpty } from "lodash";
 
 import { Grid } from "@material-ui/core";
 import {
@@ -73,39 +73,50 @@ class idfContainer extends React.PureComponent {
     const { idfData, idfStationData, error, loading } = this.props;
 
     const increments = [5, 10, 15, 30, 60, 120, 360, 720, 1440];
+    let pdrIncrements = Array.from(Array(1440).keys());
+    pdrIncrements.splice(0, 5);
+
+    const averagesData = idfData.map((data, index) => ({
+      label: `HIDE - ${data.interval} ans`,
+      fill: false,
+      showLine: false,
+      backgroundColor: chartColors[index],
+      borderColor: chartColors[index],
+      data: increments.map((increment) => ({
+        x: increment,
+        y: parseFloat(data[increment] * (60 / increment)).toFixed(2),
+      })),
+    }));
+    const pdrData = idfData.map((data, index) => ({
+      label: `${data.interval} ans`,
+      fill: false,
+      showLine: true,
+      borderDash: [3],
+      pointRadius: 0,
+      backgroundColor: chartColors[index],
+      borderColor: chartColors[index],
+      data: pdrIncrements.map((increment) => ({
+        x: increment,
+        y: parseFloat(data.a / Math.pow(data.b + increment, data.c)).toFixed(2),
+      })),
+    }));
+    const data = {
+      label: "Donnees mensuelles",
+      fill: false,
+      lineTension: 0.2,
+      showLine: true,
+      backgroundColor: blue[800],
+      borderColor: blue[800],
+      data: idfStationData.map((stationData, index) => ({
+        x: increments[index],
+        y: parseFloat(
+          stationData.intensity * (60 / stationData.increment)
+        ).toFixed(2),
+      })),
+    };
 
     const idfChartData = {
-      datasets:
-        idfData &&
-        chain(idfData)
-          .map((data, index) => ({
-            label: `${data.interval} ans`,
-            fill: false,
-            showLine: true,
-            borderDash: [3],
-            lineTension: 0.5,
-            backgroundColor: chartColors[index],
-            borderColor: chartColors[index],
-            data: increments.map((increment) => ({
-              x: increment,
-              y: parseFloat(data[increment] * (60 / increment)).toFixed(2),
-            })),
-          }))
-          .unshift({
-            label: "Donnees mensuelles",
-            fill: false,
-            lineTension: 0.2,
-            showLine: true,
-            backgroundColor: blue[800],
-            borderColor: blue[800],
-            data: idfStationData.map((stationData, index) => ({
-              x: increments[index],
-              y: parseFloat(
-                stationData.intensity * (60 / stationData.increment)
-              ).toFixed(2),
-            })),
-          })
-          .value(),
+      datasets: [data, ...averagesData, ...pdrData],
     };
 
     const idfChartOptions = {
@@ -114,6 +125,12 @@ class idfContainer extends React.PureComponent {
       title: {
         display: true,
         text: `Station Référence: ${this.referenceStationName}`,
+      },
+
+      legend: {
+        labels: {
+          filter: (item) => !item.text.startsWith("HIDE"),
+        },
       },
 
       scales: {
