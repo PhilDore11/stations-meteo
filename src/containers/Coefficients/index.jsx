@@ -47,7 +47,6 @@ class CoefficientsContainer extends React.PureComponent {
 CoefficientsContainer.propTypes = {
   fetchCoefficients: PropTypes.func.isRequired,
   data: PropTypes.array,
-  stationId: PropTypes.string.isRequired,
   start: PropTypes.string.isRequired,
   end: PropTypes.string.isRequired,
   error: PropTypes.bool,

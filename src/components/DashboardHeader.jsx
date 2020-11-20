@@ -105,7 +105,6 @@ DashboardHeader.propTypes = {
   increment: PropTypes.func.isRequired,
   decrement: PropTypes.func.isRequired,
   stations: PropTypes.array.isRequired,
-  stationId: PropTypes.string,
   onStationChange: PropTypes.func.isRequired,
   view: PropTypes.string.isRequired,
   onViewChange: PropTypes.func.isRequired,

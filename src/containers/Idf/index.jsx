@@ -34,7 +34,7 @@ const chartColors = [
   red[200],
 ];
 
-class idfContainer extends React.PureComponent {
+class IdfContainer extends React.PureComponent {
   componentDidMount() {
     this.fetchIdfData();
     this.fetchIdfStationData();
@@ -205,12 +205,11 @@ class idfContainer extends React.PureComponent {
   }
 }
 
-idfContainer.propTypes = {
+IdfContainer.propTypes = {
   fetchIdfData: PropTypes.func.isRequired,
   fetchIdfStationData: PropTypes.func.isRequired,
   idfData: PropTypes.array,
   idfStationData: PropTypes.array,
-  stationId: PropTypes.string.isRequired,
   start: PropTypes.string.isRequired,
   end: PropTypes.string.isRequired,
   error: PropTypes.bool,
@@ -226,4 +225,4 @@ const mapDispatchToProps = {
   fetchIdfStationData,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(idfContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(IdfContainer);
