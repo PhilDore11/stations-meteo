@@ -45,6 +45,7 @@ export default (state = initialState, action) => {
     case RESET_ALERTS:
       return {
         ...state,
+        message: null,
       };
     case FETCH_CLIENT_STATIONS:
       return {

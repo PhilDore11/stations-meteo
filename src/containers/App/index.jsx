@@ -162,7 +162,6 @@ App.propTypes = {
   classes: PropTypes.object.isRequired,
   loggedInUser: PropTypes.object,
   resetAlerts: PropTypes.func.isRequired,
-  stationId: PropTypes.number.isRequired,
 };
 
 const mapStateToProps = (state) => ({

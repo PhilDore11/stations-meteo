@@ -5,6 +5,7 @@ import jsonFetch from "json-fetch";
 import {
   FETCH_CLIENTS,
   FETCH_REFERENCE_STATIONS,
+  FETCH_LN_STATIONS,
   ADD_CLIENT,
   ADD_STATION,
   EDIT_CLIENT,
@@ -20,6 +21,9 @@ import {
   fetchClientsError,
   fetchReferenceStationsSuccess,
   fetchReferenceStationsError,
+  fetchLnStations,
+  fetchLnStationsSuccess,
+  fetchLnStationsError,
   addClientSuccess,
   addClientError,
   addStationError,
@@ -100,6 +104,28 @@ function* fetchReferenceStationsGenerator() {
     yield requestHandler(
       response,
       { action: fetchReferenceStationsSuccess },
+      errorObject
+    );
+  } catch (e) {
+    yield errorHandler(errorObject);
+  }
+}
+
+function* fetchLnStationsGenerator() {
+  const errorObject = {
+    action: fetchLnStationsError,
+    message: "Error Fetching LN Stations",
+  };
+
+  try {
+    const response = yield call(
+      jsonFetch,
+      `${process.env.REACT_APP_API_URL}/lnStations`
+    );
+
+    yield requestHandler(
+      response,
+      { action: fetchLnStationsSuccess },
       errorObject
     );
   } catch (e) {
@@ -396,6 +422,7 @@ function* addStationGenerator(action) {
         errorObject
       );
       yield put(fetchClients());
+      yield put(fetchLnStations());
     }
   } catch (e) {
     yield errorHandler(errorObject);
@@ -411,6 +438,7 @@ function* editStationGenerator(action) {
   try {
     const {
       id,
+      stationId,
       name,
       coefficient,
       hasRain,
@@ -429,6 +457,7 @@ function* editStationGenerator(action) {
       {
         body: {
           name,
+          stationId,
           hasRain: hasRain ? 1 : 0,
           hasSnow: hasSnow ? 1 : 0,
           hasWind: hasWind ? 1 : 0,
@@ -456,6 +485,7 @@ function* editStationGenerator(action) {
         errorObject
       );
       yield put(fetchClients());
+      yield put(fetchLnStations());
     }
   } catch (e) {
     yield errorHandler(errorObject);
@@ -482,6 +512,7 @@ function* deleteStationGenerator(action) {
       errorObject
     );
     yield put(fetchClients());
+    yield put(fetchLnStations());
   } catch (e) {
     yield errorHandler(errorObject);
   }
@@ -490,6 +521,7 @@ function* deleteStationGenerator(action) {
 function* defaultSaga() {
   yield takeLatest(FETCH_CLIENTS, fetchClientsGenerator);
   yield takeLatest(FETCH_REFERENCE_STATIONS, fetchReferenceStationsGenerator);
+  yield takeLatest(FETCH_LN_STATIONS, fetchLnStationsGenerator);
 
   yield takeLatest(ADD_CLIENT, addClientGenerator);
   yield takeLatest(EDIT_CLIENT, editClientGenerator);

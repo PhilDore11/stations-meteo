@@ -5,6 +5,8 @@ import {
   FETCH_CLIENTS_ERROR,
   FETCH_REFERENCE_STATIONS_SUCCESS,
   FETCH_REFERENCE_STATIONS_ERROR,
+  FETCH_LN_STATIONS_SUCCESS,
+  FETCH_LN_STATIONS_ERROR,
   ADD_CLIENT_SUCCESS,
   ADD_CLIENT_ERROR,
   EDIT_CLIENT_SUCCESS,
@@ -25,12 +27,12 @@ import {
   EDIT_STATION_ERROR,
   DELETE_STATION_SUCCESS,
   DELETE_STATION_ERROR,
-
 } from "../constants";
 
 const initialState = {
   clients: [],
   referenceStations: [],
+  lnStations: [],
   clientData: {},
   clientModalOpen: false,
   userModalOpen: false,
@@ -64,6 +66,7 @@ export default (state = initialState, action) => {
       };
     case FETCH_CLIENTS_ERROR:
     case FETCH_REFERENCE_STATIONS_ERROR:
+    case FETCH_LN_STATIONS_ERROR:
     case ADD_CLIENT_ERROR:
     case EDIT_CLIENT_ERROR:
     case EDIT_USER_ERROR:
@@ -92,7 +95,12 @@ export default (state = initialState, action) => {
       return {
         ...state,
         referenceStations: action.res,
-      }
+      };
+    case FETCH_LN_STATIONS_SUCCESS:
+      return {
+        ...state,
+        lnStations: action.res,
+      };
     case TOGGLE_CLIENT_MODAL:
       return {
         ...state,

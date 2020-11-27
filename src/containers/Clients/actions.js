@@ -5,6 +5,9 @@ import {
   FETCH_REFERENCE_STATIONS,
   FETCH_REFERENCE_STATIONS_SUCCESS,
   FETCH_REFERENCE_STATIONS_ERROR,
+  FETCH_LN_STATIONS,
+  FETCH_LN_STATIONS_SUCCESS,
+  FETCH_LN_STATIONS_ERROR,
   ADD_CLIENT,
   ADD_CLIENT_SUCCESS,
   ADD_CLIENT_ERROR,
@@ -53,6 +56,20 @@ export const fetchReferenceStationsSuccess = (res) => ({
 
 export const fetchReferenceStationsError = (error) => ({
   type: FETCH_REFERENCE_STATIONS_ERROR,
+  error,
+});
+
+export const fetchLnStations = () => ({
+  type: FETCH_LN_STATIONS,
+});
+
+export const fetchLnStationsSuccess = (res) => ({
+  type: FETCH_LN_STATIONS_SUCCESS,
+  res,
+});
+
+export const fetchLnStationsError = (error) => ({
+  type: FETCH_LN_STATIONS_ERROR,
   error,
 });
 

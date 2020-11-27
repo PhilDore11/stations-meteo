@@ -55,29 +55,39 @@ const StationForm = ({
   loading,
   onStationChange,
   referenceStations,
+  lnStations,
 }) => (
   <form noValidate autoComplete="off">
     <Grid container spacing={24}>
-      {isAdd && (
-        <React.Fragment>
-          <Grid item xs={12}>
-            <TextField
-              required={true}
-              error={error}
-              disabled={loading}
-              autoFocus
-              fullWidth
-              name="stationId"
-              label="ID"
-              type="text"
-              margin="dense"
-              variant="outlined"
-              value={station.stationId}
-              onChange={(event) => onStationChange(event, station)}
-            />
-          </Grid>
-        </React.Fragment>
-      )}
+      <React.Fragment>
+        <Grid item xs={12}>
+          <TextField
+            required={true}
+            select
+            error={error}
+            disabled={loading}
+            fullWidth
+            name="stationId"
+            label="LN Station"
+            type="text"
+            margin="dense"
+            variant="outlined"
+            value={station.stationId}
+            onChange={(event) => onStationChange(event, station)}
+          >
+            {lnStations &&
+              lnStations.map((station) => (
+                <MenuItem
+                  key={station.id}
+                  value={station.id}
+                  disabled={!!station.stationId}
+                >
+                  {station.name}
+                </MenuItem>
+              ))}
+          </TextField>
+        </Grid>
+      </React.Fragment>
       <Grid item xs={12}>
         <TextField
           required={true}
@@ -285,6 +295,7 @@ StationForm.propTypes = {
   loading: PropTypes.bool,
   onStationChange: PropTypes.func.isRequired,
   referenceStations: PropTypes.array.isRequired,
+  lnStations: PropTypes.array.isRequired,
 };
 
 export default React.memo(StationForm);

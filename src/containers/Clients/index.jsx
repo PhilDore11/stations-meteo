@@ -21,6 +21,7 @@ import {
 import {
   fetchClients,
   fetchReferenceStations,
+  fetchLnStations,
   addClient,
   editClient,
   deleteClient,
@@ -49,6 +50,7 @@ class ClientsContainer extends React.PureComponent {
     if (this.props.loggedInUser) {
       this.props.fetchClients();
       this.props.fetchReferenceStations();
+      this.props.fetchLnStations();
     }
   }
   componentDidUpdate(prevProps, prevState, snapshot) {
@@ -78,7 +80,6 @@ class ClientsContainer extends React.PureComponent {
   };
 
   onStationChange = (event, stationData) => {
-
     const { name, value, checked, type } = event.target;
     const newStationData = {
       ...stationData,
@@ -287,6 +288,7 @@ class ClientsContainer extends React.PureComponent {
                       loading={clientsLoading}
                       onStationChange={this.onStationChange}
                       referenceStations={this.props.referenceStations}
+                      lnStations={this.props.lnStations}
                     />
                   }
                 />
@@ -330,6 +332,8 @@ ClientsContainer.propTypes = {
   editStation: PropTypes.func.isRequired,
   deleteStation: PropTypes.func.isRequired,
   stationData: PropTypes.object.isRequired,
+  fetchLnStations: PropTypes.func.isRequired,
+  lnStations: PropTypes.array,
 };
 
 const mapStateToProps = (state) => ({
@@ -340,6 +344,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = {
   fetchClients,
   fetchReferenceStations,
+  fetchLnStations,
   addClient,
   editClient,
   editUser,

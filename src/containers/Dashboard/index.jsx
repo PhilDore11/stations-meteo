@@ -46,7 +46,7 @@ class DashboardContainer extends React.PureComponent {
   }
 
   handleStationChange(event) {
-    this.props.setStation(event.target.value);
+    window.location.href = `/dashboard/${event.target.value}`;
   }
 
   handleViewChange(event) {
