@@ -18,7 +18,6 @@ import {
 } from "../actions";
 import { DashboardHeader, Loading } from "../../components";
 import { StationDataContainer, IdfContainer } from "..";
-import CoefficientsContainer from "../Coefficients";
 
 class DashboardContainer extends React.PureComponent {
   constructor(props) {
@@ -56,7 +55,9 @@ class DashboardContainer extends React.PureComponent {
   handleStartChange(start) {
     this.props.setStart(start);
     if (this.props.view !== "custom") {
-      const newEnd = moment(start).add(1, this.props.view);
+      const newEnd = moment(start)
+        .add(1, this.props.view)
+        .subtract(1, "millisecond");
       this.props.setEnd(newEnd);
     }
   }
@@ -101,13 +102,6 @@ class DashboardContainer extends React.PureComponent {
             </Grid>
             <Grid item xs={12}>
               <IdfContainer stationId={stationId} start={start} end={end} />
-            </Grid>
-            <Grid item xs={12}>
-              <CoefficientsContainer
-                stationId={stationId}
-                start={start}
-                end={end}
-              />
             </Grid>
             <Grid item xs={12}>
               <StationDataContainer

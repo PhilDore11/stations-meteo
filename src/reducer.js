@@ -1,4 +1,4 @@
-import { combineReducers } from 'redux';
+import { combineReducers } from "redux";
 
 import {
   loginReducer,
@@ -7,8 +7,7 @@ import {
   dashboardReducer,
   stationDataReducer,
   idfReducer,
-  coefficientsReducer,
-} from './containers/reducers';
+} from "./containers/reducers";
 
 export default combineReducers({
   app: appReducer,
@@ -17,5 +16,4 @@ export default combineReducers({
   dashboard: dashboardReducer,
   stationData: stationDataReducer,
   idf: idfReducer,
-  coefficients: coefficientsReducer,
 });

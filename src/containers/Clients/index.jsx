@@ -130,7 +130,6 @@ class ClientsContainer extends React.PureComponent {
       stationId: "",
       name: "",
       referenceStationId: "",
-      coefficient: 0.1,
       latitude: "",
       longitude: "",
       ipAddress: "",

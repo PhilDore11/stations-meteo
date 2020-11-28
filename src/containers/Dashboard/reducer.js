@@ -15,9 +15,9 @@ import {
 
 const initialDay = moment();
 const initialState = {
-  start: moment(initialDay).startOf("day").toISOString(),
-  end: moment(initialDay).endOf("day").toISOString(),
-  view: "day",
+  start: moment(initialDay).startOf("month").toISOString(),
+  end: moment(initialDay).endOf("month").toISOString(),
+  view: "month",
   stationId: "",
   error: false,
   loading: false,
