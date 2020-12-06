@@ -176,7 +176,7 @@ class IdfContainer extends React.PureComponent {
     };
 
     return (
-      <Grid container spacing={24}>
+      <Grid container spacing={2}>
         <Grid item xs={12}>
           <ChartCard
             type="scatter"

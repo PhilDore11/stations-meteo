@@ -35,7 +35,10 @@ import {
   addStation,
   editStation,
   deleteStation,
+  toggleImportModal,
+  importData,
 } from "./actions";
+import ImportModal from "../../components/ImportModal";
 
 const styles = () => ({
   add: {
@@ -193,6 +196,15 @@ class ClientsContainer extends React.PureComponent {
     }
   };
 
+  onOpenImport = (stationData) => {
+    this.props.setStationData({ ...stationData });
+    this.props.toggleImportModal();
+  };
+
+  onImport = (file, stationData) => {
+    this.props.importData(file, stationData);
+  };
+
   render() {
     const {
       classes,
@@ -201,17 +213,20 @@ class ClientsContainer extends React.PureComponent {
       clientModalOpen,
       userModalOpen,
       stationModalOpen,
+      importModalOpen,
       clientData,
       stationData,
       isAdd,
       clientsError,
       clientsLoading,
+      importError,
+      importLoading,
     } = this.props;
 
     const isAdmin = !!(loggedInUser && loggedInUser.admin);
 
     return (
-      <Grid container spacing={24}>
+      <Grid container spacing={2}>
         {!clientsLoading && !clientsError ? (
           <Grid item xs={12}>
             {clients &&
@@ -227,6 +242,7 @@ class ClientsContainer extends React.PureComponent {
                   onStationAdd={this.onStationAdd}
                   onStationEdit={this.onStationEdit}
                   onStationDelete={this.onStationDelete}
+                  onOpenImport={this.onOpenImport}
                 />
               ))}
             {isAdmin ? (
@@ -291,6 +307,14 @@ class ClientsContainer extends React.PureComponent {
                     />
                   }
                 />
+                <ImportModal
+                  stationData={this.props.stationData}
+                  isOpen={importModalOpen}
+                  onToggle={this.props.toggleImportModal}
+                  error={importError}
+                  loading={importLoading}
+                  onImport={this.onImport}
+                />
               </React.Fragment>
             ) : (
               ""
@@ -333,6 +357,10 @@ ClientsContainer.propTypes = {
   stationData: PropTypes.object.isRequired,
   fetchLnStations: PropTypes.func.isRequired,
   lnStations: PropTypes.array,
+  toggleImportModal: PropTypes.func.isRequired,
+  importData: PropTypes.func.isRequired,
+  importError: PropTypes.bool,
+  importLoading: PropTypes.bool,
 };
 
 const mapStateToProps = (state) => ({
@@ -350,13 +378,15 @@ const mapDispatchToProps = {
   deleteClient,
   toggleClientModal,
   toggleUserModal,
+  toggleStationModal,
   setClientData,
   setClientAlerts,
   setStationData,
-  toggleStationModal,
   addStation,
   editStation,
   deleteStation,
+  toggleImportModal,
+  importData,
 };
 
 export default connect(

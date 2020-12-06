@@ -35,7 +35,7 @@ const styles = (theme) => ({
   content: {
     flexGrow: 1,
     backgroundColor: grey[200],
-    padding: theme.spacing.unit * 3,
+    padding: theme.spacing(3),
     minHeight: "100vh",
   },
 });
@@ -111,7 +111,6 @@ class App extends React.PureComponent {
                       <LoginContainer />
                     )
                   }
-                />{" "}
                 />
                 <Route
                   path="/home"

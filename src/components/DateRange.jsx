@@ -12,7 +12,7 @@ const styles = () => ({
 });
 
 const DateRange = ({ classes, start, end, onStartChange, onEndChange }) => (
-  <Grid container spacing={24} justify="space-between" alignItems="center">
+  <Grid container spacing={2} justify="space-between" alignItems="center">
     <Grid item xs>
       <DatePicker
         fullWidth={true}

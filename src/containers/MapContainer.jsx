@@ -7,10 +7,10 @@ import {
   withStyles,
   Divider,
   Grid,
-  ExpansionPanel,
-  ExpansionPanelSummary,
+  Accordion,
+  AccordionSummary,
   Typography,
-  ExpansionPanelDetails,
+  AccordionDetails,
 } from "@material-ui/core";
 
 import {
@@ -48,11 +48,11 @@ class MapContainer extends React.PureComponent {
     const { expanded } = this.state;
 
     return (
-      <Grid container spacing={24}>
+      <Grid container spacing={2}>
         <Grid item xs={12}>
-          <ExpansionPanel expanded={expanded} onChange={this.handleExpand}>
-            <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-              <Grid container spacing={24} alignItems="center">
+          <Accordion expanded={expanded} onChange={this.handleExpand}>
+            <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+              <Grid container spacing={2} alignItems="center">
                 <Grid item>
                   <MapIcon />
                 </Grid>
@@ -60,9 +60,9 @@ class MapContainer extends React.PureComponent {
                   <Typography variant="subtitle1">Carte</Typography>
                 </Grid>
               </Grid>
-            </ExpansionPanelSummary>
+            </AccordionSummary>
             <Divider />
-            <ExpansionPanelDetails className={classes.mapArea}>
+            <AccordionDetails className={classes.mapArea}>
               {!loading && !error ? (
                 <GoogleMapReact
                   bootstrapURLKeys={{
@@ -97,8 +97,8 @@ class MapContainer extends React.PureComponent {
               ) : (
                 <NoData />
               )}
-            </ExpansionPanelDetails>
-          </ExpansionPanel>
+            </AccordionDetails>
+          </Accordion>
         </Grid>
       </Grid>
     );

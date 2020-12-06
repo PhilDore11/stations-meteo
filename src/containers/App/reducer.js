@@ -28,23 +28,32 @@ export default (state = initialState, action) => {
       return {
         ...state,
         success: true,
+        warning: false,
+        error: false,
         message: action.message,
       };
     case WARNING:
       return {
         ...state,
+        success: false,
         warning: true,
+        error: false,
         message: action.message,
       };
     case ERROR:
       return {
         ...state,
+        success: false,
+        warning: false,
         error: true,
         message: action.message,
       };
     case RESET_ALERTS:
       return {
         ...state,
+        success: false,
+        warning: false,
+        error: false,
         message: null,
       };
     case FETCH_CLIENT_STATIONS:

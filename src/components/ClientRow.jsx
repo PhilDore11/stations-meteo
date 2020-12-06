@@ -3,9 +3,9 @@ import PropTypes from "prop-types";
 
 import {
   Grid,
-  ExpansionPanel,
-  ExpansionPanelSummary,
-  ExpansionPanelDetails,
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
   Typography,
   Divider,
 } from "@material-ui/core";
@@ -39,6 +39,7 @@ class ClientRow extends React.PureComponent {
       onStationAdd,
       onStationEdit,
       onStationDelete,
+      onOpenImport,
     } = this.props;
     const { expanded } = this.state;
 
@@ -46,13 +47,13 @@ class ClientRow extends React.PureComponent {
       return <ClientStations client={client} isAdmin={isAdmin} />;
     } else {
       return (
-        <ExpansionPanel
+        <Accordion
           expanded={expanded}
           key={client.id}
           onChange={this.handleExpand}
         >
-          <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-            <Grid container spacing={24} alignItems="center">
+          <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+            <Grid container spacing={2} alignItems="center">
               <Grid item xs>
                 <Typography variant="subtitle1">{client.name}</Typography>
               </Grid>
@@ -68,9 +69,9 @@ class ClientRow extends React.PureComponent {
                 ""
               )}
             </Grid>
-          </ExpansionPanelSummary>
+          </AccordionSummary>
           <Divider />
-          <ExpansionPanelDetails>
+          <AccordionDetails>
             <ClientStations
               isAdmin={isAdmin}
               client={client}
@@ -78,9 +79,10 @@ class ClientRow extends React.PureComponent {
               onAdd={onStationAdd}
               onEdit={onStationEdit}
               onDelete={onStationDelete}
+              onImport={onOpenImport}
             />
-          </ExpansionPanelDetails>
-        </ExpansionPanel>
+          </AccordionDetails>
+        </Accordion>
       );
     }
   }
@@ -97,6 +99,7 @@ ClientRow.propTypes = {
   onStationAdd: PropTypes.func.isRequired,
   onStationEdit: PropTypes.func.isRequired,
   onStationDelete: PropTypes.func.isRequired,
+  onOpenImport: PropTypes.func.isRequired,
 };
 
 export default ClientRow;

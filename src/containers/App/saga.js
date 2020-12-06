@@ -9,6 +9,7 @@ import {
   FETCH_STATION_DATA,
   FETCH_IDF_DATA,
   FETCH_IDF_STATION_DATA,
+  EXPORT_STATION_DATA,
 } from "../constants";
 
 import {
@@ -20,6 +21,7 @@ import {
   fetchIdfDataError,
   fetchIdfStationDataSuccess,
   fetchIdfStationDataError,
+  exportStationDataError,
 } from "../actions";
 
 function* fetchStationData(action) {
@@ -142,11 +144,26 @@ function* fetchClientStations(action) {
   }
 }
 
+function* exportStationData(action) {
+  const errorObject = {
+    action: exportStationDataError,
+    message: "Error Exporting Station Data",
+  };
+
+  try {
+    const { stationId, start, end } = action;
+    window.location.href = `${process.env.REACT_APP_API_URL}/stationData/${stationId}/export?start=${start}&end=${end}`;
+  } catch (e) {
+    yield errorHandler(errorObject);
+  }
+}
+
 function* defaultSaga() {
   yield takeLatest(FETCH_CLIENT_STATIONS, fetchClientStations);
   yield takeLatest(FETCH_STATION_DATA, fetchStationData);
   yield takeLatest(FETCH_IDF_DATA, fetchIdfData);
   yield takeLatest(FETCH_IDF_STATION_DATA, fetchIdfStationData);
+  yield takeLatest(EXPORT_STATION_DATA, exportStationData);
 }
 
 export default defaultSaga;

@@ -1,6 +1,7 @@
 import { call, put, takeLatest, select } from "redux-saga/effects";
 
 import jsonFetch from "json-fetch";
+import fetch from "node-fetch";
 
 import {
   FETCH_CLIENTS,
@@ -13,6 +14,7 @@ import {
   EDIT_STATION,
   DELETE_CLIENT,
   DELETE_STATION,
+  IMPORT_DATA,
 } from "./constants";
 
 import {
@@ -38,6 +40,8 @@ import {
   deleteClientError,
   deleteStationSuccess,
   deleteStationError,
+  importDataSuccess,
+  importDataError,
 } from "./actions";
 
 import { requestHandler, errorHandler } from "../../utils/sagaHelpers";
@@ -492,6 +496,40 @@ function* deleteStationGenerator(action) {
   }
 }
 
+function* importDataGenerator(action) {
+  const errorObject = {
+    action: importDataError,
+    message: "Error Importing Data",
+  };
+
+  try {
+    const { stationId } = action.stationData;
+    const { file } = action;
+
+    const formData = new FormData();
+    formData.append("file", file);
+
+    const result = yield call(
+      fetch,
+      `${process.env.REACT_APP_API_URL}/stationData/${stationId}/import`,
+      {
+        method: "POST",
+        body: formData,
+      }
+    );
+
+    console.log("result", result);
+
+    yield requestHandler(
+      result,
+      { action: importDataSuccess, message: "Importation Complétée" },
+      errorObject
+    );
+  } catch (e) {
+    yield errorHandler(errorObject);
+  }
+}
+
 function* defaultSaga() {
   yield takeLatest(FETCH_CLIENTS, fetchClientsGenerator);
   yield takeLatest(FETCH_REFERENCE_STATIONS, fetchReferenceStationsGenerator);
@@ -506,6 +544,8 @@ function* defaultSaga() {
   yield takeLatest(ADD_STATION, addStationGenerator);
   yield takeLatest(EDIT_STATION, editStationGenerator);
   yield takeLatest(DELETE_STATION, deleteStationGenerator);
+
+  yield takeLatest(IMPORT_DATA, importDataGenerator);
 }
 
 export default defaultSaga;

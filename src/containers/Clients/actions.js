@@ -22,13 +22,17 @@ import {
   DELETE_CLIENT_ERROR,
   TOGGLE_CLIENT_MODAL,
   TOGGLE_USER_MODAL,
+  TOGGLE_STATION_MODAL,
+  TOGGLE_IMPORT_MODAL,
   SET_CLIENT_DATA,
   SET_CLIENT_ALERTS,
-  TOGGLE_STATION_MODAL,
   SET_STATION_DATA,
   ADD_STATION,
   EDIT_STATION,
   DELETE_STATION,
+  IMPORT_DATA,
+  IMPORT_DATA_SUCCESS,
+  IMPORT_DATA_ERROR,
 } from "./constants";
 
 export const fetchClients = () => ({
@@ -205,4 +209,22 @@ export const deleteStationSuccess = (res) => ({
 export const deleteStationError = (error) => ({
   type: DELETE_CLIENT_ERROR,
   error,
+});
+
+export const toggleImportModal = () => ({
+  type: TOGGLE_IMPORT_MODAL,
+});
+
+export const importData = (file, stationData) => ({
+  type: IMPORT_DATA,
+  file,
+  stationData,
+});
+
+export const importDataSuccess = () => ({
+  type: IMPORT_DATA_SUCCESS,
+});
+
+export const importDataError = () => ({
+  type: IMPORT_DATA_ERROR,
 });

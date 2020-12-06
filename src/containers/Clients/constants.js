@@ -49,3 +49,8 @@ export const DELETE_STATION_ERROR = "Clients/DELETE_STATION_ERROR";
 export const TOGGLE_STATION_MODAL = "Clients/TOGGLE_STATION_MODAL";
 
 export const SET_STATION_DATA = "Clients/SET_STATION_DATA";
+
+export const TOGGLE_IMPORT_MODAL = "Clients/TOGGLE_IMPORT_MODAL";
+export const IMPORT_DATA = "Clients/IMPORT_DATA";
+export const IMPORT_DATA_SUCCESS = "Clients/IMPORT_DATA_SUCCESS";
+export const IMPORT_DATA_ERROR = "Clients/IMPORT_DATA_ERROR";

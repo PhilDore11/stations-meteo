@@ -53,16 +53,23 @@ const styles = (theme) => ({
   },
   readingSection: {
     textAlign: "center",
-    padding: theme.spacing.unit * 2,
+    padding: theme.spacing(2),
     borderRight: `1px solid ${grey[300]}`,
   },
   batterySection: {
     textAlign: "center",
-    padding: theme.spacing.unit * 2,
+    padding: theme.spacing(2),
   },
 });
 
-const StationCard = ({ classes, station, onEdit, onDelete, hideActions }) => {
+const StationCard = ({
+  classes,
+  station,
+  onEdit,
+  onDelete,
+  onImport,
+  hideActions,
+}) => {
   let batteryObj = {};
   if (station && station.battery > 11.5) {
     batteryObj = {
@@ -95,6 +102,7 @@ const StationCard = ({ classes, station, onEdit, onDelete, hideActions }) => {
           ) : (
             <StationMenu
               onStationEdit={() => onEdit(station)}
+              onImport={() => onImport(station)}
               onDelete={() => onDelete(station)}
             />
           )
@@ -139,7 +147,7 @@ const StationCard = ({ classes, station, onEdit, onDelete, hideActions }) => {
         </Grid>
       </Grid>
       <Divider />
-      <Grid container spacing={24} justify="center" alignItems="center">
+      <Grid container spacing={2} justify="center" alignItems="center">
         <Grid item>
           <Typography variant="caption">
             {station.date ? moment(station.date).fromNow() : "aucunes données"}
@@ -148,7 +156,7 @@ const StationCard = ({ classes, station, onEdit, onDelete, hideActions }) => {
       </Grid>
       <Divider />
       <CardContent>
-        <Grid container spacing={24} justify="center" alignItems="center">
+        <Grid container spacing={2} justify="center" alignItems="center">
           {station.hasRain ? (
             <Grid item>
               <FontAwesomeIcon
@@ -200,6 +208,7 @@ StationCard.propTypes = {
   station: PropTypes.object.isRequired,
   hideActions: PropTypes.bool,
   onEdit: PropTypes.func,
+  onImport: PropTypes.func,
   onDelete: PropTypes.func,
 };
 

@@ -1,20 +1,20 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import { 
-  Menu, 
-  MenuItem, 
-  ListItemIcon, 
-  ListItemText, 
-  IconButton, 
-  Divider
+import {
+  Menu,
+  MenuItem,
+  ListItemIcon,
+  ListItemText,
+  IconButton,
+  Divider,
 } from "@material-ui/core";
 
-import { 
-  MoreVertOutlined as MoreVertIcon, 
+import {
+  MoreVertOutlined as MoreVertIcon,
   PersonOutlined as EditClientIcon,
   LockOutlined as EditUserIcon,
-  DeleteOutlined as DeleteIcon
+  DeleteOutlined as DeleteIcon,
 } from "@material-ui/icons";
 
 class ClientMenu extends React.PureComponent {
@@ -26,12 +26,12 @@ class ClientMenu extends React.PureComponent {
     };
   }
 
-  handleClick = event => {
+  handleClick = (event) => {
     event.stopPropagation();
     this.setState({ isOpen: true });
   };
 
-  handleClose = event => {
+  handleClose = (event) => {
     event.stopPropagation();
     this.setState({ isOpen: false });
   };
@@ -40,7 +40,7 @@ class ClientMenu extends React.PureComponent {
     event.stopPropagation();
     this.setState({ isOpen: false });
     action();
-  }
+  };
 
   render() {
     const { onClientEdit, onUserEdit, onDelete } = this.props;
@@ -50,33 +50,29 @@ class ClientMenu extends React.PureComponent {
       <span>
         <IconButton
           onClick={this.handleClick}
-          buttonRef={node => this.anchorEl = node}
+          buttonRef={(node) => (this.anchorEl = node)}
         >
           <MoreVertIcon />
         </IconButton>
-        <Menu
-          anchorEl={this.anchorEl}
-          open={isOpen}
-          onClose={this.handleClose}
-        >
+        <Menu anchorEl={this.anchorEl} open={isOpen} onClose={this.handleClose}>
           <MenuItem onClick={(event) => this.onItemClick(event, onClientEdit)}>
             <ListItemIcon>
               <EditClientIcon />
             </ListItemIcon>
-            <ListItemText inset primary="Modifier Client" />
+            <ListItemText primary="Modifier Client" />
           </MenuItem>
           <MenuItem onClick={(event) => this.onItemClick(event, onUserEdit)}>
             <ListItemIcon>
               <EditUserIcon />
             </ListItemIcon>
-            <ListItemText inset primary="Modifier Usager" />
+            <ListItemText primary="Modifier Usager" />
           </MenuItem>
           <Divider />
           <MenuItem onClick={(event) => this.onItemClick(event, onDelete)}>
             <ListItemIcon>
               <DeleteIcon />
             </ListItemIcon>
-            <ListItemText inset primary="Supprimer" />
+            <ListItemText primary="Supprimer" />
           </MenuItem>
         </Menu>
       </span>
@@ -87,7 +83,7 @@ class ClientMenu extends React.PureComponent {
 ClientMenu.propTypes = {
   onClientEdit: PropTypes.func.isRequired,
   onUserEdit: PropTypes.func.isRequired,
-  onDelete: PropTypes.func.isRequired
+  onDelete: PropTypes.func.isRequired,
 };
 
 export default ClientMenu;

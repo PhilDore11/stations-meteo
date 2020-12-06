@@ -1,24 +1,24 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
+import React from "react";
+import ReactDOM from "react-dom";
+import { Provider } from "react-redux";
 
-import MomentUtils from '@date-io/moment';
-import { MuiPickersUtilsProvider } from 'material-ui-pickers';
+import MomentUtils from "@date-io/moment";
+import { MuiPickersUtilsProvider } from "material-ui-pickers";
 
-import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-import { blue, pink } from '@material-ui/core/colors';
+import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
+import { blue, pink } from "@material-ui/core/colors";
 
-import moment from 'moment';
-import 'moment/locale/fr';
+import moment from "moment";
+import "moment/locale/fr";
 
-import './index.css';
-import { AppContainer } from './containers';
+import "./index.css";
+import { AppContainer } from "./containers";
 
-import store from './store';
+import store from "./store";
 
-import * as serviceWorker from './serviceWorker';
+import * as serviceWorker from "./serviceWorker";
 
-moment.locale('fr');
+moment.locale("fr");
 
 const theme = createMuiTheme({
   palette: {
@@ -36,7 +36,7 @@ ReactDOM.render(
       </MuiPickersUtilsProvider>
     </MuiThemeProvider>
   </Provider>,
-  document.getElementById('root'),
+  document.getElementById("root")
 );
 
 // If you want your app to work offline and load faster, you can change

@@ -47,17 +47,30 @@ export default (state = initialState, action) => {
         loading: false,
         dashboardError: true,
       };
-    case INCREMENT:
+    case INCREMENT: {
       return {
         ...state,
-        start: moment(state.start).add(1, state.view).toISOString(),
-        end: moment(state.end).add(1, state.view).toISOString(),
+        start: moment(state.start)
+          .add(1, state.view)
+          .startOf(state.view)
+          .toISOString(),
+        end: moment(state.end)
+          .add(1, state.view)
+          .endOf(state.view)
+          .toISOString(),
       };
+    }
     case DECREMENT:
       return {
         ...state,
-        start: moment(state.start).subtract(1, state.view).toISOString(),
-        end: moment(state.end).subtract(1, state.view).toISOString(),
+        start: moment(state.start)
+          .subtract(1, state.view)
+          .startOf(state.view)
+          .toISOString(),
+        end: moment(state.end)
+          .subtract(1, state.view)
+          .endOf(state.view)
+          .toISOString(),
       };
     case SET_VIEW:
       return {

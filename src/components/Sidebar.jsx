@@ -34,6 +34,7 @@ const styles = (theme) => ({
   },
   toolbar: theme.mixins.toolbar,
   menuLink: {
+    color: "inherit !important",
     textDecoration: "none",
   },
   sidebarTitle: {

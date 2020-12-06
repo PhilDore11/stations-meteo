@@ -15,7 +15,7 @@ const ClientForm = ({
   onDeleteAlert,
 }) => (
   <form noValidate autoComplete="off">
-    <Grid container spacing={24}>
+    <Grid container spacing={2}>
       <Grid item xs={12}>
         <TextField
           required={true}

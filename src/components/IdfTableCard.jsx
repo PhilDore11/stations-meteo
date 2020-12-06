@@ -1,23 +1,20 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-
 import {
-  Grid,
-  ExpansionPanel,
-  ExpansionPanelSummary,
-  ExpansionPanelDetails,
-  Typography,
   Divider,
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
+  Grid,
   Table,
+  TableBody,
+  TableCell,
   TableHead,
   TableRow,
-  TableCell,
-  TableBody,
-} from '@material-ui/core';
-
-import { ExpandMoreOutlined as ExpandMoreIcon } from '@material-ui/icons';
-
-import { Loading, NoData } from '.';
+  Typography,
+} from "@material-ui/core";
+import { ExpandMoreOutlined as ExpandMoreIcon } from "@material-ui/icons";
+import PropTypes from "prop-types";
+import React from "react";
+import { Loading, NoData } from ".";
 
 class IdfTableCard extends React.PureComponent {
   constructor(props) {
@@ -39,17 +36,17 @@ class IdfTableCard extends React.PureComponent {
     const { expanded } = this.state;
 
     return (
-      <ExpansionPanel expanded={expanded} onChange={this.handleExpand}>
-        <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-          <Grid container spacing={24} alignItems="center">
+      <Accordion expanded={expanded} onChange={this.handleExpand}>
+        <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+          <Grid container spacing={2} alignItems="center">
             <Grid item>{icon}</Grid>
             <Grid item xs>
               <Typography variant="subtitle1">{title}</Typography>
             </Grid>
           </Grid>
-        </ExpansionPanelSummary>
+        </AccordionSummary>
         <Divider />
-        <ExpansionPanelDetails>
+        <AccordionDetails>
           {!error && !loading ? (
             hasData ? (
               <Table>
@@ -72,9 +69,11 @@ class IdfTableCard extends React.PureComponent {
                     <TableCell component="th" scope="row">
                       Intensite (mm/h)
                     </TableCell>
-                    {data.map(stationData => (
+                    {data.map((stationData) => (
                       <TableCell key={stationData.increment}>
-                        {parseFloat(stationData.intensity * (60 / stationData.increment)).toFixed(2)}
+                        {parseFloat(
+                          stationData.intensity * (60 / stationData.increment)
+                        ).toFixed(2)}
                       </TableCell>
                     ))}
                   </TableRow>
@@ -86,8 +85,8 @@ class IdfTableCard extends React.PureComponent {
           ) : (
             <Loading />
           )}
-        </ExpansionPanelDetails>
-      </ExpansionPanel>
+        </AccordionDetails>
+      </Accordion>
     );
   }
 }

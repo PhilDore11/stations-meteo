@@ -17,16 +17,20 @@ import {
   DELETE_CLIENT_ERROR,
   TOGGLE_CLIENT_MODAL,
   TOGGLE_USER_MODAL,
+  TOGGLE_STATION_MODAL,
+  TOGGLE_IMPORT_MODAL,
   SET_CLIENT_DATA,
   SET_CLIENT_ALERTS,
   SET_STATION_DATA,
-  TOGGLE_STATION_MODAL,
   ADD_STATION_SUCCESS,
   ADD_STATION_ERROR,
   EDIT_STATION_SUCCESS,
   EDIT_STATION_ERROR,
   DELETE_STATION_SUCCESS,
   DELETE_STATION_ERROR,
+  IMPORT_DATA,
+  IMPORT_DATA_SUCCESS,
+  IMPORT_DATA_ERROR,
 } from "../constants";
 
 const initialState = {
@@ -36,11 +40,14 @@ const initialState = {
   clientData: {},
   clientModalOpen: false,
   userModalOpen: false,
+  stationModalOpen: false,
   isAdd: true,
   clientsLoading: true,
   clientsError: false,
   stationData: {},
-  stationModalOpen: false,
+  importModalOpen: false,
+  importLoading: false,
+  importError: false,
 };
 
 export default (state = initialState, action) => {
@@ -114,6 +121,11 @@ export default (state = initialState, action) => {
         userModalOpen: !state.userModalOpen,
         clientsError: false,
       };
+    case TOGGLE_IMPORT_MODAL:
+      return {
+        ...state,
+        importModalOpen: !state.importModalOpen,
+      };
     case SET_CLIENT_DATA:
       return {
         ...state,
@@ -137,6 +149,25 @@ export default (state = initialState, action) => {
       return {
         ...state,
         stationData: { ...action.stationData },
+      };
+    case IMPORT_DATA:
+      return {
+        ...state,
+        importLoading: true,
+        importError: false,
+      };
+    case IMPORT_DATA_SUCCESS:
+      return {
+        ...state,
+        importLoading: false,
+        importError: false,
+        importModalOpen: false,
+      };
+    case IMPORT_DATA_ERROR:
+      return {
+        ...state,
+        importLoading: false,
+        importError: true,
       };
     default:
       return state;

@@ -58,7 +58,7 @@ const StationForm = ({
   lnStations,
 }) => (
   <form noValidate autoComplete="off">
-    <Grid container spacing={24}>
+    <Grid container spacing={2}>
       <React.Fragment>
         <Grid item xs={12}>
           <TextField
@@ -104,171 +104,163 @@ const StationForm = ({
           onChange={(event) => onStationChange(event, station)}
         />
       </Grid>
-      {isAdd && (
-        <React.Fragment>
-          <Grid item xs={12}>
-            <TextField
-              required={true}
-              select
-              error={error}
-              disabled={loading}
-              fullWidth
-              name="referenceStationId"
-              label="Station Reference"
-              type="text"
-              margin="dense"
-              variant="outlined"
-              value={station.referenceStationId}
-              onChange={(event) => onStationChange(event, station)}
-            >
-              {referenceStations &&
-                referenceStations.map((station) => (
-                  <MenuItem key={station.id} value={station.id}>
-                    {station.name}
-                  </MenuItem>
-                ))}
-            </TextField>
-          </Grid>
-          <Grid item xs={6}>
-            <TextField
-              required={true}
-              error={error}
-              disabled={loading}
-              fullWidth
-              name="latitude"
-              label="Latitude"
-              type="number"
-              margin="dense"
-              variant="outlined"
-              value={station.latitude}
-              onChange={(event) => onStationChange(event, station)}
-            />
-          </Grid>
-          <Grid item xs={6}>
-            <TextField
-              required={true}
-              error={error}
-              disabled={loading}
-              fullWidth
-              name="longitude"
-              label="Longitude"
-              type="number"
-              margin="dense"
-              variant="outlined"
-              value={station.longitude}
-              onChange={(event) => onStationChange(event, station)}
-            />
-          </Grid>
-          <Grid item xs={6}>
-            <TextField
-              error={error}
-              disabled={loading}
-              fullWidth
-              name="ipAddress"
-              label="Addresse IP"
-              type="string"
-              margin="dense"
-              variant="outlined"
-              value={station.ipAddress}
-              onChange={(event) => onStationChange(event, station)}
-            />
-          </Grid>
-          <Grid item xs={6}>
-            <TextField
-              error={error}
-              disabled={loading}
-              fullWidth
-              name="deviceType"
-              label="Type"
-              type="string"
-              margin="dense"
-              variant="outlined"
-              value={station.deviceType}
-              onChange={(event) => onStationChange(event, station)}
-            />
-          </Grid>
-        </React.Fragment>
-      )}
+      <Grid item xs={12}>
+        <TextField
+          required={true}
+          select
+          error={error}
+          disabled={loading}
+          fullWidth
+          name="referenceStationId"
+          label="Station Reference"
+          type="text"
+          margin="dense"
+          variant="outlined"
+          value={station.referenceStationId}
+          onChange={(event) => onStationChange(event, station)}
+        >
+          {referenceStations &&
+            referenceStations.map((station) => (
+              <MenuItem key={station.id} value={station.id}>
+                {station.name}
+              </MenuItem>
+            ))}
+        </TextField>
+      </Grid>
+      <Grid item xs={6}>
+        <TextField
+          required={true}
+          error={error}
+          disabled={loading}
+          fullWidth
+          name="latitude"
+          label="Latitude"
+          type="number"
+          margin="dense"
+          variant="outlined"
+          value={station.latitude}
+          onChange={(event) => onStationChange(event, station)}
+        />
+      </Grid>
+      <Grid item xs={6}>
+        <TextField
+          required={true}
+          error={error}
+          disabled={loading}
+          fullWidth
+          name="longitude"
+          label="Longitude"
+          type="number"
+          margin="dense"
+          variant="outlined"
+          value={station.longitude}
+          onChange={(event) => onStationChange(event, station)}
+        />
+      </Grid>
+      <Grid item xs={6}>
+        <TextField
+          error={error}
+          disabled={loading}
+          fullWidth
+          name="ipAddress"
+          label="Addresse IP"
+          type="string"
+          margin="dense"
+          variant="outlined"
+          value={station.ipAddress}
+          onChange={(event) => onStationChange(event, station)}
+        />
+      </Grid>
+      <Grid item xs={6}>
+        <TextField
+          error={error}
+          disabled={loading}
+          fullWidth
+          name="deviceType"
+          label="Type"
+          type="string"
+          margin="dense"
+          variant="outlined"
+          value={station.deviceType}
+          onChange={(event) => onStationChange(event, station)}
+        />
+      </Grid>
       <Grid item xs={12}>
         <StationGaugeTypes
           station={station}
           onStationChange={onStationChange}
         />
       </Grid>
-      {isAdd && (
-        <React.Fragment>
-          <Grid item xs={12}>
-            <TextField
-              error={error}
-              disabled={loading}
-              fullWidth
-              name="localisation"
-              label="Localisation"
-              type="string"
-              margin="dense"
-              variant="outlined"
-              value={station.localisation}
-              onChange={(event) => onStationChange(event, station)}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              error={error}
-              disabled={loading}
-              fullWidth
-              name="address"
-              label="Addresse"
-              type="string"
-              margin="dense"
-              variant="outlined"
-              value={station.address}
-              onChange={(event) => onStationChange(event, station)}
-            />
-          </Grid>
-          <Grid item xs={4}>
-            <TextField
-              error={error}
-              disabled={loading}
-              fullWidth
-              name="city"
-              label="Ville"
-              type="string"
-              margin="dense"
-              variant="outlined"
-              value={station.city}
-              onChange={(event) => onStationChange(event, station)}
-            />
-          </Grid>
-          <Grid item xs={4}>
-            <TextField
-              error={error}
-              disabled={loading}
-              fullWidth
-              name="province"
-              label="Province"
-              type="string"
-              margin="dense"
-              variant="outlined"
-              value={station.province}
-              onChange={(event) => onStationChange(event, station)}
-            />
-          </Grid>
-          <Grid item xs={4}>
-            <TextField
-              error={error}
-              disabled={loading}
-              fullWidth
-              name="postalCode"
-              label="Code Postal"
-              type="string"
-              margin="dense"
-              variant="outlined"
-              value={station.postalCode}
-              onChange={(event) => onStationChange(event, station)}
-            />
-          </Grid>
-        </React.Fragment>
-      )}
+      <Grid item xs={12}>
+        <TextField
+          error={error}
+          disabled={loading}
+          fullWidth
+          name="localisation"
+          label="Localisation"
+          type="string"
+          margin="dense"
+          variant="outlined"
+          value={station.localisation}
+          onChange={(event) => onStationChange(event, station)}
+        />
+      </Grid>
+      <Grid item xs={12}>
+        <TextField
+          error={error}
+          disabled={loading}
+          fullWidth
+          name="address"
+          label="Addresse"
+          type="string"
+          margin="dense"
+          variant="outlined"
+          value={station.address}
+          onChange={(event) => onStationChange(event, station)}
+        />
+      </Grid>
+      <Grid item xs={4}>
+        <TextField
+          error={error}
+          disabled={loading}
+          fullWidth
+          name="city"
+          label="Ville"
+          type="string"
+          margin="dense"
+          variant="outlined"
+          value={station.city}
+          onChange={(event) => onStationChange(event, station)}
+        />
+      </Grid>
+      <Grid item xs={4}>
+        <TextField
+          error={error}
+          disabled={loading}
+          fullWidth
+          name="province"
+          label="Province"
+          type="string"
+          margin="dense"
+          variant="outlined"
+          value={station.province}
+          onChange={(event) => onStationChange(event, station)}
+        />
+      </Grid>
+      <Grid item xs={4}>
+        <TextField
+          error={error}
+          disabled={loading}
+          fullWidth
+          name="postalCode"
+          label="Code Postal"
+          type="string"
+          margin="dense"
+          variant="outlined"
+          value={station.postalCode}
+          onChange={(event) => onStationChange(event, station)}
+        />
+      </Grid>
     </Grid>
   </form>
 );

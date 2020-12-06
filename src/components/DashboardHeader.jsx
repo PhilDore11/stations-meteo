@@ -1,7 +1,16 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import { withStyles, Grid, TextField, MenuItem } from "@material-ui/core";
+import {
+  withStyles,
+  Grid,
+  TextField,
+  MenuItem,
+  IconButton,
+  Tooltip,
+} from "@material-ui/core";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faFileExport } from "@fortawesome/free-solid-svg-icons";
 
 import { VIEWS } from "../containers/Dashboard/constants";
 import { DateIncrementDecrement, DateRange } from ".";
@@ -12,6 +21,10 @@ const styles = () => ({
   },
   fab: {
     backgroundColor: "white",
+  },
+  icon: {
+    width: "1em !important",
+    height: "1em !important",
   },
 });
 
@@ -28,10 +41,11 @@ const DashboardHeader = ({
   onStationChange,
   view,
   onViewChange,
+  exportStationData,
 }) => {
   return (
-    <Grid container spacing={24} justify="space-between" alignItems="center">
-      <Grid item xs={2}>
+    <Grid container spacing={2} alignItems="center">
+      <Grid item xs={3}>
         <TextField
           select
           label={"Station"}
@@ -52,6 +66,7 @@ const DashboardHeader = ({
             ))}
         </TextField>
       </Grid>
+      <Grid item xs />
       <Grid item xs={4}>
         {view === "custom" ? (
           <DateRange
@@ -72,25 +87,44 @@ const DashboardHeader = ({
           />
         )}
       </Grid>
-      <Grid item xs={2}>
-        <TextField
-          select
-          label={"Intervale"}
-          InputProps={{
-            className: classes.input,
-          }}
-          value={view}
-          onChange={onViewChange}
-          fullWidth
-          margin="dense"
-          variant="outlined"
-        >
-          {VIEWS.map((view) => (
-            <MenuItem key={view.key} value={view.key}>
-              {view.label}
-            </MenuItem>
-          ))}
-        </TextField>
+      <Grid item xs />
+      <Grid item xs={3}>
+        <Grid container spacing={0} alignItems="center">
+          <Grid item xs>
+            <TextField
+              select
+              label={"Intervale"}
+              InputProps={{
+                className: classes.input,
+              }}
+              value={view}
+              onChange={onViewChange}
+              fullWidth
+              margin="dense"
+              variant="outlined"
+            >
+              {VIEWS.map((view) => (
+                <MenuItem key={view.key} value={view.key}>
+                  {view.label}
+                </MenuItem>
+              ))}
+            </TextField>
+          </Grid>
+          <Grid item>
+            <Tooltip title="Export">
+              <IconButton
+                onClick={() => exportStationData(stationId, start, end)}
+              >
+                <FontAwesomeIcon
+                  className={classes.icon}
+                  icon={faFileExport}
+                  fixedWidth
+                  color="grey"
+                />
+              </IconButton>
+            </Tooltip>
+          </Grid>
+        </Grid>
       </Grid>
     </Grid>
   );
@@ -108,6 +142,7 @@ DashboardHeader.propTypes = {
   onStationChange: PropTypes.func.isRequired,
   view: PropTypes.string.isRequired,
   onViewChange: PropTypes.func.isRequired,
+  exportStationData: PropTypes.func.isRequired,
 };
 
 export default withStyles(styles)(DashboardHeader);

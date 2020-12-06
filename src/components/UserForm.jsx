@@ -1,10 +1,10 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { TextField, Grid } from '@material-ui/core';
+import React from "react";
+import PropTypes from "prop-types";
+import { TextField, Grid } from "@material-ui/core";
 
 const ClientForm = ({ client, error, loading, onClientChange }) => (
   <form noValidate autoComplete="off">
-    <Grid container spacing={24}>
+    <Grid container spacing={2}>
       <Grid item xs={12}>
         <TextField
           error={error}
@@ -16,7 +16,7 @@ const ClientForm = ({ client, error, loading, onClientChange }) => (
           value={client.username}
           margin="dense"
           variant="outlined"
-          onChange={event => onClientChange(event, client)}
+          onChange={(event) => onClientChange(event, client)}
         />
       </Grid>
       <Grid item xs={12}>
@@ -30,7 +30,7 @@ const ClientForm = ({ client, error, loading, onClientChange }) => (
           value={client.password}
           margin="dense"
           variant="outlined"
-          onChange={event => onClientChange(event, client)}
+          onChange={(event) => onClientChange(event, client)}
         />
       </Grid>
     </Grid>

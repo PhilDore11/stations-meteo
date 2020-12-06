@@ -21,11 +21,12 @@ const ClientStations = ({
   client,
   hideActions,
   onEdit,
+  onImport,
   onDelete,
   onAdd,
   isAdmin,
 }) => (
-  <Grid container spacing={24}>
+  <Grid container spacing={2}>
     {client.stations &&
       client.stations.map((station) => (
         <Grid item key={station.id}>
@@ -34,6 +35,7 @@ const ClientStations = ({
             hideActions={hideActions}
             onEdit={onEdit}
             onDelete={onDelete}
+            onImport={onImport}
           />
         </Grid>
       ))}
@@ -70,6 +72,7 @@ ClientStations.propTypes = {
   onAdd: PropTypes.func,
   onEdit: PropTypes.func,
   onDelete: PropTypes.func,
+  onImport: PropTypes.func,
 };
 
 export default React.memo(withStyles(styles)(ClientStations));

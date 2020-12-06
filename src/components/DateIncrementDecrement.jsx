@@ -28,14 +28,14 @@ const DateIncrementDecrement = ({
   decrement,
   view,
 }) => (
-  <Grid container spacing={24} justify="space-between" alignItems="center">
+  <Grid container spacing={2} justify="space-between" alignItems="center">
     <Grid item>
       <Fab onClick={decrement} className={classes.fab} size="small">
         <ChevronLeftIcon color="action" />
       </Fab>
     </Grid>
     <Grid item xs>
-      <Grid container spacing={16} justify="center" alignItems="center">
+      <Grid container spacing={2} justify="center" alignItems="center">
         <Grid item xs>
           <DatePicker
             fullWidth={true}

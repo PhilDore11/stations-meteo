@@ -1,20 +1,31 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import { 
-  Menu, 
-  MenuItem, 
-  ListItemIcon, 
-  ListItemText, 
-  IconButton, 
-  Divider
+import {
+  withStyles,
+  Menu,
+  MenuItem,
+  ListItemIcon,
+  ListItemText,
+  IconButton,
+  Divider,
 } from "@material-ui/core";
 
-import { 
-  MoreVertOutlined as MoreVertIcon, 
+import {
+  MoreVertOutlined as MoreVertIcon,
   EditOutlined as EditStationIcon,
-  DeleteOutlined as DeleteIcon
+  DeleteOutlined as DeleteIcon,
 } from "@material-ui/icons";
+
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faFileImport } from "@fortawesome/free-solid-svg-icons";
+
+const styles = () => ({
+  icon: {
+    width: "1em !important",
+    height: "1em !important",
+  },
+});
 
 class StationMenu extends React.PureComponent {
   constructor(props) {
@@ -25,12 +36,12 @@ class StationMenu extends React.PureComponent {
     };
   }
 
-  handleClick = event => {
+  handleClick = (event) => {
     event.stopPropagation();
     this.setState({ isOpen: true });
   };
 
-  handleClose = event => {
+  handleClose = (event) => {
     event.stopPropagation();
     this.setState({ isOpen: false });
   };
@@ -39,37 +50,44 @@ class StationMenu extends React.PureComponent {
     event.stopPropagation();
     this.setState({ isOpen: false });
     action();
-  }
+  };
 
   render() {
-    const { onStationEdit, onDelete } = this.props;
+    const { classes, onStationEdit, onImport, onDelete } = this.props;
     const { isOpen } = this.state;
 
     return (
       <span>
         <IconButton
           onClick={this.handleClick}
-          buttonRef={node => this.anchorEl = node}
+          buttonRef={(node) => (this.anchorEl = node)}
         >
           <MoreVertIcon />
         </IconButton>
-        <Menu
-          anchorEl={this.anchorEl}
-          open={isOpen}
-          onClose={this.handleClose}
-        >
+        <Menu anchorEl={this.anchorEl} open={isOpen} onClose={this.handleClose}>
           <MenuItem onClick={(event) => this.onItemClick(event, onStationEdit)}>
             <ListItemIcon>
               <EditStationIcon />
             </ListItemIcon>
-            <ListItemText inset primary="Modifier" />
+            <ListItemText primary="Modifier" />
+          </MenuItem>
+          <MenuItem onClick={(event) => this.onItemClick(event, onImport)}>
+            <ListItemIcon>
+              <FontAwesomeIcon
+                className={classes.icon}
+                icon={faFileImport}
+                fixedWidth
+                color="grey"
+              />
+            </ListItemIcon>
+            <ListItemText primary="Import de données" />
           </MenuItem>
           <Divider />
           <MenuItem onClick={(event) => this.onItemClick(event, onDelete)}>
             <ListItemIcon>
               <DeleteIcon />
             </ListItemIcon>
-            <ListItemText inset primary="Supprimer" />
+            <ListItemText primary="Supprimer" />
           </MenuItem>
         </Menu>
       </span>
@@ -78,8 +96,10 @@ class StationMenu extends React.PureComponent {
 }
 
 StationMenu.propTypes = {
+  classes: PropTypes.object.isRequired,
   onStationEdit: PropTypes.func.isRequired,
-  onDelete: PropTypes.func.isRequired
+  onImport: PropTypes.func.isRequired,
+  onDelete: PropTypes.func.isRequired,
 };
 
-export default StationMenu;
+export default withStyles(styles)(StationMenu);

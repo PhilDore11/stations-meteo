@@ -4,9 +4,9 @@ import PropTypes from "prop-types";
 import {
   withStyles,
   Grid,
-  ExpansionPanel,
-  ExpansionPanelSummary,
-  ExpansionPanelDetails,
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
   Typography,
   Divider,
 } from "@material-ui/core";
@@ -69,17 +69,17 @@ class ChartCard extends React.PureComponent {
     const ChartType = this.getChartType(type);
 
     return (
-      <ExpansionPanel expanded={expanded} onChange={this.handleExpand}>
-        <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-          <Grid container spacing={24} alignItems="center">
+      <Accordion expanded={expanded} onChange={this.handleExpand}>
+        <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+          <Grid container spacing={2} alignItems="center">
             <Grid item>{icon}</Grid>
             <Grid item xs>
               <Typography variant="subtitle1">{title}</Typography>
             </Grid>
           </Grid>
-        </ExpansionPanelSummary>
+        </AccordionSummary>
         <Divider />
-        <ExpansionPanelDetails className={classes.chartArea}>
+        <AccordionDetails className={classes.chartArea}>
           {!error && !loading ? (
             hasData ? (
               <ChartType data={data} options={options} height={height} />
@@ -89,8 +89,8 @@ class ChartCard extends React.PureComponent {
           ) : (
             <Loading />
           )}
-        </ExpansionPanelDetails>
-      </ExpansionPanel>
+        </AccordionDetails>
+      </Accordion>
     );
   }
 }

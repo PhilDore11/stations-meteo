@@ -1,12 +1,12 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 
-import { 
-    withStyles,
-    Snackbar,
-    SnackbarContent,
-    IconButton
-} from '@material-ui/core';
+import {
+  withStyles,
+  Snackbar,
+  SnackbarContent,
+  IconButton,
+} from "@material-ui/core";
 
 import {
   CheckCircleOutlined as CheckCircleIcon,
@@ -14,9 +14,9 @@ import {
   InfoOutlined as InfoIcon,
   WarningOutlined as WarningIcon,
   CloseOutlined as CloseIcon,
-} from '@material-ui/icons';
+} from "@material-ui/icons";
 
-import { green, amber } from '@material-ui/core/colors';
+import { green, amber } from "@material-ui/core/colors";
 
 const variantIcon = {
   success: CheckCircleIcon,
@@ -25,7 +25,7 @@ const variantIcon = {
   info: InfoIcon,
 };
 
-const styles = theme => ({
+const styles = (theme) => ({
   success: {
     backgroundColor: green[600],
   },
@@ -43,11 +43,11 @@ const styles = theme => ({
   },
   iconVariant: {
     opacity: 0.9,
-    marginRight: theme.spacing.unit,
+    marginRight: theme.spacing(),
   },
   message: {
-    display: 'flex',
-    alignItems: 'center',
+    display: "flex",
+    alignItems: "center",
   },
 });
 
@@ -55,7 +55,7 @@ class Alert extends React.PureComponent {
   constructor(props) {
     super(props);
 
-    this.state ={
+    this.state = {
       open: true,
     };
 
@@ -63,12 +63,19 @@ class Alert extends React.PureComponent {
   }
 
   handleClose() {
-    this.setState({open: false});
+    this.setState({ open: false });
     this.props.resetAlerts();
   }
 
   render() {
-    const { classes, message, variant, onClose, resetAlerts, ...rest } = this.props;
+    const {
+      classes,
+      message,
+      variant,
+      onClose,
+      resetAlerts,
+      ...rest
+    } = this.props;
     const Icon = variantIcon[variant];
 
     const { open } = this.state;
@@ -77,8 +84,8 @@ class Alert extends React.PureComponent {
       <Snackbar
         className={classes.alert}
         anchorOrigin={{
-          vertical: 'top',
-          horizontal: 'center',
+          vertical: "top",
+          horizontal: "center",
         }}
         open={open}
         autoHideDuration={3000}
@@ -86,18 +93,18 @@ class Alert extends React.PureComponent {
       >
         <SnackbarContent
           className={classes[variant]}
-          aria-describedby='alert-snackbar'
+          aria-describedby="alert-snackbar"
           message={
-            <span id='alert-snackbar' className={classes.message}>
-              <Icon className={[classes.icon, classes.iconVariant].join(' ')} />
+            <span id="alert-snackbar" className={classes.message}>
+              <Icon className={[classes.icon, classes.iconVariant].join(" ")} />
               {message}
             </span>
           }
           action={[
             <IconButton
-              key='close'
-              aria-label='Close'
-              color='inherit'
+              key="close"
+              aria-label="Close"
+              color="inherit"
               className={classes.close}
               onClick={this.handleClose}
             >
@@ -110,12 +117,12 @@ class Alert extends React.PureComponent {
     );
   }
 }
-  
+
 Alert.propTypes = {
   classes: PropTypes.object.isRequired,
   message: PropTypes.node,
   onClose: PropTypes.func,
-  variant: PropTypes.oneOf(['success', 'warning', 'error', 'info']).isRequired,
+  variant: PropTypes.oneOf(["success", "warning", "error", "info"]).isRequired,
   resetAlerts: PropTypes.func.isRequired,
 };
 

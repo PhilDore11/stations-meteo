@@ -15,6 +15,7 @@ import {
   setEnd,
   setStation,
   setView,
+  exportStationData,
 } from "../actions";
 import { DashboardHeader, Loading } from "../../components";
 import { StationDataContainer, IdfContainer } from "..";
@@ -82,7 +83,7 @@ class DashboardContainer extends React.PureComponent {
     } = this.props;
 
     return (
-      <Grid container spacing={24}>
+      <Grid container spacing={2}>
         {!error && !loading ? (
           <React.Fragment>
             <Grid item xs={12}>
@@ -98,6 +99,7 @@ class DashboardContainer extends React.PureComponent {
                 onStartChange={this.handleStartChange}
                 onEndChange={this.handleEndChange}
                 onViewChange={this.handleViewChange}
+                exportStationData={this.props.exportStationData}
               />
             </Grid>
             <Grid item xs={12}>
@@ -133,6 +135,7 @@ DashboardContainer.propTypes = {
   setView: PropTypes.func.isRequired,
   setStart: PropTypes.func.isRequired,
   setEnd: PropTypes.func.isRequired,
+  exportStationData: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => {
@@ -149,6 +152,7 @@ const mapDispatchToProps = {
   setEnd,
   setStation,
   setView,
+  exportStationData,
 };
 
 export default connect(
