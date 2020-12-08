@@ -1,4 +1,5 @@
 import moment from "moment";
+import { FETCH_STATION_DATA_SUCCESS } from "../App/constants";
 
 import {
   LOGOUT,
@@ -21,6 +22,7 @@ const initialState = {
   stationId: "",
   error: false,
   loading: false,
+  validated: false,
 };
 
 export default (state = initialState, action) => {
@@ -94,6 +96,8 @@ export default (state = initialState, action) => {
         ...state,
         end: moment(action.end).toISOString(),
       };
+    case FETCH_STATION_DATA_SUCCESS:
+      return { ...state, validated: action.res.validated };
     default:
       return state;
   }

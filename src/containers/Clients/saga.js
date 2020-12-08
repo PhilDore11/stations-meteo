@@ -431,10 +431,20 @@ function* editStationGenerator(action) {
       id,
       stationId,
       name,
+      referenceStationId,
+      latitude,
+      longitude,
+      ipAddress,
+      deviceType,
       hasRain,
       hasSnow,
       hasWind,
       hasHydro,
+      localisation,
+      address,
+      city,
+      province,
+      postalCode,
     } = action.stationData;
 
     if (!id || !name) {
@@ -446,12 +456,22 @@ function* editStationGenerator(action) {
       `${process.env.REACT_APP_API_URL}/stations/${id}`,
       {
         body: {
-          name,
           stationId,
+          name,
+          referenceStationId,
+          latitude,
+          longitude,
+          ipAddress,
+          deviceType,
           hasRain: hasRain ? 1 : 0,
           hasSnow: hasSnow ? 1 : 0,
           hasWind: hasWind ? 1 : 0,
           hasHydro: hasHydro ? 1 : 0,
+          localisation,
+          address,
+          city,
+          province,
+          postalCode,
         },
         method: "PUT",
       }
@@ -517,8 +537,6 @@ function* importDataGenerator(action) {
         body: formData,
       }
     );
-
-    console.log("result", result);
 
     yield requestHandler(
       result,

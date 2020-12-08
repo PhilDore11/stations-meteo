@@ -7,6 +7,7 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 
 import { Grid } from "@material-ui/core";
+import Alert from "@material-ui/lab/Alert";
 
 import {
   increment,
@@ -75,6 +76,7 @@ class DashboardContainer extends React.PureComponent {
     const {
       error,
       loading,
+      validated,
       clientStations,
       stationId,
       start,
@@ -86,6 +88,15 @@ class DashboardContainer extends React.PureComponent {
       <Grid container spacing={2}>
         {!error && !loading ? (
           <React.Fragment>
+            {!validated && (
+              <Grid item xs={12}>
+                <Alert variant={"filled"} severity={"info"}>
+                  Attention, les données suivantes sont des données brutes, les
+                  données traitées seront validées par JFSA dans un délais de 60
+                  jours
+                </Alert>
+              </Grid>
+            )}
             <Grid item xs={12}>
               <DashboardHeader
                 stations={clientStations}
@@ -131,6 +142,7 @@ DashboardContainer.propTypes = {
   end: PropTypes.string,
   error: PropTypes.bool,
   loading: PropTypes.bool,
+  validated: PropTypes.bool,
   setStation: PropTypes.func.isRequired,
   setView: PropTypes.func.isRequired,
   setStart: PropTypes.func.isRequired,

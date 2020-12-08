@@ -3,7 +3,7 @@ import {
   FETCH_STATION_DATA,
   FETCH_STATION_DATA_SUCCESS,
   FETCH_STATION_DATA_ERROR,
-} from '../constants';
+} from "../constants";
 
 const initialState = {
   stationData: [],
@@ -25,7 +25,7 @@ export default (state = initialState, action) => {
     case FETCH_STATION_DATA_SUCCESS:
       return {
         ...state,
-        stationData: action.res,
+        stationData: action.res.data,
         error: false,
         loading: false,
       };
