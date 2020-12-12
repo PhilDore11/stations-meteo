@@ -30,9 +30,9 @@ import {
   ADD_STATION,
   EDIT_STATION,
   DELETE_STATION,
-  IMPORT_DATA,
-  IMPORT_DATA_SUCCESS,
-  IMPORT_DATA_ERROR,
+  IMPORT_STATION_DATA,
+  IMPORT_STATION_DATA_SUCCESS,
+  IMPORT_STATION_DATA_ERROR,
 } from "./constants";
 
 export const fetchClients = () => ({
@@ -216,15 +216,15 @@ export const toggleImportModal = () => ({
 });
 
 export const importData = (file, stationData) => ({
-  type: IMPORT_DATA,
+  type: IMPORT_STATION_DATA,
   file,
   stationData,
 });
 
-export const importDataSuccess = () => ({
-  type: IMPORT_DATA_SUCCESS,
+export const importDataSuccess = (res) => ({
+  type: IMPORT_STATION_DATA_SUCCESS,
 });
 
 export const importDataError = () => ({
-  type: IMPORT_DATA_ERROR,
+  type: IMPORT_STATION_DATA_ERROR,
 });

@@ -14,7 +14,7 @@ import {
   EDIT_STATION,
   DELETE_CLIENT,
   DELETE_STATION,
-  IMPORT_DATA,
+  IMPORT_STATION_DATA,
 } from "./constants";
 
 import {
@@ -563,7 +563,7 @@ function* defaultSaga() {
   yield takeLatest(EDIT_STATION, editStationGenerator);
   yield takeLatest(DELETE_STATION, deleteStationGenerator);
 
-  yield takeLatest(IMPORT_DATA, importDataGenerator);
+  yield takeLatest(IMPORT_STATION_DATA, importDataGenerator);
 }
 
 export default defaultSaga;

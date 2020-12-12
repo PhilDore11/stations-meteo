@@ -7,6 +7,8 @@ import {
   DialogActions,
   Button,
   Divider,
+  CircularProgress,
+  Grid,
 } from "@material-ui/core";
 import { DropzoneArea } from "material-ui-dropzone";
 
@@ -21,18 +23,34 @@ const ImportModal = ({
   <Dialog fullWidth maxWidth="md" open={isOpen} onClose={onToggle}>
     <DialogTitle>Import de Données</DialogTitle>
     <Divider />
-    <DialogContent>
-      <DropzoneArea
-        acceptedFiles={[".csv"]}
-        filesLimit={1}
-        showPreviews={false}
-        showPreviewsInDropzone={false}
-        dropzoneText={"Ajouter votre fichier"}
-        showAlerts={false}
-        onChange={(files) =>
-          files && files.length > 0 && onImport(files[0], stationData)
-        }
-      />
+    <DialogContent style={{ height: 300 }}>
+      <Grid
+        container
+        spacing={2}
+        alignItems="center"
+        justify="center"
+        style={{ height: "100%" }}
+      >
+        {loading ? (
+          <Grid item>
+            <CircularProgress size={48} />
+          </Grid>
+        ) : (
+          <Grid item xs>
+            <DropzoneArea
+              acceptedFiles={[".csv"]}
+              filesLimit={1}
+              showPreviews={false}
+              showPreviewsInDropzone={false}
+              dropzoneText={"Ajouter votre fichier"}
+              showAlerts={false}
+              onChange={(files) =>
+                files && files.length > 0 && onImport(files[0], stationData)
+              }
+            />
+          </Grid>
+        )}
+      </Grid>
     </DialogContent>
     <Divider />
     <DialogActions>

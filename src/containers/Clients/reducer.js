@@ -28,9 +28,9 @@ import {
   EDIT_STATION_ERROR,
   DELETE_STATION_SUCCESS,
   DELETE_STATION_ERROR,
-  IMPORT_DATA,
-  IMPORT_DATA_SUCCESS,
-  IMPORT_DATA_ERROR,
+  IMPORT_STATION_DATA,
+  IMPORT_STATION_DATA_SUCCESS,
+  IMPORT_STATION_DATA_ERROR,
 } from "../constants";
 
 const initialState = {
@@ -150,20 +150,20 @@ export default (state = initialState, action) => {
         ...state,
         stationData: { ...action.stationData },
       };
-    case IMPORT_DATA:
+    case IMPORT_STATION_DATA:
       return {
         ...state,
         importLoading: true,
         importError: false,
       };
-    case IMPORT_DATA_SUCCESS:
+    case IMPORT_STATION_DATA_SUCCESS:
       return {
         ...state,
         importLoading: false,
         importError: false,
         importModalOpen: false,
       };
-    case IMPORT_DATA_ERROR:
+    case IMPORT_STATION_DATA_ERROR:
       return {
         ...state,
         importLoading: false,
