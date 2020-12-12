@@ -59,6 +59,7 @@ class IdfTableCard extends React.PureComponent {
                     <TableCell>30 mins</TableCell>
                     <TableCell>1 hr</TableCell>
                     <TableCell>2 hrs</TableCell>
+                    <TableCell>3 hrs</TableCell>
                     <TableCell>6 hrs</TableCell>
                     <TableCell>12 hrs</TableCell>
                     <TableCell>24 hrs</TableCell>
@@ -71,9 +72,7 @@ class IdfTableCard extends React.PureComponent {
                     </TableCell>
                     {data.map((stationData) => (
                       <TableCell key={stationData.increment}>
-                        {parseFloat(
-                          stationData.intensity * (60 / stationData.increment)
-                        ).toFixed(2)}
+                        {parseFloat(stationData.intensity).toFixed(2)}
                       </TableCell>
                     ))}
                   </TableRow>

@@ -72,7 +72,7 @@ class IdfContainer extends React.PureComponent {
   render() {
     const { idfData, idfStationData, error, loading } = this.props;
 
-    const increments = [5, 10, 15, 30, 60, 120, 360, 720, 1440];
+    const increments = [5, 10, 15, 30, 60, 120, 180, 360, 720, 1440];
     let pdrIncrements = Array.from(Array(1440).keys());
     pdrIncrements.splice(0, 5);
 
@@ -109,9 +109,7 @@ class IdfContainer extends React.PureComponent {
       borderColor: blue[800],
       data: idfStationData.map((stationData, index) => ({
         x: increments[index],
-        y: parseFloat(
-          stationData.intensity * (60 / stationData.increment)
-        ).toFixed(2),
+        y: parseFloat(stationData.intensity).toFixed(2),
       })),
     };
 
@@ -166,7 +164,7 @@ class IdfContainer extends React.PureComponent {
             },
             type: "logarithmic",
             ticks: {
-              min: 0,
+              min: 1,
               max: 500,
               callback: (value) => Number(value.toString()),
             },

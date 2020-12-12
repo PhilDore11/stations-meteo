@@ -82,7 +82,7 @@ class StationDataContainer extends React.PureComponent {
             stationData &&
             stationData.map((data) => ({
               t: moment(data.stationDate),
-              y: parseFloat(data.intensity).toFixed(2),
+              y: parseFloat(data.intensity * 12).toFixed(2),
             })),
         },
       ],
