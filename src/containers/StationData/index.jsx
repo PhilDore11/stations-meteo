@@ -44,7 +44,7 @@ class StationDataContainer extends React.PureComponent {
           {
             scaleLabel: {
               display: true,
-              labelString: "Precipitations (mm)",
+              labelString: "Precipitations (mm/h)",
             },
             ticks: {
               min: 0,
@@ -74,7 +74,7 @@ class StationDataContainer extends React.PureComponent {
     const precipitationChartData = {
       datasets: [
         {
-          label: "Précipitation (mm)",
+          label: "Précipitation (mm/h)",
           fill: false,
           backgroundColor: blue[600],
           borderColor: blue[800],
