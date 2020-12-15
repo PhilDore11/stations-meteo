@@ -90,7 +90,7 @@ class DashboardContainer extends React.PureComponent {
           <React.Fragment>
             {!validated && (
               <Grid item xs={12}>
-                <Alert variant={"filled"} severity={"info"}>
+                <Alert variant={"filled"} severity={"error"}>
                   Attention, les données suivantes sont des données brutes, les
                   données traitées seront validées par JFSA dans un délais de 60
                   jours

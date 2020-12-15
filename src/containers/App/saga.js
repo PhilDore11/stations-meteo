@@ -1,5 +1,6 @@
 import { call, takeLatest } from "redux-saga/effects";
 
+import moment from "moment";
 import jsonFetch from "json-fetch";
 
 import { requestHandler, errorHandler } from "../../utils/sagaHelpers";
@@ -33,9 +34,23 @@ function* fetchStationData(action) {
   try {
     const { stationId, start, end, view } = action;
 
+    const startMoment = moment(start).startOf("day");
+    const endMoment = moment(end).endOf("day");
+    const dateDiff = endMoment.diff(startMoment, "month", true);
+
+    if (dateDiff > 1) {
+      return yield requestHandler(
+        { status: 200, body: [] },
+        { action: fetchStationDataSuccess },
+        errorObject
+      );
+    }
+
     const response = yield call(
       jsonFetch,
-      `${process.env.REACT_APP_API_URL}/stationData/${stationId}/?start=${start}&end=${end}&view=${view}`
+      `${
+        process.env.REACT_APP_API_URL
+      }/stationData/${stationId}/?start=${startMoment.toISOString()}&end=${endMoment.toISOString()}&view=${view}`
     );
 
     yield requestHandler(
@@ -81,9 +96,14 @@ function* fetchIdfStationData(action) {
   try {
     const { stationId, start, end } = action;
 
+    const startMoment = moment(start).startOf("day");
+    const endMoment = moment(end).endOf("day");
+
     const response = yield call(
       jsonFetch,
-      `${process.env.REACT_APP_API_URL}/idfData/${stationId}/stationData?start=${start}&end=${end}`
+      `${
+        process.env.REACT_APP_API_URL
+      }/idfData/${stationId}/stationData?start=${startMoment.toISOString()}&end=${endMoment.toISOString()}`
     );
 
     yield requestHandler(
@@ -152,7 +172,13 @@ function* exportStationData(action) {
 
   try {
     const { stationId, start, end } = action;
-    window.location.href = `${process.env.REACT_APP_API_URL}/stationData/${stationId}/export?start=${start}&end=${end}`;
+
+    const startMoment = moment(start).startOf("day");
+    const endMoment = moment(end).endOf("day");
+
+    window.location.href = `${
+      process.env.REACT_APP_API_URL
+    }/stationData/${stationId}/export?start=${startMoment.toISOString()}&end=${endMoment.toISOString()}`;
   } catch (e) {
     yield errorHandler(errorObject);
   }

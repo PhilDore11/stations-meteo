@@ -73,6 +73,8 @@ class IdfContainer extends React.PureComponent {
     const { idfData, idfStationData, error, loading } = this.props;
 
     const increments = [5, 10, 15, 30, 60, 120, 180, 360, 720, 1440];
+    const idfIncrements = [5, 10, 15, 30, 60, 120, 360, 720, 1440];
+
     let pdrIncrements = Array.from(Array(1440).keys());
     pdrIncrements.splice(0, 5);
 
@@ -82,7 +84,7 @@ class IdfContainer extends React.PureComponent {
       showLine: false,
       backgroundColor: chartColors[index],
       borderColor: chartColors[index],
-      data: increments.map((increment) => ({
+      data: idfIncrements.map((increment) => ({
         x: increment,
         y: parseFloat(data[increment] * (60 / increment)).toFixed(2),
       })),
