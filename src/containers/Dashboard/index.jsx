@@ -84,18 +84,30 @@ class DashboardContainer extends React.PureComponent {
       view,
     } = this.props;
 
+    const dateDiff = moment(end).diff(moment(start), "month", true);
+    console.log("DATE DIFF", dateDiff)
+
     return (
       <Grid container spacing={2}>
         {!error && !loading ? (
           <React.Fragment>
-            {!validated && (
+            {dateDiff >= 1 ? (
               <Grid item xs={12}>
-                <Alert variant={"filled"} severity={"error"}>
-                  Attention, les données suivantes sont des données brutes, les
-                  données traitées seront validées par JFSA dans un délais de 60
-                  jours
+                <Alert variant={"filled"} severity={"warning"}>
+                  Attention, vous avez choisi une période supérieure à un mois.
+                  Le tableau de précipitation ne peut être présenté.
                 </Alert>
               </Grid>
+            ) : (
+              !validated && (
+                <Grid item xs={12}>
+                  <Alert variant={"filled"} severity={"error"}>
+                    Attention, les données suivantes sont des données brutes,
+                    les données traitées seront validées par JFSA dans un délais
+                    de 60 jours
+                  </Alert>
+                </Grid>
+              )
             )}
             <Grid item xs={12}>
               <DashboardHeader

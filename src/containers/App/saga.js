@@ -38,7 +38,7 @@ function* fetchStationData(action) {
     const endMoment = moment(end).endOf("day");
     const dateDiff = endMoment.diff(startMoment, "month", true);
 
-    if (dateDiff > 1) {
+    if (dateDiff >= 1) {
       return yield requestHandler(
         { status: 200, body: [] },
         { action: fetchStationDataSuccess },

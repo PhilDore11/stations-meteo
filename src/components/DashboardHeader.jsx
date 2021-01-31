@@ -50,7 +50,7 @@ const DashboardHeader = ({
 }) => {
   return (
     <React.Fragment>
-      <Grid container spacing={2} alignItems="center">
+      <Grid container spacing={8} alignItems="center">
         <Grid item xs={3}>
           <TextField
             select
@@ -72,8 +72,7 @@ const DashboardHeader = ({
               ))}
           </TextField>
         </Grid>
-        <Grid item xs />
-        <Grid item xs={4}>
+        <Grid item xs>
           {view === "custom" ? (
             <DateRange
               start={start}
@@ -93,7 +92,6 @@ const DashboardHeader = ({
             />
           )}
         </Grid>
-        <Grid item xs />
         <Grid item xs={3}>
           <Grid container spacing={0} alignItems="center">
             <Grid item xs>
