@@ -75,7 +75,8 @@ class StationDataContainer extends React.PureComponent {
       datasets: [
         {
           label: "Précipitation (mm/h)",
-          fill: false,
+          fill: true,
+          lineTension: 0.2,
           backgroundColor: blue[600],
           borderColor: blue[800],
           data:
@@ -90,7 +91,7 @@ class StationDataContainer extends React.PureComponent {
 
     return (
       <ChartCard
-        type="bar"
+        type="line"
         title="Précipitations"
         icon={<PrecipitationIcon />}
         hasData={!isEmpty(stationData)}

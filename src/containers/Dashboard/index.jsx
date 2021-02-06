@@ -85,7 +85,6 @@ class DashboardContainer extends React.PureComponent {
     } = this.props;
 
     const dateDiff = moment(end).diff(moment(start), "month", true);
-    console.log("DATE DIFF", dateDiff)
 
     return (
       <Grid container spacing={2}>
