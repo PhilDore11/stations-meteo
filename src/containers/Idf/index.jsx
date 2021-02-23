@@ -210,8 +210,10 @@ IdfContainer.propTypes = {
   fetchIdfStationData: PropTypes.func.isRequired,
   idfData: PropTypes.array,
   idfStationData: PropTypes.array,
+  stationId: PropTypes.number.isRequired,
   start: PropTypes.string.isRequired,
   end: PropTypes.string.isRequired,
+  view: PropTypes.string.isRequired,
   error: PropTypes.bool,
   loading: PropTypes.bool,
 };

@@ -56,7 +56,7 @@ class ClientsContainer extends React.PureComponent {
       this.props.fetchLnStations();
     }
   }
-  componentDidUpdate(prevProps, prevState, snapshot) {
+  componentDidUpdate(prevProps) {
     if (
       this.props.loggedInUser &&
       this.props.loggedInUser !== prevProps.loggedInUser
@@ -361,6 +361,10 @@ ClientsContainer.propTypes = {
   importData: PropTypes.func.isRequired,
   importError: PropTypes.bool,
   importLoading: PropTypes.bool,
+  clientModalOpen: PropTypes.bool,
+  userModalOpen: PropTypes.bool,
+  stationModalOpen: PropTypes.bool,
+  importModalOpen: PropTypes.bool,
 };
 
 const mapStateToProps = (state) => ({

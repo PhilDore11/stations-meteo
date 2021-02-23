@@ -47,6 +47,7 @@ const AlertTableRow = ({ alert, onChange, onDeleteRow }) => (
 AlertTableRow.propTypes = {
   alert: PropTypes.object.isRequired,
   onChange: PropTypes.func.isRequired,
+  onDeleteRow: PropTypes.func.isRequired,
 };
 
 export default React.memo(AlertTableRow);

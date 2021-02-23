@@ -101,7 +101,7 @@ ChartCard.propTypes = {
   title: PropTypes.string,
   height: PropTypes.number,
   icon: PropTypes.element,
-  hasdata: PropTypes.bool,
+  hasData: PropTypes.bool,
   data: PropTypes.object,
   options: PropTypes.object,
   error: PropTypes.bool,

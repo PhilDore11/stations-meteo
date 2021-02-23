@@ -68,14 +68,7 @@ class Alert extends React.PureComponent {
   }
 
   render() {
-    const {
-      classes,
-      message,
-      variant,
-      onClose,
-      resetAlerts,
-      ...rest
-    } = this.props;
+    const { classes, message, variant, ...rest } = this.props;
     const Icon = variantIcon[variant];
 
     const { open } = this.state;

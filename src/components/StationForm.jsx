@@ -47,9 +47,12 @@ const StationGaugeTypes = ({ station, onStationChange }) => (
     </TableBody>
   </Table>
 );
+StationGaugeTypes.propTypes = {
+  station: PropTypes.object.isRequired,
+  onStationChange: PropTypes.func.isRequired,
+};
 
 const StationForm = ({
-  isAdd,
   station,
   error,
   loading,

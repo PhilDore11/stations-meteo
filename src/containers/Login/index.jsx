@@ -93,6 +93,11 @@ LoginContainer.propTypes = {
   username: PropTypes.string,
   password: PropTypes.string,
   login: PropTypes.func.isRequired,
+  setUsername: PropTypes.func.isRequired,
+  setPassword: PropTypes.func.isRequired,
+  loggedInUser: PropTypes.bool,
+  loginError: PropTypes.string,
+  loginLoading: PropTypes.bool,
 };
 
 const mapStateToProps = state => ({

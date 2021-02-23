@@ -107,6 +107,8 @@ class StationDataContainer extends React.PureComponent {
 StationDataContainer.propTypes = {
   fetchStationData: PropTypes.func.isRequired,
   stationData: PropTypes.array,
+  stationId: PropTypes.number.isRequired,
+  view: PropTypes.string.isRequired,
   start: PropTypes.string.isRequired,
   end: PropTypes.string.isRequired,
   error: PropTypes.bool,

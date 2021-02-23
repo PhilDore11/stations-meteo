@@ -221,7 +221,7 @@ export const importData = (file, stationData) => ({
   stationData,
 });
 
-export const importDataSuccess = (res) => ({
+export const importDataSuccess = () => ({
   type: IMPORT_STATION_DATA_SUCCESS,
 });
 

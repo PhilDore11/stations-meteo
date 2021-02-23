@@ -26,8 +26,8 @@
     "react-chartjs-2": "^2.7.4",
     "react-dom": "^16.14.0",
     "react-redux": "^5.1.1",
-    "react-router-dom": "^4.4.0-beta.6",
-    "react-scripts": "^2.1.5",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "^4.0.2",
     "redux": "^4.0.1",
     "redux-saga": "0.16.2"
   },
@@ -47,6 +47,8 @@
     "not op_mini all"
   ],
   "devDependencies": {
+    "eslint": "^7.19.0",
+    "eslint-plugin-react": "^7.22.0",
     "prettier": "^2.1.2"
   },
   "resolutions": {

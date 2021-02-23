@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { withStyles, CircularProgress } from '@material-ui/core';
 
-const styles = theme => ({
+const styles = () => ({
   loading: {
     margin: 'auto',
   },

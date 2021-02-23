@@ -5,7 +5,7 @@ import { withStyles, Grid, Typography } from '@material-ui/core';
 
 import { WarningOutlined as WarningIcon } from '@material-ui/icons';
 
-const styles = theme => ({
+const styles = () => ({
   icon: {
     margin: 'auto',
   },

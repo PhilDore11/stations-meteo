@@ -89,6 +89,7 @@ class ClientRow extends React.PureComponent {
 }
 
 ClientRow.propTypes = {
+  isAdmin: PropTypes.bool,
   client: PropTypes.object.isRequired,
   stations: PropTypes.array,
   showActions: PropTypes.bool,

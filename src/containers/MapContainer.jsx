@@ -106,7 +106,10 @@ class MapContainer extends React.PureComponent {
 }
 
 MapContainer.propTypes = {
+  classes: PropTypes.object.isRequired,
   clientStations: PropTypes.array,
+  loading: PropTypes.bool,
+  error: PropTypes.bool,
 };
 
 const mapStateToProps = (state) => ({

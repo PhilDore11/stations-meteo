@@ -160,7 +160,12 @@ class App extends React.PureComponent {
 App.propTypes = {
   classes: PropTypes.object.isRequired,
   loggedInUser: PropTypes.object,
+  message: PropTypes.string,
   resetAlerts: PropTypes.func.isRequired,
+  fetchClientStations: PropTypes.func.isRequired,
+  success: PropTypes.bool,
+  warning: PropTypes.bool,
+  error: PropTypes.bool,
 };
 
 const mapStateToProps = (state) => ({

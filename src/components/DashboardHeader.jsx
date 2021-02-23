@@ -138,7 +138,7 @@ const DashboardHeader = ({
         <Grid item>
           <Typography variant={"caption"} color={"textSecondary"}>
             Toutes les dates indiquées seront présumées être en Heure Normale de
-            l'Est
+            l&apos;Est
           </Typography>
         </Grid>
       </Grid>
@@ -155,6 +155,7 @@ DashboardHeader.propTypes = {
   increment: PropTypes.func.isRequired,
   decrement: PropTypes.func.isRequired,
   stations: PropTypes.array.isRequired,
+  stationId: PropTypes.number.isRequired,
   onStationChange: PropTypes.func.isRequired,
   view: PropTypes.string.isRequired,
   onViewChange: PropTypes.func.isRequired,

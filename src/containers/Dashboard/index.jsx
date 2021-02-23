@@ -146,6 +146,7 @@ class DashboardContainer extends React.PureComponent {
 DashboardContainer.propTypes = {
   match: PropTypes.object.isRequired,
   clientStations: PropTypes.array,
+  stationId: PropTypes.number.isRequired,
   increment: PropTypes.func.isRequired,
   decrement: PropTypes.func.isRequired,
   view: PropTypes.string,

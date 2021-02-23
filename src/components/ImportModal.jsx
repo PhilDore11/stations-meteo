@@ -12,14 +12,7 @@ import {
 } from "@material-ui/core";
 import { DropzoneArea } from "material-ui-dropzone";
 
-const ImportModal = ({
-  stationData,
-  error,
-  loading,
-  isOpen,
-  onToggle,
-  onImport,
-}) => (
+const ImportModal = ({ stationData, loading, isOpen, onToggle, onImport }) => (
   <Dialog fullWidth maxWidth="md" open={isOpen} onClose={onToggle}>
     <DialogTitle>Import de Données</DialogTitle>
     <Divider />
