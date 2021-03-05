@@ -62,35 +62,33 @@ const StationForm = ({
 }) => (
   <form noValidate autoComplete="off">
     <Grid container spacing={2}>
-      <React.Fragment>
-        <Grid item xs={12}>
-          <TextField
-            required={true}
-            select
-            error={error}
-            disabled={loading}
-            fullWidth
-            name="stationId"
-            label="LN Station"
-            type="text"
-            margin="dense"
-            variant="outlined"
-            value={station.stationId}
-            onChange={(event) => onStationChange(event, station)}
-          >
-            {lnStations &&
-              lnStations.map((station) => (
-                <MenuItem
-                  key={station.id}
-                  value={station.id}
-                  disabled={!!station.stationId}
-                >
-                  {station.name}
-                </MenuItem>
-              ))}
-          </TextField>
-        </Grid>
-      </React.Fragment>
+      <Grid item xs={12}>
+        <TextField
+          required={true}
+          select
+          error={error}
+          disabled={loading}
+          fullWidth
+          name="stationId"
+          label="LN Station"
+          type="text"
+          margin="dense"
+          variant="outlined"
+          value={station.stationId}
+          onChange={(event) => onStationChange(event, station)}
+        >
+          {lnStations &&
+            lnStations.map((station) => (
+              <MenuItem
+                key={station.id}
+                value={station.id}
+                disabled={!!station.stationId}
+              >
+                {station.name}
+              </MenuItem>
+            ))}
+        </TextField>
+      </Grid>
       <Grid item xs={12}>
         <TextField
           required={true}

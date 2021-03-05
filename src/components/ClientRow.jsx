@@ -40,6 +40,7 @@ class ClientRow extends React.PureComponent {
       onStationEdit,
       onStationDelete,
       onOpenImport,
+      onOpenAdjustCoefficient,
     } = this.props;
     const { expanded } = this.state;
 
@@ -80,6 +81,7 @@ class ClientRow extends React.PureComponent {
               onEdit={onStationEdit}
               onDelete={onStationDelete}
               onImport={onOpenImport}
+              onAdjustCoefficient={onOpenAdjustCoefficient}
             />
           </AccordionDetails>
         </Accordion>
@@ -101,6 +103,7 @@ ClientRow.propTypes = {
   onStationEdit: PropTypes.func.isRequired,
   onStationDelete: PropTypes.func.isRequired,
   onOpenImport: PropTypes.func.isRequired,
+  onOpenAdjustCoefficient: PropTypes.func.isRequired,
 };
 
 export default ClientRow;

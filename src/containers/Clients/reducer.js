@@ -19,6 +19,7 @@ import {
   TOGGLE_USER_MODAL,
   TOGGLE_STATION_MODAL,
   TOGGLE_IMPORT_MODAL,
+  TOGGLE_ADJUST_COEFFICIENT_MODAL,
   SET_CLIENT_DATA,
   SET_CLIENT_ALERTS,
   SET_STATION_DATA,
@@ -31,6 +32,9 @@ import {
   IMPORT_STATION_DATA,
   IMPORT_STATION_DATA_SUCCESS,
   IMPORT_STATION_DATA_ERROR,
+  ADJUST_COEFFICIENT_STATION_DATA,
+  ADJUST_COEFFICIENT_STATION_DATA_SUCCESS,
+  ADJUST_COEFFICIENT_STATION_DATA_ERROR,
 } from "../constants";
 
 const initialState = {
@@ -48,6 +52,9 @@ const initialState = {
   importModalOpen: false,
   importLoading: false,
   importError: false,
+  adjustCoefficientModalOpen: false,
+  adjustCoefficientLoading: false,
+  adjustCoefficientError: false,
 };
 
 export default (state = initialState, action) => {
@@ -126,6 +133,11 @@ export default (state = initialState, action) => {
         ...state,
         importModalOpen: !state.importModalOpen,
       };
+    case TOGGLE_ADJUST_COEFFICIENT_MODAL:
+      return {
+        ...state,
+        adjustCoefficientModalOpen: !state.adjustCoefficientModalOpen,
+      };
     case SET_CLIENT_DATA:
       return {
         ...state,
@@ -168,6 +180,25 @@ export default (state = initialState, action) => {
         ...state,
         importLoading: false,
         importError: true,
+      };
+    case ADJUST_COEFFICIENT_STATION_DATA:
+      return {
+        ...state,
+        adjustCoefficientLoading: true,
+        adjustCoefficientError: false,
+      };
+    case ADJUST_COEFFICIENT_STATION_DATA_SUCCESS:
+      return {
+        ...state,
+        adjustCoefficientLoading: false,
+        adjustCoefficientError: false,
+        adjustCoefficientModalOpen: false,
+      };
+    case ADJUST_COEFFICIENT_STATION_DATA_ERROR:
+      return {
+        ...state,
+        adjustCoefficientLoading: false,
+        adjustCoefficientError: true,
       };
     default:
       return state;

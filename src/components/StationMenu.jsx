@@ -15,6 +15,7 @@ import {
   MoreVertOutlined as MoreVertIcon,
   EditOutlined as EditStationIcon,
   DeleteOutlined as DeleteIcon,
+  SettingsInputComponentOutlined as AdjustCoefficientIcon,
 } from "@material-ui/icons";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -53,7 +54,7 @@ class StationMenu extends React.PureComponent {
   };
 
   render() {
-    const { classes, onStationEdit, onImport, onDelete } = this.props;
+    const { classes, onStationEdit, onImport, onAdjustCoefficient, onDelete } = this.props;
     const { isOpen } = this.state;
 
     return (
@@ -71,6 +72,14 @@ class StationMenu extends React.PureComponent {
             </ListItemIcon>
             <ListItemText primary="Modifier" />
           </MenuItem>
+          <MenuItem
+            onClick={(event) => this.onItemClick(event, onAdjustCoefficient)}
+          >
+            <ListItemIcon>
+              <AdjustCoefficientIcon />
+            </ListItemIcon>
+            <ListItemText primary="Ajuster le coefficient" />
+          </MenuItem>
           <MenuItem onClick={(event) => this.onItemClick(event, onImport)}>
             <ListItemIcon>
               <FontAwesomeIcon
@@ -82,6 +91,7 @@ class StationMenu extends React.PureComponent {
             </ListItemIcon>
             <ListItemText primary="Import de données" />
           </MenuItem>
+
           <Divider />
           <MenuItem onClick={(event) => this.onItemClick(event, onDelete)}>
             <ListItemIcon>
@@ -99,6 +109,7 @@ StationMenu.propTypes = {
   classes: PropTypes.object.isRequired,
   onStationEdit: PropTypes.func.isRequired,
   onImport: PropTypes.func.isRequired,
+  onAdjustCoefficient: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
 };
 

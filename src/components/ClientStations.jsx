@@ -22,6 +22,7 @@ const ClientStations = ({
   hideActions,
   onEdit,
   onImport,
+  onAdjustCoefficient,
   onDelete,
   onAdd,
   isAdmin,
@@ -36,6 +37,7 @@ const ClientStations = ({
             onEdit={onEdit}
             onDelete={onDelete}
             onImport={onImport}
+            onAdjustCoefficient={onAdjustCoefficient}
           />
         </Grid>
       ))}
@@ -73,6 +75,7 @@ ClientStations.propTypes = {
   onEdit: PropTypes.func,
   onDelete: PropTypes.func,
   onImport: PropTypes.func,
+  onAdjustCoefficient: PropTypes.func,
 };
 
 export default React.memo(withStyles(styles)(ClientStations));

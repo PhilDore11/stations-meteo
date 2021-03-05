@@ -37,8 +37,11 @@ import {
   deleteStation,
   toggleImportModal,
   importData,
+  toggleAdjustCoefficientModal,
+  adjustCoefficient,
 } from "./actions";
 import ImportModal from "../../components/ImportModal";
+import AdjustCoefficientForm from "../../components/AdjustCoefficientForm";
 
 const styles = () => ({
   add: {
@@ -205,6 +208,15 @@ class ClientsContainer extends React.PureComponent {
     this.props.importData(file, stationData);
   };
 
+  onOpenAdjustCoefficient = (stationData) => {
+    this.props.setStationData({ ...stationData });
+    this.props.toggleAdjustCoefficientModal();
+  };
+
+  onAdjustCoefficient = () => {
+    this.props.adjustCoefficient(this.props.stationData);
+  };
+
   render() {
     const {
       classes,
@@ -214,6 +226,7 @@ class ClientsContainer extends React.PureComponent {
       userModalOpen,
       stationModalOpen,
       importModalOpen,
+      adjustCoefficientModalOpen,
       clientData,
       stationData,
       isAdd,
@@ -243,6 +256,7 @@ class ClientsContainer extends React.PureComponent {
                   onStationEdit={this.onStationEdit}
                   onStationDelete={this.onStationDelete}
                   onOpenImport={this.onOpenImport}
+                  onOpenAdjustCoefficient={this.onOpenAdjustCoefficient}
                 />
               ))}
             {isAdmin ? (
@@ -308,12 +322,25 @@ class ClientsContainer extends React.PureComponent {
                   }
                 />
                 <ImportModal
-                  stationData={this.props.stationData}
+                  stationData={stationData}
                   isOpen={importModalOpen}
                   onToggle={this.props.toggleImportModal}
                   error={importError}
                   loading={importLoading}
                   onImport={this.onImport}
+                />
+                <StationModal
+                  title={"Ajuster Coefficient"}
+                  isOpen={adjustCoefficientModalOpen}
+                  onToggle={this.props.toggleAdjustCoefficientModal}
+                  saveLabel={"Modifier"}
+                  onSave={this.onAdjustCoefficient}
+                  body={
+                    <AdjustCoefficientForm
+                      stationData={stationData}
+                      onStationChange={this.onStationChange}
+                    />
+                  }
                 />
               </React.Fragment>
             ) : (
@@ -365,6 +392,9 @@ ClientsContainer.propTypes = {
   userModalOpen: PropTypes.bool,
   stationModalOpen: PropTypes.bool,
   importModalOpen: PropTypes.bool,
+  toggleAdjustCoefficientModal: PropTypes.func.isRequired,
+  adjustCoefficientModalOpen: PropTypes.bool,
+  adjustCoefficient: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -391,6 +421,8 @@ const mapDispatchToProps = {
   deleteStation,
   toggleImportModal,
   importData,
+  toggleAdjustCoefficientModal,
+  adjustCoefficient,
 };
 
 export default connect(

@@ -24,6 +24,7 @@ import {
   TOGGLE_USER_MODAL,
   TOGGLE_STATION_MODAL,
   TOGGLE_IMPORT_MODAL,
+  TOGGLE_ADJUST_COEFFICIENT_MODAL,
   SET_CLIENT_DATA,
   SET_CLIENT_ALERTS,
   SET_STATION_DATA,
@@ -33,6 +34,9 @@ import {
   IMPORT_STATION_DATA,
   IMPORT_STATION_DATA_SUCCESS,
   IMPORT_STATION_DATA_ERROR,
+  ADJUST_COEFFICIENT_STATION_DATA,
+  ADJUST_COEFFICIENT_STATION_DATA_SUCCESS,
+  ADJUST_COEFFICIENT_STATION_DATA_ERROR,
 } from "./constants";
 
 export const fetchClients = () => ({
@@ -211,6 +215,7 @@ export const deleteStationError = (error) => ({
   error,
 });
 
+// IMPORT MODAL
 export const toggleImportModal = () => ({
   type: TOGGLE_IMPORT_MODAL,
 });
@@ -227,4 +232,22 @@ export const importDataSuccess = () => ({
 
 export const importDataError = () => ({
   type: IMPORT_STATION_DATA_ERROR,
+});
+
+// ADJUST COEFFICIENT MODAL
+export const toggleAdjustCoefficientModal = () => ({
+  type: TOGGLE_ADJUST_COEFFICIENT_MODAL,
+});
+
+export const adjustCoefficient = (stationData) => ({
+  type: ADJUST_COEFFICIENT_STATION_DATA,
+  stationData,
+});
+
+export const adjustCoefficientSuccess = () => ({
+  type: ADJUST_COEFFICIENT_STATION_DATA_SUCCESS,
+});
+
+export const adjustCoefficientError = () => ({
+  type: ADJUST_COEFFICIENT_STATION_DATA_ERROR,
 });

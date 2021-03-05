@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import { call, put, takeLatest, select } from "redux-saga/effects";
 
 import jsonFetch from "json-fetch";
@@ -15,6 +16,7 @@ import {
   DELETE_CLIENT,
   DELETE_STATION,
   IMPORT_STATION_DATA,
+  ADJUST_COEFFICIENT_STATION_DATA,
 } from "./constants";
 
 import {
@@ -42,6 +44,8 @@ import {
   deleteStationError,
   importDataSuccess,
   importDataError,
+  adjustCoefficientError,
+  adjustCoefficientSuccess,
 } from "./actions";
 
 import { requestHandler, errorHandler } from "../../utils/sagaHelpers";
@@ -548,6 +552,44 @@ function* importDataGenerator(action) {
   }
 }
 
+function* adjustStationCoefficientGenerator(action) {
+  const errorObject = {
+    action: adjustCoefficientError,
+    message: "Error Adjusting Station Coefficient",
+  };
+
+  try {
+    const { stationId, coefficient } = action.stationData;
+
+    if (!stationId || !coefficient) {
+      return yield errorHandler(errorObject);
+    }
+
+    const stationResponse = yield call(
+      jsonFetch,
+      `${process.env.REACT_APP_API_URL}/coefficients`,
+      {
+        body: {
+          stationId,
+          coefficient,
+        },
+        method: "POST",
+      }
+    );
+
+    yield requestHandler(
+      stationResponse,
+      { action: adjustCoefficientSuccess },
+      errorObject
+    );
+
+    yield put(fetchClients());
+    yield put(fetchLnStations());
+  } catch (e) {
+    yield errorHandler(errorObject);
+  }
+}
+
 function* defaultSaga() {
   yield takeLatest(FETCH_CLIENTS, fetchClientsGenerator);
   yield takeLatest(FETCH_REFERENCE_STATIONS, fetchReferenceStationsGenerator);
@@ -564,6 +606,10 @@ function* defaultSaga() {
   yield takeLatest(DELETE_STATION, deleteStationGenerator);
 
   yield takeLatest(IMPORT_STATION_DATA, importDataGenerator);
+  yield takeLatest(
+    ADJUST_COEFFICIENT_STATION_DATA,
+    adjustStationCoefficientGenerator
+  );
 }
 
 export default defaultSaga;

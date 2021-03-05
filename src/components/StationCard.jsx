@@ -68,6 +68,7 @@ const StationCard = ({
   onEdit,
   onDelete,
   onImport,
+  onAdjustCoefficient,
   hideActions,
 }) => {
   let batteryObj = {};
@@ -103,6 +104,7 @@ const StationCard = ({
             <StationMenu
               onStationEdit={() => onEdit(station)}
               onImport={() => onImport(station)}
+              onAdjustCoefficient={() => onAdjustCoefficient(station)}
               onDelete={() => onDelete(station)}
             />
           )
@@ -209,6 +211,7 @@ StationCard.propTypes = {
   hideActions: PropTypes.bool,
   onEdit: PropTypes.func,
   onImport: PropTypes.func,
+  onAdjustCoefficient: PropTypes.func,
   onDelete: PropTypes.func,
 };
 
