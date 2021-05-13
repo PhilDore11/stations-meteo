@@ -72,7 +72,7 @@ class IdfContainer extends React.PureComponent {
   render() {
     const { idfData, idfStationData, error, loading } = this.props;
 
-    const increments = [5, 10, 15, 30, 60, 120, 180, 360, 720, 1440];
+    const increments = [5, 10, 15, 30, 60, 120, 360, 720, 1440];
     const idfIncrements = [5, 10, 15, 30, 60, 120, 360, 720, 1440];
 
     let pdrIncrements = Array.from(Array(1440).keys());

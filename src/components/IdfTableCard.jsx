@@ -59,7 +59,6 @@ class IdfTableCard extends React.PureComponent {
                     <TableCell>30 mins</TableCell>
                     <TableCell>1 hr</TableCell>
                     <TableCell>2 hrs</TableCell>
-                    <TableCell>3 hrs</TableCell>
                     <TableCell>6 hrs</TableCell>
                     <TableCell>12 hrs</TableCell>
                     <TableCell>24 hrs</TableCell>
