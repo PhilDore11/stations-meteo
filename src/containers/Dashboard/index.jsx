@@ -1,5 +1,4 @@
 import React from "react";
-import moment from "moment";
 import PropTypes from "prop-types";
 
 import { connect } from "react-redux";
@@ -20,6 +19,7 @@ import {
 } from "../actions";
 import { DashboardHeader, Loading } from "../../components";
 import { StationDataContainer, IdfContainer } from "..";
+import { getMoment } from "../../utils/dateUtils";
 
 class DashboardContainer extends React.PureComponent {
   constructor(props) {
@@ -57,7 +57,7 @@ class DashboardContainer extends React.PureComponent {
   handleStartChange(start) {
     this.props.setStart(start);
     if (this.props.view !== "custom") {
-      const newEnd = moment(start)
+      const newEnd = getMoment(start)
         .add(1, this.props.view)
         .subtract(1, "millisecond");
       this.props.setEnd(newEnd);
@@ -67,7 +67,7 @@ class DashboardContainer extends React.PureComponent {
   handleEndChange(end) {
     this.props.setEnd(end);
     if (this.props.view !== "custom") {
-      const newStart = moment(end).subtract(1, this.props.view);
+      const newStart = getMoment(end).subtract(1, this.props.view);
       this.props.setStart(newStart);
     }
   }
@@ -84,7 +84,7 @@ class DashboardContainer extends React.PureComponent {
       view,
     } = this.props;
 
-    const dateDiff = moment(end).diff(moment(start), "month", true);
+    const dateDiff = getMoment(end).diff(getMoment(start), "month", true);
 
     return (
       <Grid container spacing={2}>

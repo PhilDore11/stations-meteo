@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 
 import { connect } from "react-redux";
 
-import moment from "moment";
 import { isEmpty } from "lodash";
 
 import { CloudOutlined as PrecipitationIcon } from "@material-ui/icons";
@@ -12,6 +11,7 @@ import { blue } from "@material-ui/core/colors";
 
 import { fetchStationData } from "../actions";
 import { ChartCard } from "../../components";
+import { getMomentForDisplay } from "../../utils/dateUtils";
 
 class StationDataContainer extends React.PureComponent {
   componentDidMount() {
@@ -34,7 +34,12 @@ class StationDataContainer extends React.PureComponent {
   }
 
   render() {
-    const { stationData, start, end, view, error, loading } = this.props;
+    const { stationData, view, error, loading } = this.props;
+
+    const min = getMomentForDisplay(stationData[0]?.stationDate);
+    const max = getMomentForDisplay(
+      stationData[stationData.length - 1]?.stationDate
+    );
 
     const precipitationChartOptions = {
       maintainAspectRatio: false,
@@ -63,8 +68,8 @@ class StationDataContainer extends React.PureComponent {
             type: "time",
             ticks: {
               unit: view === "day" ? "hour" : "day",
-              min: moment(start).valueOf(),
-              max: moment(end).valueOf(),
+              min,
+              max,
             },
           },
         ],
@@ -82,7 +87,7 @@ class StationDataContainer extends React.PureComponent {
           data:
             stationData &&
             stationData.map((data) => ({
-              t: moment(data.stationDate),
+              t: getMomentForDisplay(data.stationDate),
               y: parseFloat(data.intensity * 12).toFixed(2),
             })),
         },
@@ -108,7 +113,7 @@ StationDataContainer.propTypes = {
   fetchStationData: PropTypes.func.isRequired,
   stationData: PropTypes.array,
   stationId: PropTypes.number.isRequired,
-  view: PropTypes.string.isRequired,
+  view: PropTypes.string,
   start: PropTypes.string.isRequired,
   end: PropTypes.string.isRequired,
   error: PropTypes.bool,

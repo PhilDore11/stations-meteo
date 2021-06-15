@@ -8,6 +8,7 @@ import {
   ChevronRightOutlined as ChevronRightIcon,
 } from "@material-ui/icons";
 import { DatePicker } from "material-ui-pickers";
+import { getMoment } from "../utils/dateUtils";
 
 const styles = () => ({
   fab: {
@@ -45,7 +46,7 @@ const DateIncrementDecrement = ({
             margin="dense"
             variant="outlined"
             label={view !== "day" ? "Début" : "Date"}
-            value={start}
+            value={getMoment(start)}
             onChange={onStartChange}
             format={"LL"}
           />
@@ -62,7 +63,7 @@ const DateIncrementDecrement = ({
                 margin="dense"
                 variant="outlined"
                 label="Fin"
-                value={end}
+                value={getMoment(end)}
                 onChange={onEndChange}
                 format={"LL"}
               />

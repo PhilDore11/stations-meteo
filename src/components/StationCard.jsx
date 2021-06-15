@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import moment from "moment";
 import { isNumber } from "lodash";
 
 import {
@@ -32,6 +31,7 @@ import {
 
 import { green, red, grey, orange } from "@material-ui/core/colors";
 import StationMenu from "./StationMenu";
+import { getMomentForDisplay } from "../utils/dateUtils";
 
 const styles = (theme) => ({
   stationCard: {
@@ -152,7 +152,9 @@ const StationCard = ({
       <Grid container spacing={2} justify="center" alignItems="center">
         <Grid item>
           <Typography variant="caption">
-            {station.date ? moment(station.date).fromNow() : "aucunes données"}
+            {station.date
+              ? getMomentForDisplay(station.date).fromNow()
+              : "aucunes données"}
           </Typography>
         </Grid>
       </Grid>

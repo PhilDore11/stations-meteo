@@ -1,6 +1,5 @@
 import { call, takeLatest } from "redux-saga/effects";
 
-import moment from "moment";
 import jsonFetch from "json-fetch";
 
 import { requestHandler, errorHandler } from "../../utils/sagaHelpers";
@@ -24,6 +23,7 @@ import {
   fetchIdfStationDataError,
   exportStationDataError,
 } from "../actions";
+import { getMoment } from "../../utils/dateUtils";
 
 function* fetchStationData(action) {
   const errorObject = {
@@ -34,8 +34,8 @@ function* fetchStationData(action) {
   try {
     const { stationId, start, end, view } = action;
 
-    const startMoment = moment(start).startOf("day");
-    const endMoment = moment(end).endOf("day");
+    const startMoment = getMoment(start).startOf("day");
+    const endMoment = getMoment(end).endOf("day");
     const dateDiff = endMoment.diff(startMoment, "month", true);
 
     if (dateDiff >= 1) {
@@ -96,8 +96,8 @@ function* fetchIdfStationData(action) {
   try {
     const { stationId, start, end } = action;
 
-    const startMoment = moment(start).startOf("day");
-    const endMoment = moment(end).endOf("day");
+    const startMoment = getMoment(start).startOf("day");
+    const endMoment = getMoment(end).endOf("day");
 
     const response = yield call(
       jsonFetch,
@@ -125,10 +125,14 @@ export function* fetchClientStationsRequest(clientId) {
   const clientStations = [];
   for (let i = 0; i < response.body.length; i++) {
     const clientStation = response.body[i];
-    const latestStationDataResponse = yield call(
-      jsonFetch,
-      `${process.env.REACT_APP_API_URL}/stationData/${clientStation.stationId}/latest`
-    );
+
+    let clientStationLatest = {};
+    if (clientStation.stationId) {
+      clientStationLatest = yield call(
+        jsonFetch,
+        `${process.env.REACT_APP_API_URL}/stationData/${clientStation.stationId}/latest`
+      );
+    }
 
     clientStations.push({
       ...clientStation,
@@ -136,7 +140,7 @@ export function* fetchClientStationsRequest(clientId) {
       hasSnow: clientStation.hasSnow === 1,
       hasWind: clientStation.hasWind === 1,
       hasHydro: clientStation.hasHydro === 1,
-      ...latestStationDataResponse.body,
+      ...clientStationLatest.body,
     });
   }
 
@@ -173,8 +177,8 @@ function* exportStationData(action) {
   try {
     const { stationId, start, end } = action;
 
-    const startMoment = moment(start).startOf("day");
-    const endMoment = moment(end).endOf("day");
+    const startMoment = getMoment(start).startOf("day");
+    const endMoment = getMoment(end).endOf("day");
 
     window.location.href = `${
       process.env.REACT_APP_API_URL

@@ -1,4 +1,4 @@
-import moment from "moment";
+import { getMoment } from "../../utils/dateUtils";
 import { FETCH_STATION_DATA_SUCCESS } from "../App/constants";
 
 import {
@@ -14,10 +14,9 @@ import {
   SET_STATION,
 } from "../constants";
 
-const initialDay = moment();
 const initialState = {
-  start: moment(initialDay).startOf("month").toISOString(),
-  end: moment(initialDay).endOf("month").toISOString(),
+  start: getMoment().startOf("month").toISOString(),
+  end: getMoment().endOf("month").toISOString(),
   view: "month",
   stationId: "",
   error: false,
@@ -52,11 +51,11 @@ export default (state = initialState, action) => {
     case INCREMENT: {
       return {
         ...state,
-        start: moment(state.start)
+        start: getMoment(state.start)
           .add(1, state.view)
           .startOf(state.view)
           .toISOString(),
-        end: moment(state.end)
+        end: getMoment(state.end)
           .add(1, state.view)
           .endOf(state.view)
           .toISOString(),
@@ -65,11 +64,11 @@ export default (state = initialState, action) => {
     case DECREMENT:
       return {
         ...state,
-        start: moment(state.start)
+        start: getMoment(state.start)
           .subtract(1, state.view)
           .startOf(state.view)
           .toISOString(),
-        end: moment(state.end)
+        end: getMoment(state.end)
           .subtract(1, state.view)
           .endOf(state.view)
           .toISOString(),
@@ -78,8 +77,8 @@ export default (state = initialState, action) => {
       return {
         ...state,
         view: action.view,
-        start: moment(state.start).startOf(action.view).toISOString(),
-        end: moment(state.start).endOf(action.view).toISOString(),
+        start: getMoment(state.start).startOf(action.view).toISOString(),
+        end: getMoment(state.start).endOf(action.view).toISOString(),
       };
     case SET_STATION:
       return {
@@ -89,12 +88,12 @@ export default (state = initialState, action) => {
     case SET_START:
       return {
         ...state,
-        start: moment(action.start).toISOString(),
+        start: getMoment(action.start).startOf("day").toISOString(),
       };
     case SET_END:
       return {
         ...state,
-        end: moment(action.end).toISOString(),
+        end: getMoment(action.end).endOf("day").toISOString(),
       };
     case FETCH_STATION_DATA_SUCCESS:
       return { ...state, validated: action.res.validated };

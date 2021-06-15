@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import moment from "moment";
+import { duration } from "moment";
 
 import { connect } from "react-redux";
 
@@ -143,13 +143,11 @@ class IdfContainer extends React.PureComponent {
               callback: (value, index) => {
                 const increment = increments[index];
                 if (increment < 60) {
-                  return (
-                    moment.duration(value, "minutes").asMinutes() + " mins"
-                  );
+                  return duration(value, "minutes").asMinutes() + " mins";
                 } else if (increment > 60) {
-                  return moment.duration(value, "minutes").asHours() + " hrs";
+                  return duration(value, "minutes").asHours() + " hrs";
                 } else {
-                  return moment.duration(value, "minutes").asHours() + " hr";
+                  return duration(value, "minutes").asHours() + " hr";
                 }
               },
             },
@@ -213,7 +211,7 @@ IdfContainer.propTypes = {
   stationId: PropTypes.number.isRequired,
   start: PropTypes.string.isRequired,
   end: PropTypes.string.isRequired,
-  view: PropTypes.string.isRequired,
+  view: PropTypes.string,
   error: PropTypes.bool,
   loading: PropTypes.bool,
 };

@@ -109,7 +109,7 @@ Sidebar.propTypes = {
   classes: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
   isAdmin: PropTypes.bool.isRequired,
-  sidebarItems: PropTypes.bool.isRequired,
+  sidebarItems: PropTypes.bool,
 };
 
 export default React.memo(withStyles(styles)(withRouter(Sidebar)));

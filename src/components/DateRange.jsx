@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import { DatePicker } from "material-ui-pickers";
 
 import { withStyles, Grid } from "@material-ui/core";
+import { getMoment } from "../utils/dateUtils";
 
 const styles = () => ({
   input: {
@@ -22,7 +23,7 @@ const DateRange = ({ classes, start, end, onStartChange, onEndChange }) => (
         margin="dense"
         variant="outlined"
         label="Début"
-        value={start}
+        value={getMoment(start)}
         onChange={onStartChange}
         format={"LL"}
       />
@@ -37,7 +38,7 @@ const DateRange = ({ classes, start, end, onStartChange, onEndChange }) => (
         margin="dense"
         variant="outlined"
         label="Fin"
-        value={end}
+        value={getMoment(end)}
         onChange={onEndChange}
         format={"LL"}
       />
