@@ -36,11 +36,6 @@ class StationDataContainer extends React.PureComponent {
   render() {
     const { stationData, view, error, loading } = this.props;
 
-    const min = getMomentForDisplay(stationData[0]?.stationDate);
-    const max = getMomentForDisplay(
-      stationData[stationData.length - 1]?.stationDate
-    );
-
     const precipitationChartOptions = {
       maintainAspectRatio: false,
       legend: false,
@@ -68,8 +63,10 @@ class StationDataContainer extends React.PureComponent {
             type: "time",
             ticks: {
               unit: view === "day" ? "hour" : "day",
-              min,
-              max,
+              min: stationData && getMomentForDisplay(stationData[0]?.stationDate),
+              max: stationData && getMomentForDisplay(
+                stationData[stationData.length - 1]?.stationDate
+              ),
             },
           },
         ],
